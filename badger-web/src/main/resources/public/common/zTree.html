@@ -1,0 +1,153 @@
+<link rel="stylesheet" href="{=ctx}/widget/zTree/css/demo.css" type="text/css">
+<link rel="stylesheet" href="{=ctx}/widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery.ztree.exedit.js"></script>
+<style type="text/css">
+div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
+div#rMenu ul li{
+	margin: 1px 0;
+	padding: 0 5px;
+	cursor: pointer;
+	list-style: none outside none;
+	background-color: #DFDFDF;
+}
+</style>
+<script>
+var zTree, rMenu;
+//zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+var setting = {
+		edit: {
+			enable: true,
+			showRemoveBtn: false,
+			showRenameBtn: false,
+			drag: {
+				isCopy: true,
+				isMove: true,
+				prev: true,
+				inner: true,
+				next: true
+			}
+		},
+		data: {
+			simpleData: {
+				enable: true
+			}
+		},
+		callback: {
+			beforeDrag: beforeDrag,
+			beforeDrop: beforeDrop,
+			onRightClick: OnRightClick
+		}
+};
+
+// zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+var zNodes = [
+{name:"test1", open:true, children:[
+   {name:"test1_1"}, {name:"test1_2"}]},
+{name:"test2", open:true, children:[
+   {name:"test2_1"}, {name:"test2_2"}]}
+];
+
+$(document).ready(function(){
+	$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+	zTree = $.fn.zTree.getZTreeObj("treeDemo");
+	rMenu = $("#rMenu");
+});
+
+function beforeDrag(treeId, treeNodes) {
+	for (var i=0,l=treeNodes.length; i<l; i++) {
+		if (treeNodes[i].drag === false) {
+			return false;
+		}
+	}
+	return true;
+}
+
+function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+	return targetNode ? targetNode.drop !== false : true;
+}
+
+//右键菜单
+function OnRightClick(event, treeId, treeNode) {
+	if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
+		zTree.cancelSelectedNode();
+		showRMenu("root", event.clientX, event.clientY);
+	} else if (treeNode && !treeNode.noR) {
+		zTree.selectNode(treeNode);
+		showRMenu("node", event.clientX, event.clientY);
+	}
+}
+
+function showRMenu(type, x, y) {
+	$("#rMenu ul").show();
+	if (type=="root") {
+		$("#m_del").hide();
+		$("#m_check").hide();
+		$("#m_unCheck").hide();
+	} else {
+		$("#m_del").show();
+		$("#m_check").show();
+		$("#m_unCheck").show();
+	}
+
+    y += document.body.scrollTop;
+    x += document.body.scrollLeft;
+    rMenu.css({"top":y+"px", "left":x+"px", "visibility":"visible"});
+
+	$("body").bind("mousedown", onBodyMouseDown);
+}
+
+function hideRMenu() {
+	if (rMenu) rMenu.css({"visibility": "hidden"});
+	$("body").unbind("mousedown", onBodyMouseDown);
+}
+
+function onBodyMouseDown(event){
+	if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length>0)) {
+		rMenu.css({"visibility" : "hidden"});
+	}
+}
+
+var addCount = 1;
+function addTreeNode() {
+	hideRMenu();
+	var newNode = { name:"add" + (addCount++)};
+	if (zTree.getSelectedNodes()[0]) {
+		newNode.checked = zTree.getSelectedNodes()[0].checked;
+		zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
+	} else {
+		zTree.addNodes(null, newNode);
+	}
+}
+
+function removeTreeNode() {
+	hideRMenu();
+	var nodes = zTree.getSelectedNodes();
+	if (nodes && nodes.length>0) {
+		if (nodes[0].children && nodes[0].children.length > 0) {
+			var msg = "will delete children points!";
+			if (confirm(msg)==true){
+				zTree.removeNode(nodes[0]);
+			}
+		} else {
+			zTree.removeNode(nodes[0]);
+		}
+	}
+}
+
+function checkTreeNode(checked) {
+	var nodes = zTree.getSelectedNodes();
+	if (nodes && nodes.length>0) {
+		zTree.checkNode(nodes[0], checked, true);
+	}
+	hideRMenu();
+}
+
+function resetTree() {
+	hideRMenu();
+	$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+}
+
+</script>

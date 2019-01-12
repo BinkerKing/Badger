@@ -1,0 +1,24 @@
+{
+	"table": "T_CST_INFO",
+	"editable": "1",
+	"groups": [
+		{
+			"prop": "base",
+			"alias": ""
+		}
+	],
+	"attrs": [
+		{
+			"prop": "id",
+			"type":"string",
+			"alias": "",
+			"group":"base"
+		},
+		{
+			"prop": "name",
+			"type":"string",
+			"alias": "",
+			"group":"base"
+		}
+	]
+}

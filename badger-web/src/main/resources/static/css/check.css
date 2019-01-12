@@ -1,0 +1,181 @@
+@charset "utf-8";
+.layui-input-block{
+	min-height:auto;
+}
+.rk-panel-header {
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    background: #f5f7f8;
+    border-bottom: 1px solid #e6e6e6;
+}
+.rk-panel-header h3 {
+    float: left;
+    padding-left: 15px;
+    font-size: 12px;
+    color: #666;
+    font-weight: 700;
+}
+.rk-panel-content {
+    position: absolute;
+    top: 36px;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    overflow: auto;
+}
+.ruleEntryBar .layui-colla-title {
+    position: relative;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 15px 0 35px;
+    font-size: 12px;
+    color: #333;
+    background-color: #f5f7f8;
+    cursor: pointer;
+    text-align: left;
+    font-weight: 700;
+}
+.ruleEntryBar .layui-form-item{
+	margin-bottom:10px;
+}
+.ruleEntryBar .layui-form-item .layui-input-inline{
+	width:140px;
+}
+
+.ruleEntryBar .layui-elem-field legend{
+	font-size: 12px;
+}
+.ruleEntrybox{
+	height:150px;
+	width:100%;
+	border:1px solid #e6e6e6;
+	margin-bottom: 10px;
+}
+.ruleEntrybox .layui-form-item .layui-form-label{
+	width: auto;
+    font-weight: 400;
+    text-align: left;
+}
+.ruleEntrybox .layui-form-item .layui-form-label .layui-form-radio{
+	margin:0;
+	line-height: 20px;
+}
+.ruleEntrybox .layui-form-item .layui-input-inline{
+	width:190px;
+}
+.ruleEntrybox .layui-form-item .layui-input-block{
+	margin-left: 130px;
+    margin-right: 20px;
+}
+.ruleEntrybox .rk-rule-left,.ruleEntrybox .rk-rule-main,.ruleEntrybox .rk-rule-right{
+	position: relative;
+	float:left;
+	width:40%;
+	height:100%;
+	border-right: 1px solid #e6e6e6;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ruleEntrybox .rk-rule-left{
+	width:40%;
+}
+.ruleEntrybox .rk-rule-main{
+	width:20%;  
+}
+.ruleEntrybox .rk-rule-main .layui-input-inline{
+	padding:20px 30px
+}
+.ruleEntrybox .rk-rule-main .layui-form-radio{
+	display:block;
+}
+.ruleEntrybox .rk-rule-right{
+	width:40%;
+	border-right: 0
+}
+.ruleEntrybox .rk-panel-content{
+	padding:10px;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: initial;
+}
+.ruleEntryBar .layui-colla-item{
+	position: relative;
+}
+.ruleEntryBar .rk-form-term{
+	position: relative;
+}
+.rk-form-term .layui-form-label{
+	display: inline-block;
+    float: none;
+    width: auto;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px 0 0;
+    vertical-align: middle;
+    font-size: 12px;
+}
+.rk-form-term .layui-inline {
+    margin-right: 15px;
+    margin-bottom: 0;
+}
+.ruleEntryBar .rk-form-term .layui-input-inline {
+    width: 120px;
+    float: none;
+    margin-right: 0;
+}
+.layui-layer-rim .layui-form{
+	padding:20px 0;
+}
+.layui-layer-rim .layui-form .layui-form-radio{
+	margin-top:3px;
+}
+.ruleEntryBar .layui-btn-view{
+	position: absolute;
+    top: 5px;
+    right:5px;
+}
+.ruleEntryBar .layui-table-view .layui-table{
+	width:100%;
+}
+.ruleEntryBar .layui-table-view .layui-table-header{
+	 margin-right: -1px;
+}
+.ruleEntryBar .layui-table-view .layui-table-body{
+	min-height:50px;
+	max-height:330px;
+}
+.ruleEntryBar .layui-table-view .layui-form-checkbox{
+	display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.ruleEntryBar .layui-form-select dl{
+	max-height:200px;
+}
+.ruleEntryBar .layui-form-selectup dl{
+	top: auto;
+    bottom: 42px;
+}
+.layui-layer-rule{
+	overflow: hidden;
+}
+.columnsDiv .layui-table-header{
+	border-bottom:0;
+}
+.columnsDiv .layui-input{
+	height:25px;
+	line-height:25px;
+	margin: 2px 0;	
+}
+.columnsDiv .border-n{
+	border:0px;
+	background:none;
+}
+.columnsDiv .border-n:hover{
+	border:0px;
+	background:none;
+}

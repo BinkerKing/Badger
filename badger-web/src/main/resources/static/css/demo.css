@@ -1,0 +1,775 @@
+@charset "utf-8";
+
+/*内容*/
+.iframeBody{
+	position: relative;
+	overflow: hidden;
+}
+.mainContent .layui-tab {
+	position: relative;
+}
+
+
+/*--索引菜单--*/
+.mainContent .layui-tab  .crumbs {
+	position: absolute;
+	right: 5px;
+	top: 10px;
+}
+
+.mainContent .layui-tab  .crumbs .layui-breadcrumb a,.crumbs .layui-breadcrumb a cite,.crumbs .layui-breadcrumb a span {
+	font-size: 12px;
+}
+
+.mainContent .layui-tab  .crumbs ul {
+	background: none;
+}
+
+.mainContent .layui-tab  .crumbs li {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.mainContent .layui-tab  .crumbs li a {
+	padding: 0 5px 0 0;
+}
+
+.mainContent .layui-tab  .crumbs li .layui-nav-child {
+	top: 30px;
+	left: -20px;
+}
+
+.mainContent .layui-tab  .crumbs li .layui-nav-more {
+	display: none;
+}
+
+.mainContent .layui-tab  .crumbs .layui-nav-bar {
+	display: none;
+}
+
+.mainContent .layui-tab  .crumbs li dd .layui-box {
+	display: none;
+}
+
+.mainContent .layui-tab  .crumbs li dd a {
+	padding: 0 20px;
+}
+
+/*--快捷菜单--*/
+.mainContent .layui-tab  .quick-menu {
+	position: absolute;
+	right: 290px;
+	top: 10px;
+}
+
+.mainContent .layui-tab  .quick-menu .layui-breadcrumb a {
+	font-size: 12px;
+}
+
+
+
+.mainContent .layui-tab-content {
+	min-height: 500px;
+}
+
+.layui-tab-title li a {
+	display: inline-block;
+}
+
+.content {
+	margin: 10px auto 40px;
+}
+
+.content .indexes {
+	padding: 0 0 10px;
+}
+
+.content .lay-tab-left {
+	float: left;
+	width: 70%;
+}
+
+.content .lay-tab-right {
+	float: left;
+	width: 30%;
+}
+
+.content .lay-tab-right td:first-child,.content .lay-tab-right th:first-child {
+	border-left: 0;
+}
+
+.content .layui-elem-field {
+	padding: 8px 20px 5px;
+	margin-bottom: 0px;
+	background: #fff;
+}
+.content .layui-elem-mg{
+	margin-bottom: 30px;
+}
+.content .layui-elem-field legend{
+	font-size: 16px;
+	color: #08c;
+	font-weight: 700;
+}
+
+.content .last-a-time{
+	line-height: 30px;
+    margin: 5px 15px;
+}
+/*展示*/
+.content .layui-elem-field .dataList{
+	width: 100%;
+	overflow:hidden;
+}
+.exhibitionBox .layui-field-box .layui-form-item{
+	margin-bottom: 0;
+}
+.content .layui-elem-field .dataList li{
+	position: relative;
+    width: 20%;
+    height: 80px;
+    padding: 0;
+    float: left;
+    margin: 15px 2.5% 25px 2.5%;
+    cursor: pointer;
+}
+.content .layui-elem-field .dataList li div{
+	height: 100%;
+	border: 1px solid #08C;
+} 
+.content .layui-elem-field .dataList li p{
+	height: 40px;
+	line-height: 40px;
+	background: #08C;
+	font-size: 14px;
+	color: #fff;
+	text-align:center;
+}
+
+.content .layui-elem-field .dataList li span{
+	display:block;
+	height: 40px;
+	line-height: 40px;
+	background: #fff;
+	font-size: 16px;
+	color: #f00;
+	text-align:center;
+} 
+#echarts_s{
+	background: #08C;
+}
+
+
+.content .group-button {
+	margin: 5px 0;
+}
+
+/*-操作栏-搜索-*/
+.content .layui-form-search {
+	margin-bottom: 0px;
+	margin-bottom: -10px\9;
+}
+
+.content .layui-form-search .layui-input-inline {
+	width: 120px;
+}
+.content .layui-form-search .layui-input-date{
+	width: 200px;
+	height: 36px;
+    line-height: 36px;
+	border: 1px solid #e6e6e6;
+	overflow: hidden;
+}
+.content .layui-form-search .layui-input-date .layui-input{
+	display: inline-block;
+	width: 95px;
+	padding-left: 0;
+	margin-left:-2px;
+	border: 0;
+	text-align:center;
+}
+.content .layui-form-search .layui-input-date span{
+	display: inline-block;
+	width: 8px;
+	margin-left:-2px;
+	color: #757575;
+}
+
+.content .layui-unselect {
+	position: relative;
+}
+
+.content .search-term {
+	position: absolute;
+	top: 45px;
+	right: 0px;
+	width: 390px;
+	padding: 20px 20px 10px 0px;
+	border: 1px solid #e6e6e6;
+	background-color: #fff;
+	z-index: 9999;
+	display: none;
+}
+
+:root .layui-form-selected .layui-edge {
+	margin-top: -9px\0/IE9;
+}
+
+.layui-form-selected-l .layui-edge-a {
+	margin-top: -9px;
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+	margin-top: -3px\9;
+}
+
+.content .layui-form-selected-l .search-term {
+	display: block;
+}
+
+.layui-form-selected-l .search-term, .layui-nav-child {
+	box-shadow: 0 2px 4px rgba(0,0,0,.12);
+}
+/*-操作栏-搜索-*/
+
+/*--表格数据-右--*/
+.content .contentLeft {
+	float: left;
+	width: 100%;
+	height: 472px;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+}
+
+.content .contentLeft.w1 {
+	width: 70%;
+}
+
+.content  .contentLeft.w1 .lay-tab-left {
+	width: 100%;
+}
+
+.content .lay-tab-right.w3 {
+	display: none;
+	overflow: hidden;
+}
+
+.content .contentLeft table th,.content .contentLeft table {
+	table-layout: fixed;
+}
+
+.content .contentLeft table th,.content .contentLeft table td {
+	padding: 0px 10px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	width: 100px;
+	font-size: 12px;
+	overflow: hidden;
+	word-wrap: break-word;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.content .contentLeft .lay-tab-left th:first-child,.content .contentLeft .lay-tab-left td:first-child{
+	padding:0;
+}
+.content .contentLeft table td.operate {
+	text-align: left;
+}
+
+.content .contentLeft table td.operate a {
+	text-decoration: none;
+	margin: 0 5px;
+}
+
+.layui-table tr.tron {
+	background-color: #f8f8f8;
+}
+
+.layui-table tr.bg081{
+	background: #efeeee
+
+}
+
+/*--表格数据-左--*/
+.content .contentRight {
+	position: relative;
+	float: right;
+	width: 0%;
+	margin: 10px 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+}
+
+.content .contentRight.w2 {
+	border: 1px solid #e2e2e2;
+	width: 30%;
+}
+
+.content .contentRight .text {
+	position: absolute;
+	top: 41px;
+	left: 0;
+	width: 100%;
+	padding: 10px 0 20px;
+	line-height: 24px;
+	overflow-y: auto;
+	font-size: 12px;
+}
+
+.content .contentRight .text .layui-form {
+	padding: 0 30px 0 0;
+}
+
+.content .contentRight .text .layui-input-block {
+	line-height: 24px;
+	margin-left: 0px;
+	color: #a9a9a9;
+}
+
+.content .contentRight .text .layui-input-block p {
+	padding: 7px 0;
+}
+.content .contentRight .text .layui-form-item {
+    clear: both;
+    margin-left: 20px;
+    margin-bottom: 0px;
+}
+.content .contentRight .text .layui-form-label {
+    float: none;
+    display: block;
+    padding: 5px 15px 5px 0;
+    width: 100%;
+    font-weight: 400;
+    text-align: left;
+}
+
+.content .contentRight .text .layui-input,.content .contentRight .text .layui-select,.content .contentRight .text .layui-textarea{
+	height: 28px;
+	line-height: 28px;
+}
+
+.content .contentRight .title {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	background: #f2f2f2;
+	border-bottom: 1px solid #e2e2e2;
+}
+
+.content .contentRight .title h3 {
+	float: left;
+	margin-left: 15px;
+	font-size: 15px;
+	color: #000;
+	font-weight: 700;
+}
+
+.content .contentRight .title .switchTest {
+	float: left;
+	margin-left: 15px;
+}
+
+.content .contentRight .title .switchTest .layui-form-switch {
+	margin-top: -2px;
+}
+
+.content .contentRight .title .operate {
+	float: right;
+	margin-right: 10px;
+}
+.content .contentRight .title .operate .layui-btn+.layui-btn{
+	margin-left: 0;
+}
+
+.content .contentRight .title .operate .layui-form-switch {
+	margin: 0px 10px 0 0;
+}
+/*----分页------*/
+.page {
+	margin-top: 5px;
+	width: 100%;
+}
+
+.page .layui-input {
+	height: 30px;
+	line-height: 30px;
+	margin: 10px 0;
+	font-size: 14px;
+}
+
+.page .layui-form-item .layui-input-inline {
+	width: 110px;
+}
+/*----分页------*/
+
+
+
+.layui-form-onswitch {
+	border-color: #08c;
+	background-color: #08c;
+}
+
+.layui-btn-normal {
+	background: #08c;
+}
+
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+	background: #08c;
+}
+
+.layui-form-select dl dd.layui-this {
+	background: #08c;
+}
+
+.layui-btn-primary:hover {
+	border-color: #08c;
+}
+
+/*左右布局*/
+body .main-panel {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	min-height: 500px;
+	padding-top:0;
+}
+
+.main-panel .main-panel-side {
+	position: absolute;
+	left: 0;
+	top: -1px;
+	z-index: 1000;
+	width: 200px;
+	height: 100%;
+	overflow-x: hidden;
+	border: 1px solid #e2e2e2;
+	border-radius: 2px;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+}
+
+.main-panel .main-panel-side .layui-side-scroll {
+	width: 208px;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+.main-panel .fly-none {
+	min-height: 0;
+}
+
+.main-panel {
+	padding-top: 5px;
+}
+
+.main-panel .layui-nav-tree {
+	padding: 35px 0;
+	overflow: auto;
+	background: none;
+}
+
+.main-panel  .sidebar-fold {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 35px;
+	line-height: 35px;
+	background: #f2f2f2;
+	z-index: 99;
+	border-bottom: 1px solid #e2e2e2;
+}
+.main-panel  .sidebar-fold span{
+	margin-left:15px;
+}
+
+.main-panel .layui-nav-tree .layui-nav-item a {
+	height: 40px;
+	font-size: 12px;
+	color:#736d6d;
+	border-bottom: 1px solid #e2e2e2;
+}
+
+.main-panel .layui-nav-tree .layui-nav-item a:hover {
+	background-color: #f7f7f7;
+	color: #333;
+}
+
+.main-panel .layui-nav-tree li:last-child a {
+	border-bottom: 0;
+}
+
+.main-panel .layui-nav-tree .layui-this>a {
+	background: #08c;
+    color: #fff;
+}
+
+.main-panel .layui-nav-tree .layui-nav-bar {
+	left: -4px;
+	background: #08c;
+}
+
+.main-panel>.layui-nav .layui-icon {
+	position: relative;
+	top: 2px;
+	font-size: 20px;
+	margin-right: 10px;
+}
+
+
+/*--权限管理模板--*/
+.main-panel>.main-panel-right {
+	height: 100%;
+	margin: 0 0 0 230px;
+	min-height: 500px;
+}
+.main-panel .main-panel-right .panel-right-list{
+	position: relative;
+	float:left;
+	height:500px;
+	padding:10px;
+	border: 1px solid #e2e2e2;
+    border-radius: 2px; 
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+    overflow: hidden;
+    background: #f7f7f7;
+}
+.main-panel .main-panel-right .fnone{
+	float:none;
+	padding:0;
+	height:100%;
+	min-height:500px;
+}
+.main-panel>.main-panel-right .listDiv{
+	position: relative;
+	float:left;
+	z-index: 1000;
+    width: 200px;
+    height: 100%;
+
+}
+.main-panel>.main-panel-right .listDiv .pos-scroll{
+    position: absolute;
+    left: 0;
+    top: -1px;
+    z-index: 1000;
+    width: 200px;
+    height: 100%;
+    background: #fff;
+    overflow-x: hidden;
+    border: 1px solid #e2e2e2;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+}
+.main-panel-right .listDiv .pos-scroll .layui-side-scroll{
+	width:208px;
+}
+.main-panel>.main-panel-right .listDivbtn{
+	position: relative;
+	float:left;
+	width:90px;
+	height: 100%;
+    min-height: 500px;
+}
+.main-panel>.main-panel-right .listDivbtn .pos{
+	position: absolute;
+	top: 50%;
+	left: 0;
+	height:96px;
+	margin-top:-48px;
+	text-align: center;
+}
+.main-panel>.main-panel-right .listDivbtn .layui-btn{
+	margin:5px 0 5px 0;
+}
+
+.main-panel>.main-panel-right .layui-nav-tree .layui-nav-item{
+	line-height: 33px;
+}
+.main-panel>.main-panel-right .layui-nav-tree .layui-nav-item a{
+	height:30px;
+}
+.main-panel>.main-panel-right .layui-nav-tree .layui-this,.main-panel>.main-panel-right .layui-nav-tree .layui-this>a{
+	    background: none;
+	    color:#736d6d;
+}
+.main-panel>.main-panel-right .layui-nav-tree .layui-nav-item .layui-icon{
+	position: absolute;
+    right: 8px;
+    top: 1px;
+    color:#08c;
+    display:none;
+}
+.main-panel>.main-panel-right .layui-nav-tree .layui-nav-item .layui-icon.on{
+	display:block;
+}
+.main-panel>.main-panel-right .subSystem{
+	border:0;
+	border-right:1px solid #e2e2e2;
+	border-radius: 0px;
+	background:#fff;
+}
+.main-panel>.main-panel-right .tabelBox{
+	position: relative;
+    margin: 0 0 0 201px;
+    padding:50px 20px 20px;
+}
+.main-panel>.main-panel-right .tabelBox .layui-table{
+	margin:0;
+}
+.main-panel>.main-panel-right .ftTable tbody tr:hover{
+	background:none;
+}
+
+.main-panel>.main-panel-right .layui-table thead tr:hover{
+	background:#f2f2f2;
+}
+.main-panel>.main-panel-right .layui-table th .btn-bc{
+	float:right;
+}
+.main-panel>.main-panel-right .ftTable .navTd .layui-form-checkbox[lay-skin=primary] i{
+	top: 1px;
+    width: 12px;
+    line-height: 12px;
+}
+.main-panel>.main-panel-right .ftTable .navTd{
+	padding-left:40px;
+}
+.main-panel>.main-panel-right .ftTable .layui-form-checkbox span{
+	color:#333;
+}
+.main-panel>.main-panel-right .ftTable .navTd .layui-form-checkbox span{
+	padding: 0 10px 0 5px;
+	font-size:12px;
+	color:#666;
+}
+.layui-input-ld select{
+	width:80px;
+	height:25px;
+	line-height: 25px;
+	border: 1px solid #e6e6e6;
+	font-size:12px;
+}
+.layui-input-ld label{
+	display: inline-block;
+    vertical-align: middle;
+    margin:0 5px;
+    margin-bottom: -2px;
+    font-size:12px;
+    color:#666;
+}
+/*--权限管理模板--*/
+/*--树菜单--*/
+.ztreeUl * {font-size: 10pt;font-family:"Microsoft Yahei",Verdana,Simsun,"Segoe UI Web Light","Segoe UI Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","Helvetica Neue",Arial}
+.zTreeDemoBackground{
+	padding-top:35px;
+}
+.ztreeUl li ul{ margin:0; padding:0}
+.ztreeUl li {line-height:30px;}
+.ztreeUl li a {width:190px;height:30px;padding-top: 0px;}
+.ztreeUl li a:hover {text-decoration:none; background-color: #E7E7E7;}
+.ztreeUl li a span.button.switch {visibility:hidden}
+.ztreeUl.showIcon li a span.button.switch {visibility:visible}
+.ztreeUl li a.curSelectedNode {background-color:#D4D4D4;border:0;height:30px;}
+.ztreeUl li span {line-height:30px;}
+.ztreeUl li span.button {margin-top: -7px;}
+.ztreeUl li span.button.switch {width: 16px;height: 16px;}
+
+.ztreeUl li a.level0 span {font-size: 14px;font-weight: bold;}
+.ztreeUl li span.button {background-image:url("../images/left_menuForOutLook.png"); *background-image:url("../images/left_menuForOutLook.gif")}
+.ztreeUl li span.button.switch.level0 {width: 20px; height:20px}
+.ztreeUl li span.button.switch.level1 {width: 20px; height:20px}
+.ztreeUl li span.button.noline_open {background-position: 0 0;}
+.ztreeUl li span.button.noline_close {background-position: -18px 0;}
+.ztreeUl li span.button.noline_open.level0 {background-position: 0 -18px;}
+.ztreeUl li span.button.noline_close.level0 {background-position: -18px -18px;}
+.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+/*--树菜单--*/
+
+.layui-layer-btn{
+	border-top: 1px dotted #E3E7EA;
+}
+
+.panel {
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.23);
+	border: none;
+    border-radius: 2px;
+}
+.layui-field-box{
+	overflow:hidden;
+}
+.layui-field-box .panel{
+	float:left;
+	width: 47%;
+	margin: 20px 3% 20px 0;
+}
+.panel-heading{border-color:#eff2f7;font-size:14px;font-weight:300;padding: 15px 20px;border: 0;border-bottom: 1px solid #EEEFF1;}
+.panel-heading select,.panel-heading input{height: 30px;}
+.panel-footer{background-color: transparent;border: none;}
+.panel .panel-body{
+	padding: 5px;
+      border-bottom: 1px dotted #E3E7EA;
+}
+.viewBox{
+	margin:10px 0;
+	padding:5px;
+	overflow: hidden;
+}
+.viewBox .panel{
+	width:48%;
+	min-height:400px;
+	margin-bottom:25px;
+}
+.viewBox .rowView{
+	width:100%;height: 500px; text-align: center; position: relative;
+}
+.iframeBody .layui-layer{
+	position: absolute;
+}
+.iframeBody .layui-layer.layui-layer-dialog{
+	position: fixed;
+}
+.layui-form-select dl{
+	max-width:260px;
+}
+.identifier{
+	font-size: 18px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 10px;
+    color: #f00;
+}
+.formbox .layui-form-select{
+	display: inline-block;
+}
+/* 响应布局*/
+@media screen and (max-width: 1200px) {
+	.content .lay-tab-left{
+		width: 70%;
+	}
+	.content .lay-tab-right{
+		width: 30%;
+	}
+	.content .contentLeft.w1{
+		width: 70%;
+	}
+	.content .contentRight.w2{
+		width: 30%;
+	}
+}
+@media screen and (max-width: 1400px) {
+	header .nav-right .nav{
+		display: none;
+	}
+}
+@media screen and (max-width: 1400px) {
+	header .nav-right .nav{
+		display: none;
+	}
+}

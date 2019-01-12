@@ -1,0 +1,30 @@
+.importFormbox1{
+	padding:20px;
+}
+.importFormbox1 .layui-input-block{
+	min-height: 30px;
+	line-height:30px;
+}
+.importFormbox1 .layui-input-inline{
+	min-height: 30px;
+	line-height:30px;
+}
+.importFormbox1 .layui-form-radio{
+	margin: 0px 10px 0 0;
+}
+.importFormbox1 .layui-form-radio span{
+	font-size:12px;
+	color:#666;
+}
+.importFormbox1 .layui-form-label{
+	float: none;
+	width:auto;
+    text-align: left;
+    padding: 0;
+    margin-bottom:10px;
+}
+.importFormbox1 .layui-form-tips{
+	line-height:28px;
+	font-size:12px;
+	color:#666;
+}

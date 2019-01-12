@@ -1,0 +1,185 @@
+[
+	{
+		"id": "WF1001",
+		"name": "客户信息工作流程",
+		"states": [
+			{
+				"state": "PRE_RECROD",
+				"stateName": "待补录",
+				"actions": [
+					{
+						"action": "SHOW",
+						"name": "查看",
+						"style":"iconfont icon-bianji",
+						"fun":"show"
+					},
+					{
+						"action": "EDIT",
+						"name": "补录",
+						"style":"iconfont icon-bulu",
+						"fun":"edit"
+					}
+				],
+				"events": [
+					"RECROD_SAVE"
+				]
+			},
+			{
+				"state": "PRE_SUBMIT",
+				"stateName": "待提交",
+				"actions": [
+					{
+						"action": "SHOW",
+						"name": "查看",
+						"style":"iconfont icon-bianji",
+						"fun":"show"
+					},
+					{
+						"action": "EDIT",
+						"name": "补录",
+						"style":"iconfont icon-bulu",
+						"fun":"edit"
+					},
+					{
+						"action": "SUBMIT",
+						"name": "提交",
+						"event": "SUBMIT",
+						"style":"iconfont icon-tijiao",
+						"fun":"submit"
+					}
+				],
+				"events": [
+					"RECROD_SAVE",
+					"SUBMIT"
+				]
+			},
+			{
+				"state": "PRE_APPROVE",
+				"stateName": "待审核",
+				"actions": [
+					{
+						"action": "SHOW",
+						"name": "查看",
+						"style":"iconfont icon-bianji",
+						"fun":"show"
+					},
+					{
+						"action": "APPROVE",
+						"name": "审核",
+						"style":"iconfont icon-shenhe1",
+						"fun":"approve"
+					}
+				],
+				"events": [
+					"APPROVE_NOT_PASS",
+					"APPROVE_PASS"
+				]
+			},
+			{
+				"state": "APPROVED",
+				"stateName": "已审核",
+				"actions": [
+					{
+						"action": "SHOW",
+						"name": "查看",
+						"style":"iconfont icon-bianji",
+						"fun":"show"
+					},
+					{
+						"action": "CHANGES",
+						"name": "申请变更",
+						"style":"iconfont icon-xiangmushenbao",
+						"fun":"changes"
+					},
+					{
+						"action": "RESAVE",
+						"name": "重置",
+						"style":"iconfont icon-zhongzhi",
+						"event": "RESAVE",
+						"fun":"resave"
+					}
+				],
+				"events": [
+					"RESAVE",
+					"CHANGES"
+				]
+			},
+			{
+				"state": "PRE_UPDATE",
+				"stateName": "变更待审核",
+				"actions": [
+					{
+						"action": "SHOW",
+						"name": "查看",
+						"style":"iconfont icon-bianji",
+						"fun":"show"
+					},
+					{
+						"action": "UPDATE",
+						"name": "变更",
+						"style":"iconfont icon-huisu",
+						"fun":"update"
+					},
+					{
+						"action": "RESAVE",
+						"name": "重置",
+						"style":"iconfont icon-zhongzhi",
+						"event": "RESAVE",
+						"fun":"resave"
+					}
+				],
+				"events": [
+					"UPDATE_NOT_PASS",
+					"RESAVE"
+				]
+			}
+		],
+		"events": [
+			{
+				"event": "RECROD_SAVE",
+				"eventName": "保存",
+				"nextState": "PRE_SUBMIT",
+				"fun":"save"
+			},
+			{
+				"event": "SUBMIT",
+				"eventName": "提交",
+				"nextState": "PRE_APPROVE",
+				"fun":"submit"
+			},
+			{
+				"event": "APPROVE_PASS",
+				"eventName": "审核通过",
+				"nextState": "APPROVED",
+				"fun":"pass"
+			},
+			{
+				"event": "APPROVE_NOT_PASS",
+				"eventName": "不通过",
+				"nextState": "PRE_RECROD",
+				"commentsRequired": true,
+				"fun":"passnot"
+			},
+			{
+				"event": "RESAVE",
+				"eventName": "重置",
+				"nextState": "PRE_RECROD",
+				"fun":"resave"
+			},
+			{
+				"event": "CHANGES",
+				"eventName": "申请",
+				"nextState": "PRE_UPDATE",
+				"commentsRequired": true,
+				"fun":"changes"
+			},
+			{
+				"event": "UPDATE_NOT_PASS",
+				"eventName": "不同意",
+				"nextState": "APPROVED",
+				"commentsRequired": true,
+				"fun":"notpass"
+			}
+		]
+	}
+]

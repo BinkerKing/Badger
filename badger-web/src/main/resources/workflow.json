@@ -1,0 +1,251 @@
+[
+	{
+		"id": "WF1001",
+		"name": "大额可疑交易上报工作流程",
+		"states": [
+			{
+				"state": "SISP_PRE_DEAL",
+				"stateName": "可疑待处理",
+				"actions":[
+					{"action":"DEAL","name":"处理","style":"layui-btn-normal"},
+					{"action":"STOP","name":"STOP","event":"STOP","style":"layui-btn-danger"}
+				],
+				"events": [
+					"SISP_DEAL",
+					"STOP"
+				]
+			},
+			{
+				"state": "SISP_PRE_VERIFY",
+				"stateName": "可疑待审核",
+				"actions":[
+					{"action":"VERIFY","name":"审核"}
+				],
+				"events": [
+					"SISP_VERIFY_PASS",
+					"SISP_VERIFY_NOT_PASS",
+					"STOP"
+				]
+			},
+			{
+				"state": "PRE_RECROD",
+				"stateName": "待补录",
+				"actions":[
+					{"action":"EDIT","name":"补录"}
+				],
+				"events": [
+					"RECROD_SAVE",
+					"SUBMIT"
+				]
+			},
+			{
+				"state": "PRE_SUBMIT",
+				"stateName": "待提交",
+				"actions":[
+					{"action":"EDIT","name":"补录","fun":"EDIT"},
+					{"action":"SUBMIT","name":"提交","event":"SUBMIT"}
+				],
+				"events": [
+					"SUBMIT"
+				]
+			},
+			{
+				"state": "PRE_VERIFY",
+				"stateName": "待审核",
+				"actions":[
+					{"action":"VERIFY","name":"审核"}
+				],
+				"events": [
+					"VERIFY_PASS",
+					"VERIFY_NOT_PASS"
+				]
+			},
+			{
+				"state": "PRE_EXPORT",
+				"stateName": "待导出",
+				"actions":[
+					{"action":"SHOW","name":"查看"},
+					{"action":"CANCEL_VERIFY","name":"取消审核","event":"CANCEL_VERIFY"}
+				],
+				"events": [
+					"CANCEL_VERIFY",
+					"EXPORT"
+				]
+			},
+			{
+				"state": "PRE_EXPORTOVER",
+				"stateName": "已导出",
+				"actions":[
+					{"action":"SHOW","name":"查看"},
+					{"action":"COPY","name":"复制"}
+				],
+				"events": [
+				    "ADD_STORAGE",
+					"RESET"
+				]
+			},
+			{
+				"state": "PRE_STORAGE",
+				"stateName": "已入库",
+				"actions":[
+					{"action":"SHOW","name":"查看"},
+					{"action":"CHANGE","name":"变更"}
+				],
+				"events": [
+					"RESET",
+					"REPORT_AGAIN"
+				]
+			},
+			{
+				"state": "SISP_PRE_END",
+				"stateName": "已终止",
+				"actions":[
+					{"action":"SHOW","name":"查看"}
+				],
+				"events": [
+					"RESAVE"
+				]
+			}
+			
+		],
+		"events": [
+			{
+				"event": "SISP_DEAL",
+				"eventName": "提交",
+				"nextState": "SISP_PRE_VERIFY",
+				"style":"layui-btn-normal"
+			},
+			{
+				"event": "SISP_VERIFY_PASS",
+				"eventName": "审核",
+				"nextState": "PRE_RECROD"
+			},
+			{
+				"event": "SISP_VERIFY_NOT_PASS",
+				"eventName": "审核不通过",
+				"nextState": "SISP_PRE_DEAL"
+			},
+			{
+				"event": "RECROD_SAVE",
+				"eventName": "保存",
+				"nextState": "PRE_SUBMIT"
+			},
+			{
+				"event": "SUBMIT",
+				"eventName": "提交",
+				"nextState": "PRE_VERIFY"
+			},
+			{
+				"event": "VERIFY_PASS",
+				"eventName": "审核通过",
+				"nextState": "PRE_EXPORT"
+			},
+			{
+				"event": "VERIFY_NOT_PASS",
+				"eventName": "不通过",
+				"nextState": "PRE_RECROD",
+				"commentsRequired": true
+			},
+			{
+				"event": "EXPORT",
+				"eventName": "导出",
+				"nextState": "PRE_EXPORTOVER",
+				"visible":false
+			},
+			{
+				"event": "ADD_STORAGE",
+				"eventName": "入库",
+				"nextState": "PRE_STORAGE"
+			},
+			{
+				"event": "REPORT_AGAIN",
+				"eventName": "重发",
+				"nextState": "PRE_RECROD"
+			},
+			{
+				"event": "RESET",
+				"eventName": "重置",
+				"nextState": "PRE_EXPORT"
+			},
+			
+			{
+				"event": "DELETE",
+				"eventName": "删除",
+				"nextState": "PRE_VERIFY",
+				"fun":"DEAL"
+			},
+			{
+				"event": "STOP",
+				"eventName": "结束",
+				"nextState": "SISP_PRE_END"
+			},
+			{
+				"event": "RESAVE",
+				"eventName": "启用",
+				"nextState": "SISP_PRE_DEAL"
+			},
+			{
+				"event": "CANCEL_VERIFY",
+				"eventName": "取消审核",
+				"nextState": "PRE_SUBMIT"
+			}
+		]
+	},
+	{
+		"id": "WF1002",
+		"name": "基本信息工作流程",
+		"states": [
+			
+			
+			{
+				"state": "PRE_RECROD",
+				"stateName": "待补录",
+				"actions":[
+					{"action":"EDIT","name":"补录"}
+				],
+				"events": [
+					"RECROD_SAVE"
+				]
+			},
+			{
+				"state": "PRE_APPROVE",
+				"stateName": "待审核",
+				"actions":[
+					{"action":"APPROVE","name":"审核"}
+				],
+				"events": [
+					"APPROVE_PASS",
+					"APPROVE_NOT_PASS"
+				]
+			},
+			{
+				"state": "APPROVED",
+				"stateName": "已审核",
+				"actions":[
+					{"action":"UPDATE","name":"变更"}
+				],
+				"events": []
+			}
+			
+		],
+		"events": [
+			{
+				"event": "RECROD_SAVE",
+				"eventName": "保存",
+				"nextState": "PRE_APPROVE"
+			},
+			{
+				"event": "APPROVE_PASS",
+				"eventName": "审核通过",
+				"nextState": "APPROVED"
+			},
+			{
+				"event": "APPROVE_NOT_PASS",
+				"eventName": "审核不通过",
+				"nextState": "PRE_RECROD"
+			}
+			
+			
+		]
+	}
+]
