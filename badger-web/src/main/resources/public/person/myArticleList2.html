@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>我的手记列表</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link type="include" href="/common/depcss.html" />
+<link type="include" href="/common/metroTree.html" />
+<style>
+.myArticleList-card{
+    background: #e6e6e6;
+    height:700px;
+    width:900px;
+}
+</style>
+</head>
+<body class="iframeBody">
+	<div class="content">
+	<!--  
+		<button class="layui-btn layui-btn-small layui-btn-primary" id ="add-data">
+			<i class="iconfont icon-tianjia"></i>写文章
+		</button>
+	-->
+		<div class="layui-col-md6">
+			<div class="layui-card">
+				<ul id="treeDemo" class="ztree" style="width:900px;height:900px;"></ul>
+			</div>
+		</div>
+		<div class="layui-col-md6">
+			<div class="layui-card">
+				<div class="domBtnDiv" style="width:500px;height:500px;">
+					<div id="dom_1" class="categoryDiv">
+						<span class="layui-btn-radius domBtn" domId="11">大树</span>
+						<span class="layui-btn-radius domBtn" domId="12">小草</span>
+						<span class="layui-btn layui-btn-primary layui-btn-radius domBtn" domId="13">花朵</span>
+					</div>
+					<div class="dom_line"></div>
+					<div id="dom_2" class="categoryDiv">
+						<span class="domBtn" domId="21">老虎</span>
+						<span class="layui-btn layui-btn-primary layui-btn-radius domBtn" domId="22">狗熊</span>
+						<span class="layui-btn layui-btn-primary layui-btn-radius domBtn" domId="23">狮子</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<link type="include" href="/common/depjs.html" />
+<script>
+	var form = layui.form, layer = layui.layer;
+	
+	$("#add-data").click(function() {
+		var content = 'articleEdit.html';
+		layer.open({
+			type : 2,
+			title : '写文章',
+			skin: 'layui-layer-rim',
+			shadeClose : true,
+			shade : .3,
+			resize  : false,
+			area: ['80%', '90%'],
+			maxmin : true, //开启最大化最小化按钮
+			zIndex: layer.zIndex,
+		    success: function(layero){
+		        layer.setTop(layero);
+		    },
+			content : content //iframe的url
+		});
+	});
+	
+	$(function() {
+		
+	});
+	
+</script>
+</html>

@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="{=ctx}/widget/zTree/css/demo.css" type="text/css">
-<link rel="stylesheet" href="{=ctx}/widget/zTree/css/metroStyle/metroStyle.css" type="text/css">
+<!--<link rel="stylesheet" href="{=ctx}/widget/zTree/css/metroStyle/metroStyle.css" type="text/css">-->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{=ctx}/widget/zTree/css/awesomeStyle/awesome.css" type="text/css">
 <script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery.ztree.excheck.js"></script>
@@ -158,7 +160,8 @@
         view: {
             addHoverDom: addHoverDom,
             removeHoverDom: removeHoverDom,
-            selectedMulti: false
+            selectedMulti: false,
+            dblClickExpand: dblClickExpand
         },
         check: {
             enable: true
@@ -195,7 +198,7 @@
         { id:121, pId:12, name:"child121"},
         { id:122, pId:12, name:"child122"},
         { id:123, pId:12, name:"child123"},
-        { id:124, pId:12, name:"child124"},
+        { id:124, pId:12, tt:"12", name:"child124"},
         { id:13, pId:1, name:"father13", isParent:true},
         { id:2, pId:0, name:"father2"},
         { id:21, pId:2, name:"father21", open:true},
@@ -215,6 +218,13 @@
         { id:234, pId:23, name:"child234"},
         { id:3, pId:0, name:"father3", isParent:true}
     ];
+    
+    function test(){
+    	var treeObj = $.fn.zTree.getZTreeObj("treeDemo");//获取到树
+    	var nodesSys = treeObj.getNodes(); //可以获取所有的父节点
+    	var nodesSysAll = treeObj.transformToArray(nodesSys); //获取树所有节点
+    	console.log(nodesSysAll);
+    }
 
     $(document).ready(function(){
         $.fn.zTree.init($("#treeDemo"), setting, zNodes);
@@ -224,6 +234,7 @@
 
     var newCount = 1;
     function addHoverDom(treeId, treeNode) {
+    	debugger;
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
         var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
@@ -236,6 +247,10 @@
             return false;
         });
     };
+    
+    function dblClickExpand(treeId, treeNode) {
+		return treeNode.level > 0;
+	}
     
     function removeHoverDom(treeId, treeNode) {
         $("#addBtn_"+treeNode.tId).unbind().remove();
