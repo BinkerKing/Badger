@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>我的手记列表</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link type="include" href="/common/depcss.html" />
+<link rel="stylesheet" href="{=ctx}/block/articleListBlock/layui/css/layui.css">
+<link rel="stylesheet" href="{=ctx}/block/articleListBlock/css/demo.css">
+</head>
+<body class="iframeBody">
+<div class="content">
+	<div class="layui-col-md8">
+		<div id ="cardDiv" class="layui-card" style="position:absolute; height:900px; overflow:auto">
+			<div id="articleListDiv"></div>
+		</div>
+	</div>
+</div>
+</body>
+<link type="include" href="/common/depjs.html" />
+<script>
+	var form = layui.form, layer = layui.layer;
+
+	$(function() {
+		var data = {};
+		data.lables = [{name:"lable1"},{name:"lable2"},{name:"lable3"},{name:"lable4"},{name:"lable5"}];
+		data.article = [{title:"我是标题1"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},
+			{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},
+			{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"}];
+		var getTpl = articleTmpl.innerHTML;
+		var view = $("#articleListDiv")[0];//document.getElementById('articleListDiv');
+		layui.laytpl(getTpl).render(data, function(html){
+		  view.innerHTML = html;
+		});
+		View.resetUi();
+	});
+	
+	function AutoTableHeight()
+    {
+        var dev_obj = document.getElementById('cardDiv'); //table的父div
+ 
+        var layuitable_main = dev_obj.getElementsByClassName("autoHeight");   //在父div中找 layui-table-main 属性所在标签
+        if (layuitable_main != null && layuitable_main.length > 0) {
+            layuitable_main[0].style.height = '100%';    
+        }
+ 
+        var layuitable = dev_obj.getElementsByClassName("layui-form");   //在父div中找 layui-form 属性所在标签
+        if (layuitable != null && layuitable.length > 0) {
+            layuitable[0].style.height = '100%';
+        }
+    }
+</script>
+<script id="articleTmpl" type="text/html">
+<div class="sub-header" id="sub-nav">
+	<div class="label-manage">
+		<div class="my-label">
+			<div class="label-box">
+				<ul>
+					<li>我的关注:</li>
+					{{#
+						layui.each(d.lables, function(index, item){
+					}}
+					<li><a href="/wenda/5" target="_blank">{{item.name}}</a></li>
+					{{#
+						});
+					}}
+				</ul>
+			</div>
+		</div>
+		<div class="add-label js-label-manage">
+			标签管理
+		</div>
+	</div>
+</div>
+
+<div class="mainContent">
+	<div class="wrapper">
+		<div class="wdnav clearfix">
+			<div class="nav-list fl">
+				<a href="javascript:;" class="active">热门回答</a>
+				<a href="javascript:;">最新回答</a>
+				<a href="javascript:;">等我回答</a>
+				<a href="javascript:;">话题</a>
+			</div>
+			<div class="que-btn clearfix fr">
+				<button class="layui-btn layui-btn-normal layui-btn layui-btn-sm">提问</button>
+			</div>
+			<div class="search-warp clearfix">
+				<div class="search-area" data-search="top-banner">
+					<input class="search-input" data-suggest-trigger="suggest-trigger" placeholder="请输入你的问题" type="text" autocomplete="off">
+					<input type="hidden" class="btn_search" data-search-btn="search-btn">
+					<ul class="search-area-result" data-suggest-result="suggest-result" style="display: none;">
+					</ul>
+				</div>
+				<div class="showhide-search" data-show="no">
+					<i class="layui-icon">&#xe615;</i>
+				</div>
+			</div>
+		</div>
+		<div class="ques-list">
+			{{#
+				layui.each(d.article, function(index, item){
+			}}
+			<div class="item clearfix">
+				<div class="item-num fl">
+					<a href="javascript:;" class="has-finish" target="_blank">
+					<i class="layui-icon">&#xe605;</i>
+					<span>17</span>
+					</a>
+					<a href="javascript:;" target="_blank">
+					<em>8495</em>
+					<span>浏览</span>
+					</a>
+				</div>
+				<div class="que-con">
+					<a href="javascript:;" class="que-title" target="_blank" title="{{item.title}}">{{item.title}}</a>
+					<div class="label">
+						<i class="layui-icon" title="JavaScript">&#xe656;</i>
+						<a href="javascript:;" target="_blank">JavaScript</a>
+					</div>
+				</div>
+			</div>
+			{{#
+				});
+			}}
+		</div>
+	</div>
+</div>
+</script>
+</body>
+</html>
+</html>

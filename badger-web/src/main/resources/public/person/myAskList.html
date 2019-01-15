@@ -19,11 +19,10 @@
 </head>
 <body class="iframeBody">
 	<div class="content">
-	<!--  
 		<button class="layui-btn layui-btn-small layui-btn-primary" id ="add-data">
 			<i class="iconfont icon-tianjia"></i>写文章
 		</button>
-	-->
+
 		<div class="layui-col-md6">
 			<div class="layui-card">
 				<ul id="treeDemo" class="ztree" style="width:900px;height:900px;"></ul>
@@ -72,8 +71,8 @@
 	});
 	
 	$(function() {
-		
+		articleListTmpl.init("articalTmpl",null);
+		articleListTmpl.load();
 	});
-	
 </script>
 </html>
