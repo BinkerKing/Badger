@@ -12,9 +12,24 @@
 </head>
 <body class="iframeBody">
 <div class="content">
-	<div class="layui-col-md8">
-		<div id ="cardDiv" class="layui-card" style="position:absolute; height:900px; overflow:auto">
-			<div id="articleListDiv"></div>
+	<div class="layui-row layui-col-space10">
+		<div class="layui-col-md8">
+			<div class="layui-card" style="height:750px;overflow:auto">
+				<div id="articleListDiv"></div>
+			</div>
+		</div>
+		<div class="layui-col-md4">
+			<div style="text-align:center;padding-top:6%;">
+				<button class="layui-btn layui-btn-lg layui-btn-normal" id ="add-data">
+					<i class="iconfont icon-tianjia"></i>写文章
+				</button>
+			</div>
+		    <div class="layui-card" style="height:300px; overflow:auto">
+				<div id="outlineDiv"></div>
+			</div>
+			<div class="layui-card" style="height:300px; overflow:auto">
+				
+			</div>
 		</div>
 	</div>
 </div>
@@ -22,20 +37,106 @@
 <link type="include" href="/common/depjs.html" />
 <script>
 	var form = layui.form, layer = layui.layer;
+	
+	$("#add-data").click(function() {
+		var content = 'articleEdit.html';
+		layer.open({
+			type : 2,
+			title : '写文章',
+			skin: 'layui-layer-rim',
+			shadeClose : true,
+			shade : .3,
+			resize  : false,
+			area: ['80%', '90%'],
+			maxmin : true, //开启最大化最小化按钮
+			zIndex: layer.zIndex,
+		    success: function(layero){
+		        layer.setTop(layero);
+		    },
+			content : content //iframe的url
+		});
+	});
 
+	var AtcList = [];
+	var lableList=[];//存放该用户所有lable
+	var search_lable = "";
+	var search_status = "1";
+	var authorId = 1;
+	
+	var outline_unpublish=0;
+	var outline_publish=0;
+	var outline_like=0;
+	var outline_view=0;
+	
+	var search_value= "";
+	
 	$(function() {
+		initArticleTmpl();
+	});
+	
+	function initArticleTmpl(){
+		var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
+		var param = {};
+		param.authorId = authorId;
+		param.status= search_status;
+		param.search= null;
+		param.lable = null;
+		View.post(url, param, function(resp) {
+			AtcList = resp;
+			var data = {};
+			data.lables = getLables(resp);
+			data.article = resp;
+			data.search = search_value;
+			var getTpl = articleTmpl.innerHTML;
+			var view = $("#articleListDiv")[0];//document.getElementById('articleListDiv');
+			layui.laytpl(getTpl).render(data, function(html){
+			  view.innerHTML = html;
+			});
+			initOutlineTmpl();
+			changeSearchStatus();
+			View.resetUi();
+		}, function() {
+			TmplUtils.showMsgFail("出错");
+		})
+	}
+	
+	function initOutlineTmpl(){
 		var data = {};
-		data.lables = [{name:"lable1"},{name:"lable2"},{name:"lable3"},{name:"lable4"},{name:"lable5"}];
-		data.article = [{title:"我是标题1"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},
-			{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},
-			{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"},{title:"我是标题2"}];
-		var getTpl = articleTmpl.innerHTML;
-		var view = $("#articleListDiv")[0];//document.getElementById('articleListDiv');
+		data.unpublish = outline_unpublish;
+		data.publish = outline_publish;
+		data.like = outline_like;
+		data.see = outline_view;
+		var getTpl = outlineTmpl.innerHTML;
+		var view = $("#outlineDiv")[0];
 		layui.laytpl(getTpl).render(data, function(html){
 		  view.innerHTML = html;
 		});
 		View.resetUi();
-	});
+	}
+	
+	//获取不重复发的标签列表
+	function getLables(resp){
+		var lable = [];
+		$.each(resp,function(i,item){
+			var lableGroup = item.labelGroup;
+			var lables = lableGroup.split(",");
+			for ( var i = 0; i <lables.length; i++){
+				if(!isInArray(lable,lables[i])){
+					var lableObj = {};
+					lableObj.name = lables[i];
+					lable.push(lableObj);
+				}
+			}
+			if(item.publishStatus == "1"){
+				outline_publish ++;
+			}else{
+				outline_unpublish ++;
+			}
+			outline_like += item.likeCount;
+			outline_view += item.scanCount;
+		});
+		return lable;
+	}
 	
 	function AutoTableHeight()
     {
@@ -51,6 +152,94 @@
             layuitable[0].style.height = '100%';
         }
     }
+	
+	function isInArray(arr,value){
+	    for(var i = 0; i < arr.length; i++){
+	        if(value === arr[i].name){
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	function publish(id){
+		
+		
+	}
+	
+	function search(status){
+		var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
+		var param = {};
+		param.authorId = authorId;
+		if(status != null){
+			search_status = status;
+		}
+		param.status= search_status;
+		param.search= $("#searchInput").val();
+		search_value = param.search;
+		param.lable = search_lable;
+		
+		View.post(url, param, function(resp) {
+			var data = {};
+			data.lables = getLables(resp);
+			data.article = resp;
+			data.search = search_value;
+			var getTpl = articleTmpl.innerHTML;
+			var view = $("#articleListDiv")[0];//document.getElementById('articleListDiv');
+			layui.laytpl(getTpl).render(data, function(html){
+			  view.innerHTML = html;
+			});
+			changeSearchStatus();
+			View.resetUi();
+		}, function() {
+			TmplUtils.showMsgFail("出错");
+		})
+	}
+	
+	function changeSearchStatus(){
+		if(search_status == "1"){
+			$("#a1").addClass("active");
+			$("#a2").removeClass("active");
+			$("#a3").removeClass("active");
+		}else if(search_status == "2"){
+			$("#a1").removeClass("active");
+			$("#a2").addClass("active");
+			$("#a3").removeClass("active");
+		}else{
+			$("#a1").removeClass("active");
+			$("#a2").removeClass("active");
+			$("#a3").addClass("active");
+		}
+	}
+</script>
+<script id="outlineTmpl" type="text/html">
+<div class="layui-card-header">待办事项</div>
+<div class="layui-card-body layui-text">
+	<table class="layui-table">
+		<colgroup>
+		  <col width="200">
+		  <col>
+		</colgroup>
+		<tbody>
+		  <tr>
+			<td>未发布文章数</td>
+			<td><p>{{d.unpublish}}</p></td>
+		  </tr>
+		  <tr>
+			<td>发布文章数</td>
+			<td><p>{{d.publish}}</p></td>
+		  </tr>
+		  <tr>
+			<td>点赞量</td>
+			<td>{{d.like}}</td>
+		  </tr>
+		  <tr>
+			<td>浏览量</td>
+			<td><p>{{d.see}}</p></td>
+		  </tr>
+		</tbody>
+	</table>
+</div>
 </script>
 <script id="articleTmpl" type="text/html">
 <div class="sub-header" id="sub-nav">
@@ -79,20 +268,18 @@
 	<div class="wrapper">
 		<div class="wdnav clearfix">
 			<div class="nav-list fl">
-				<a href="javascript:;" class="active">热门回答</a>
-				<a href="javascript:;">最新回答</a>
-				<a href="javascript:;">等我回答</a>
-				<a href="javascript:;">话题</a>
+				<a id="a1" href="javascript:search('1');" class="active">全部</a>
+				<a id="a2" href="javascript:search('2');">已发布</a>
+				<a id="a3" href="javascript:search('3');">未发布</a>
 			</div>
 			<div class="que-btn clearfix fr">
-				<button class="layui-btn layui-btn-normal layui-btn layui-btn-sm">提问</button>
+				<button class="layui-btn layui-btn-normal layui-btn layui-btn-sm" onclick="search()">搜索</button>
 			</div>
 			<div class="search-warp clearfix">
 				<div class="search-area" data-search="top-banner">
-					<input class="search-input" data-suggest-trigger="suggest-trigger" placeholder="请输入你的问题" type="text" autocomplete="off">
+					<input id="searchInput" class="search-input" data-suggest-trigger="suggest-trigger" placeholder="{{d.search}}" type="text" autocomplete="off">
 					<input type="hidden" class="btn_search" data-search-btn="search-btn">
-					<ul class="search-area-result" data-suggest-result="suggest-result" style="display: none;">
-					</ul>
+					<ul class="search-area-result" data-suggest-result="suggest-result" style="display: none;"></ul>
 				</div>
 				<div class="showhide-search" data-show="no">
 					<i class="layui-icon">&#xe615;</i>
@@ -105,20 +292,30 @@
 			}}
 			<div class="item clearfix">
 				<div class="item-num fl">
+					{{#
+						if(item.publishStatus == "0"){
+					}}
+					<button class="layui-btn layui-btn-normal layui-btn-lg" onclick="publish({{item.id}})">发布</button>
+					{{#
+						}else{
+					}}
 					<a href="javascript:;" class="has-finish" target="_blank">
-					<i class="layui-icon">&#xe605;</i>
-					<span>17</span>
+						<em>{{item.likeCount}}</em>
+						<span>点赞</span>
 					</a>
 					<a href="javascript:;" target="_blank">
-					<em>8495</em>
-					<span>浏览</span>
+						<em>{{item.scanCount}}</em>
+						<span>浏览</span>
 					</a>
+					{{#
+						}
+					}}
 				</div>
 				<div class="que-con">
-					<a href="javascript:;" class="que-title" target="_blank" title="{{item.title}}">{{item.title}}</a>
+					<a href="javascript:;" class="que-title" target="_blank" title="{{item.titleInfo}}">{{item.titleInfo}}</a>
 					<div class="label">
-						<i class="layui-icon" title="JavaScript">&#xe656;</i>
-						<a href="javascript:;" target="_blank">JavaScript</a>
+						<img src="//img.mukewang.com/59e9700900012e3602400240.jpg" title="JAVA">
+						<a href="javascript:;" target="_blank">{{item.labelGroup}}</a>
 					</div>
 				</div>
 			</div>
