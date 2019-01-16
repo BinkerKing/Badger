@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link type="include" href="/common/depcss.html" />
 <link rel="stylesheet" href="{=ctx}/block/articleListBlock/layui/css/layui.css">
+<link rel="stylesheet" href="{=ctx}/block/articleListBlock/css/common-less.css">
 <link rel="stylesheet" href="{=ctx}/block/articleListBlock/css/demo.css">
 </head>
 <body class="iframeBody">
@@ -98,6 +99,25 @@
 		}, function() {
 			TmplUtils.showMsgFail("出错");
 		})
+	}
+	
+	function view (id){
+		var content = 'myArticleView.html?id='+id;
+		layer.open({
+			type : 2,
+			title : '我的文章',
+			skin: 'layui-layer-rim',
+			shadeClose : false,
+			shade : 0,
+			resize  : false,
+			area: ['100%', '100%'],
+			maxmin: true,
+			zIndex: layer.zIndex,
+		    success: function(layero){
+		        layer.setTop(layero);
+		    },
+			content : content //iframe的url
+		});
 	}
 	
 	function initOutlineTmpl(){
@@ -272,9 +292,6 @@
 				<a id="a2" href="javascript:search('2');">已发布</a>
 				<a id="a3" href="javascript:search('3');">未发布</a>
 			</div>
-			<div class="que-btn clearfix fr">
-				<button class="layui-btn layui-btn-normal layui-btn layui-btn-sm" onclick="search()">搜索</button>
-			</div>
 			<div class="search-warp clearfix">
 				<div class="search-area" data-search="top-banner">
 					<input id="searchInput" class="search-input" data-suggest-trigger="suggest-trigger" placeholder="{{d.search}}" type="text" autocomplete="off">
@@ -282,7 +299,7 @@
 					<ul class="search-area-result" data-suggest-result="suggest-result" style="display: none;"></ul>
 				</div>
 				<div class="showhide-search" data-show="no">
-					<i class="layui-icon">&#xe615;</i>
+					<i href="javascript:search();" class="layui-icon">&#xe615;</i>
 				</div>
 			</div>
 		</div>
@@ -299,11 +316,11 @@
 					{{#
 						}else{
 					}}
-					<a href="javascript:;" class="has-finish" target="_blank">
+					<a href="javascript:view({{item.id}});" class="has-finish" target="_blank">
 						<em>{{item.likeCount}}</em>
 						<span>点赞</span>
 					</a>
-					<a href="javascript:;" target="_blank">
+					<a href="javascript:view({{item.id}});" target="_blank">
 						<em>{{item.scanCount}}</em>
 						<span>浏览</span>
 					</a>
@@ -312,7 +329,7 @@
 					}}
 				</div>
 				<div class="que-con">
-					<a href="javascript:;" class="que-title" target="_blank" title="{{item.titleInfo}}">{{item.titleInfo}}</a>
+					<a href="javascript:view({{item.id}});" class="que-title" target="_blank" title="{{item.titleInfo}}">{{item.titleInfo}}</a>
 					<div class="label">
 						<img src="//img.mukewang.com/59e9700900012e3602400240.jpg" title="JAVA">
 						<a href="javascript:;" target="_blank">{{item.labelGroup}}</a>

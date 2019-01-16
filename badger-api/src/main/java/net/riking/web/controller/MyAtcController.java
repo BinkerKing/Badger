@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.riking.config.CodeDef;
@@ -43,5 +44,12 @@ public class MyAtcController {
 	public Resp saveAtcInfo(@RequestBody TAtcInfomation lc){
 		tAtcInfomationService.saveAtcInfo(lc);
 		return new Resp(CodeDef.SUCCESS);
+	}
+	
+	@InFunLog(funName = "获取我的文章列表", args = { 0 })
+	@RequestMapping(value = "/getMyAtcView", method = RequestMethod.GET)
+	public Resp getMyAtcView(@RequestParam("id") Long id){
+		TAtcInfomation tAtcInfomation = tAtcInfomationService.getMyAtcView(id);
+		return new Resp(tAtcInfomation,CodeDef.SUCCESS);
 	}
 }

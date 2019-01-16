@@ -84,6 +84,14 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 		tAtcInfomationRepo.save(lc);
 		return null;
 	}
+
+	@Override
+	public TAtcInfomation getMyAtcView(Long id) {
+		TAtcInfomation atcInfo = tAtcInfomationRepo.getOne(id);
+		TAtcContent content = tAtcContentRepo.getOne(atcInfo.getContentId());
+		atcInfo.setTAtcContent(content);
+		return atcInfo;
+	}
 	
 	
 }

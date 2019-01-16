@@ -5,74 +5,60 @@
 <title>我的手记列表</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link type="include" href="/common/depcss.html" />
-<link type="include" href="/common/metroTree.html" />
-<style>
-.myArticleList-card{
-    background: #e6e6e6;
-    height:700px;
-    width:900px;
-}
-</style>
+<link rel="stylesheet" href="{=ctx}/block/articleListBlock/layui/css/layui.css">
+<link rel="stylesheet" href="{=ctx}/block/articleListBlock/css/demo.css">
+<link rel="stylesheet" href="{=ctx}/block/articleListBlock/css/common-less.css">
 </head>
 <body class="iframeBody">
-	<div class="content">
-		<button class="layui-btn layui-btn-small layui-btn-primary" id ="add-data">
-			<i class="iconfont icon-tianjia"></i>写文章
-		</button>
-
-		<div class="layui-col-md6">
-			<div class="layui-card">
-				<ul id="treeDemo" class="ztree" style="width:900px;height:900px;"></ul>
-			</div>
-		</div>
-		<div class="layui-col-md6">
-			<div class="layui-card">
-				<div class="domBtnDiv" style="width:500px;height:500px;">
-					<div id="dom_1" class="categoryDiv">
-						<span class="layui-btn-radius domBtn" domId="11">大树</span>
-						<span class="layui-btn-radius domBtn" domId="12">小草</span>
-						<span class="layui-btn layui-btn-primary layui-btn-radius domBtn" domId="13">花朵</span>
-					</div>
-					<div class="dom_line"></div>
-					<div id="dom_2" class="categoryDiv">
-						<span class="domBtn" domId="21">老虎</span>
-						<span class="layui-btn layui-btn-primary layui-btn-radius domBtn" domId="22">狗熊</span>
-						<span class="layui-btn layui-btn-primary layui-btn-radius domBtn" domId="23">狮子</span>
+<div class="content">
+	<div class="artical-view">
+		<div class="layui-card" style="height:100%;overflow:auto">
+			<div class="ques-intro-box">
+				<div class="ques-intro-box">
+					<div id="js-content-main">
+						<div class="bread-nav">
+							<i class="imv2-imooc"></i>
+							<span>/</span>            
+							<a href="/wenda" target="_blank">猿问</a>
+						</div>
+						<h1 class="js-qa-wenda-title">遇见好答案---Python编程问答专场</h1>
+						<div class="detail-user-tips">
+							<div class="label-box l">
+								<a href="" target="_blank">C</a>
+								<a href="" target="_blank">JavaScript</a>
+								<a href="" target="_blank">Python</a>
+							</div>
+							<div class="author-info r">
+								<a href="/u/10000/bbs" class="author">慕女神</a>
+								<span>2016-12-05 18:04:56</span>
+							</div>
+						</div>
+						<article>
+						<div id="js-qa-wenda" class="detail-content js-detail-con aimgPreview rich-text" style="">
+							<p style="text-align:center;"><br></p><p style="text-align:center;">Python天生有着开发效率高，部署简单，跨平台等诸多优点，</p><p style="text-align:center;">与Java,C,C++一起成为全球前4大最流行语言。&nbsp;</p><p style="text-align:center;"><strong>So，人生苦短，我用Python</strong></p><p style="text-align:center;">有其他语言编程经验的人，1周内能学会Python基础的内容。</p><p><strong><br></strong></p><p style="text-align:center;"><strong>但大部分新手仅仅在Python语法和API层面体验了下，</strong></p><p style="text-align:center;">是无法在实际上胜任工作岗位的！！</p><p><br></p><p style="text-align:center;">随意列举这些的高级Python编程知识点 ↓↓ &nbsp; &nbsp; &nbsp;你可知多少？！</p><p style="text-align:center;"><img src="//img.imooc.com/5845225800014fef03330466.jpg" alt="http://img.imooc.com/5845225800014fef03330466.jpg" data-src="http://img.imooc.com/5845225800014fef03330466.jpg" style="cursor: pointer;"></p><p style="text-align:center;"><strong>不懂肿么办？别担心，资深开发工程师告诉你python学习进阶的秘诀。</strong></p><p style="text-align:center;"><strong>有问题，就赶紧来提问吧~~</strong></p><p><br></p><p style="text-align:center;"><img src="//img.imooc.com/584524650001453b04020241.jpg" alt="http://img.imooc.com/584524650001453b04020241.jpg" data-src="http://img.imooc.com/584524650001453b04020241.jpg" style="cursor: pointer;"></p><p style="text-align:center;"><strong>刘硕 &nbsp;&nbsp;资深开发工程师</strong></p><p style="text-align:center;">曾就职于全球领先的半导体公司Freescale、清华大学信研院等知名企业及研究机构。</p><p style="text-align:center;">是国内著名开源项目skyeye中Python架构的贡献者。</p><p style="text-align:center;">具有多年开发及教学双重经验，<a href="http://coding.imooc.com/class/62.html?mc_marking=9f4a6e416bbb85823796024662618fec&amp;mc_channel=act"><strong>在慕课网录制了《Python高级编程技巧实战》，点击查看</strong></a></p><p style="text-align:center;">该课知识点透彻，深受Python学习者的喜欢</p><p style="text-align:center;"><br></p><p><br></p><ul class="list-paddingleft-2"><li><p>在评论区块，发布一条问题并在描述中 @<strong style="text-align:center;">刘硕</strong>老师</p></li><li><p>活动时间：2016年12月6日--12月8日</p><p><br></p></li></ul><p>提问之前希望：</p><p><strong>你的问题是关于Python编程技巧、学习进阶相关问题，且描述问题要详细；</strong></p><p>千万别再问：Python学来干什么，这个问题慕女神来回答亲(づ￣3￣)づ╭❤～</p><p style="text-align:center;">Python的应用几乎无限制，不仅能在服务器编程、web应用有所作为，</p><p style="text-align:center;">甚至基于Python的数据分析、测试，机器学习都被广泛的运用在行业中。</p><p><br></p><p>&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 大家好，很高兴能来到慕课网和大家就Python编程的话题进行交流。</p><p><br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;虽然Python的简洁易用，快速开发对项目有价值，但这不是你的价值，是Python的价值。要想不被代替，你需要的是精进，向更高级的Python进阶。通常自称一个月光速学了会Python的人基本都不是天才，只是浮躁，目标定的比较低而已。不要太过急功近利，慢慢玩， 精进。</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;如果你觉着编程有趣，成长也就不再痛苦， 祝学习愉快。</p><p><br></p>
+						</div>
+						<div class="hide-articel-box" style="display: none;">查看完整描述</div>
+						</article>
 					</div>
 				</div>
-			</div>
+        	</div>
 		</div>
 	</div>
+</div>
 </body>
 <link type="include" href="/common/depjs.html" />
 <script>
 	var form = layui.form, layer = layui.layer;
 	
-	$("#add-data").click(function() {
-		var content = 'articleEdit.html';
-		layer.open({
-			type : 2,
-			title : '写文章',
-			skin: 'layui-layer-rim',
-			shadeClose : true,
-			shade : .3,
-			resize  : false,
-			area: ['80%', '90%'],
-			maxmin : true, //开启最大化最小化按钮
-			zIndex: layer.zIndex,
-		    success: function(layero){
-		        layer.setTop(layero);
-		    },
-			content : content //iframe的url
-		});
+	$(function() {
 	});
 	
-	$(function() {
-		articleListTmpl.init("articalTmpl",null);
-		articleListTmpl.load();
-	});
+
+
+
 </script>
+</body>
+</html>
 </html>

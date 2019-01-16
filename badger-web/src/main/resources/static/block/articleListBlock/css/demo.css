@@ -584,5 +584,8 @@
 .ques-list .item:hover .answer-url a:hover {
 	color: #0f5727
 }
-
+.artical-view {
+	height : 800px;
+	width : 800px;
+}
 

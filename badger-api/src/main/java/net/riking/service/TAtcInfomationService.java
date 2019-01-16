@@ -11,4 +11,6 @@ public interface TAtcInfomationService {
 	public String saveAtc(TAtcInfomation lc);
 	
 	public String saveAtcInfo(TAtcInfomation lc);
+	
+	public TAtcInfomation getMyAtcView(Long id);
 }
