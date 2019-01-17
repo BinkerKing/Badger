@@ -12,164 +12,25 @@
 </head>
 <body>
 <div class="layui-row layui-col-space15">
-<div class="layui-col-md8">
-	<div class="fly-panel fly-column">
-		<div class="layui-container">
-			<ul>
-				<li>我的标签:</li>
-				<li><a href="">lable1</a></li>
-				<li><a href="">lable1</a></li>
-				<li><a href="">lable1</a></li>
-				<li><a href="">lable1</a></li>
-				<li><a href="">lable1</a></li>
-			</ul> 
-
-			<div class="fly-column-right layui-hide-xs"> 
-			  <span class="fly-search"><i class="layui-icon"></i></span> 
-			  <a href="javascript:addArticle();" class="layui-btn">写文章</a> 
-			</div> 
-			<div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;"> 
-			  <a href="jie/add.html" class="layui-btn">写文章</a> 
-			</div> 
-		</div>
+	<div class="layui-col-md8">
+		<div id="searchTmplDiv"></div>
+		<div id="topListTmplDiv"></div>
+		<div id="articleListTmplDiv"></div>
 	</div>
-
-	<div class="fly-panel">
-		<div class="fly-panel-title fly-filter">
-			<a>置顶</a>
-			<a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin" style="color: #FF5722;">去签到</a>
-		</div>
-		<ul class="fly-list">
-			<li>
-				<a href="user/home.html" class="fly-avatar">
-					<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
-				</a>
-				<h2>
-					<a class="layui-badge">动态</a>
-					<a href="javascript:viewArticle(1);">基于 layui 的极简社区页面模版</a>
-				</h2>
-				<div class="fly-list-info">
-					<a href="user/home.html" link="">
-					<cite>贤心</cite>
-					<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-					<i class="layui-badge fly-badge-vip">VIP3</i>
-					</a>
-					<span>刚刚</span>
-
-					<span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
-					<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
-					<span class="fly-list-nums"> 
-					<i class="iconfont icon-pinglun1" title="回答"></i> 66
-					</span>
-				</div>
-				<div class="fly-list-badge">
-				<!--
-				<span class="layui-badge layui-bg-black">置顶</span>
-				<span class="layui-badge layui-bg-red">精帖</span>
-				-->
-				</div>
-			</li>
-		</ul>
-	</div>
-
-	<div class="fly-panel" style="margin-bottom: 0;">
-		<div class="fly-panel-title fly-filter">
-			<a href="" class="layui-this">综合</a>
-			<span class="fly-mid"></span>
-			<a href="">未发布</a>
-			<span class="fly-mid"></span>
-			<a href="">已发布</a>
-			<span class="fly-mid"></span>
-			<a href="">精华</a>
-			<span class="fly-filter-right layui-hide-xs">
-			<a href="" class="layui-this">按最新</a>
-			<span class="fly-mid"></span>
-			<a href="">按热议</a>
-			</span>
-		</div>
-
-		<ul class="fly-list">          
-			<li>
-				<a href="user/home.html" class="fly-avatar">
-				<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
-				</a>
-				<h2>
-					<a class="layui-badge">动态</a>
-					<a href="javascript:viewArticle(1);">基于 layui 的极简社区页面模版</a>
-				</h2>
-				<div class="fly-list-info">
-					<a href="user/home.html" link="">
-					<cite>贤心</cite>
-					<!--<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>-->
-					<i class="layui-badge fly-badge-vip">VIP3</i>
-					</a>
-					<span>刚刚</span>
-
-					<span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
-					<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
-					<span class="fly-list-nums"> 
-					<i class="iconfont icon-pinglun1" title="回答"></i> 66
-					</span>
-				</div>
-				<div class="fly-list-badge">
-					<span class="layui-badge layui-bg-red">精帖</span>
-				</div>
-			</li>
-		</ul>
-		<div style="text-align: center">
-			<div class="laypage-main">
-				<a href="jie/index.html" class="laypage-next">更多</a>
+	<div class="layui-col-md4">
+		<div id="outlineTmplDiv"></div>
+		<div class="fly-panel fly-signin">
+			<div class="fly-panel-title">
+				签到
+				<i class="fly-mid"></i> 
+				<a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
+				<i class="fly-mid"></i> 
+				<a href="javascript:;" class="fly-link" id="LAY_signinTop">活跃榜</a>
+			</div>
+			<div class="fly-panel-main fly-signin-main">
+				<span>可获得<cite>5</cite>飞吻</span>
 			</div>
 		</div>
-	</div>
-
-</div>
-  
-<div class="layui-col-md4">
-	<div class="fly-panel">
-		<div class="layui-card" style="height:300px; overflow:auto">
-			<div class="layui-card-header">统计</div>
-			<div class="layui-card-body layui-text">
-				<table class="layui-table">
-					<colgroup>
-					  <col width="200">
-					  <col>
-					</colgroup>
-					<tbody>
-					  <tr>
-						<td>未发布文章数</td>
-						<td><p>{{d.unpublish}}</p></td>
-					  </tr>
-					  <tr>
-						<td>发布文章数</td>
-						<td><p>{{d.publish}}</p></td>
-					  </tr>
-					  <tr>
-						<td>点赞量</td>
-						<td>{{d.like}}</td>
-					  </tr>
-					  <tr>
-						<td>浏览量</td>
-						<td><p>{{d.see}}</p></td>
-					  </tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-
-	<div class="fly-panel fly-signin">
-		<div class="fly-panel-title">
-			签到
-			<i class="fly-mid"></i> 
-			<a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
-			<i class="fly-mid"></i> 
-			<a href="javascript:;" class="fly-link" id="LAY_signinTop">活跃榜</a>
-		</div>
-		<div class="fly-panel-main fly-signin-main">
-			<span>可获得<cite>5</cite>飞吻</span>
-		</div>
-	</div>
 	</div>
 </div>
 </body>
@@ -177,9 +38,67 @@
 <script>
 var form = layui.form, layer = layui.layer;
 
+var AtcList = [];
+var lableList=[];//存放该用户所有lable
+var search_lable = "";
+var search_status = "1";
+var authorId = 1;
+
+var outline_unpublish=0;
+var outline_publish=0;
+var outline_like=0;
+var outline_view=0;
+
+var search_value="";
 $(function() {
-	
+	var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
+	var param = {};
+	param.authorId = authorId;
+	param.status= search_status;
+	param.search= null;
+	param.lable = null;
+	View.post(url, param, function(resp) {
+		AtcList = resp;
+		var searchData = {};
+		searchData.lables = getLables(resp);
+		searchData.buttonName = "写文章";
+		searchData.buttonFun = "addArticle()"
+		//data.article = resp;
+		//search模板
+		tmplTools.searchTmpl.onload(searchData);
+		//topList模板
+		var topData = {};
+		topData.article = getTopList(resp,3);
+		tmplTools.topListTmpl.onload(topData);
+		//articleList模板
+		var listData = {};
+		listData.article = resp;
+		tmplTools.articleListTmpl.onload(listData);
+		//outline模板
+		var outlineData = {};
+		outlineData.unpublish = outline_unpublish;
+		outlineData.publish = outline_publish;
+		outlineData.like = outline_like;
+		outlineData.see = outline_view;
+		tmplTools.outlineTmpl.onload(outlineData);
+		
+		View.resetUi();
+	}, function() {
+		TmplUtils.showMsgFail("出错");
+	})
 });
+
+function getTopList(resp,count){
+	var list = [];
+	for(var i=0;i<resp.length;i++){
+		if(count == 0)
+			return list;
+		if(resp[i].starFlag == "1"){
+			list.push(resp[i]);
+			count --;
+		}
+	}
+}
 
 //写文章
 function addArticle(){
@@ -220,8 +139,90 @@ function viewArticle (id){
 		content : content //iframe的url
 	});
 }
-</script>
 
+function getLables(resp){
+	var lable = [];
+	$.each(resp,function(i,item){
+		var lableGroup = item.labelGroup;
+		var lables = lableGroup.split(",");
+		for ( var i = 0; i <lables.length; i++){
+			if(!isInArray(lable,lables[i])){
+				var lableObj = {};
+				lableObj.name = lables[i];
+				lable.push(lableObj);
+			}
+		}
+		if(item.publishStatus == "1"){
+			outline_publish ++;
+		}else{
+			outline_unpublish ++;
+		}
+		outline_like += item.likeCount;
+		outline_view += item.scanCount;
+	});
+	return lable;
+}
+
+function search(status){
+	var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
+	var param = {};
+	param.authorId = authorId;
+	if(status != null){
+		search_status = status;
+	}
+	param.status= search_status;
+	param.search = "";
+	param.lable = search_lable;
+	View.post(url, param, function(resp) {
+		//articleList模板
+		var listData = {};
+		listData.article = resp;
+		tmplTools.articleListTmpl.onload(listData);
+		changeSearchStatus();
+		View.resetUi();
+	}, function() {
+		TmplUtils.showMsgFail("出错");
+	})
+}
+
+function changeSearchStatus(){
+	if(search_status == "1"){
+		$("#a1").addClass("active");
+		$("#a2").removeClass("active");
+		$("#a3").removeClass("active");
+		$("#a4").removeClass("active");
+	}else if(search_status == "2"){
+		$("#a2").addClass("active");
+		$("#a1").removeClass("active");
+		$("#a3").removeClass("active");
+		$("#a4").removeClass("active");
+	}else if(search_status == "3"){
+		$("#a3").addClass("active");
+		$("#a1").removeClass("active");
+		$("#a2").removeClass("active");
+		$("#a4").removeClass("active");
+	}else if(search_status == "4"){
+		$("#a4").addClass("active");
+		$("#a1").removeClass("active");
+		$("#a2").removeClass("active");
+		$("#a3").removeClass("active");
+	}
+}
+
+function isInArray(arr,value){
+    for(var i = 0; i < arr.length; i++){
+        if(value === arr[i].name){
+            return true;
+        }
+    }
+    return false;
+}
+</script>
+<script type="text/javascript" src="/common/tmplsJs/tmplUtils.js"></script>
+<link type="include" href="/common/tmpls/searchTmpl.html" />
+<link type="include" href="/common/tmpls/topListTmpl.html" />
+<link type="include" href="/common/tmpls/articleListTmpl.html" />
+<link type="include" href="/common/tmpls/outlineTmpl.html" />
 </body>
 </html>
 </html>

@@ -1,0 +1,33 @@
+<script id="outlineTmpl" type="text/html">
+<div class="fly-panel">
+	<div class="layui-card" style="height:300px; overflow:auto">
+		<div class="layui-card-header">统计</div>
+		<div class="layui-card-body layui-text">
+			<table class="layui-table">
+				<colgroup>
+				  <col width="200">
+				  <col>
+				</colgroup>
+				<tbody>
+				  <tr>
+					<td>未发布文章数</td>
+					<td><p>{{d.unpublish}}</p></td>
+				  </tr>
+				  <tr>
+					<td>发布文章数</td>
+					<td><p>{{d.publish}}</p></td>
+				  </tr>
+				  <tr>
+					<td>点赞量</td>
+					<td>{{d.like}}</td>
+				  </tr>
+				  <tr>
+					<td>浏览量</td>
+					<td><p>{{d.see}}</p></td>
+				  </tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</script>

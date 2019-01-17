@@ -86,6 +86,10 @@ public class TAtcInfomation {
 	@Column(name = "publish_status")
 	private String publishStatus;
 	
+	@Comment("标星")
+	@Column(name = "star_flag")
+	private String starFlag;
+	
 	//正文内容
 	@Transient
 	private TAtcContent tAtcContent;
