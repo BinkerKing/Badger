@@ -50,6 +50,8 @@ public class MyAtcController {
 	@RequestMapping(value = "/getMyAtcView", method = RequestMethod.GET)
 	public Resp getMyAtcView(@RequestParam("id") Long id){
 		TAtcInfomation tAtcInfomation = tAtcInfomationService.getMyAtcView(id);
+		if(tAtcInfomation == null)
+			return new Resp().setCode(CodeDef.ERROR);
 		return new Resp(tAtcInfomation,CodeDef.SUCCESS);
 	}
 }

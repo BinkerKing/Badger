@@ -87,8 +87,10 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 
 	@Override
 	public TAtcInfomation getMyAtcView(Long id) {
-		TAtcInfomation atcInfo = tAtcInfomationRepo.getOne(id);
-		TAtcContent content = tAtcContentRepo.getOne(atcInfo.getContentId());
+		TAtcInfomation atcInfo = tAtcInfomationRepo.findOne(id);
+		if(atcInfo == null)
+			return null;
+		TAtcContent content = tAtcContentRepo.findOne(atcInfo.getContentId());
 		atcInfo.setTAtcContent(content);
 		return atcInfo;
 	}
