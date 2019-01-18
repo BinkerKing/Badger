@@ -11,13 +11,20 @@
 <link type="include" href="/common/simditor.html" />
 </head>
 <body class="iframeBody">
-	<div class="scrollbar">
+<div class="layui-row layui-col-space15">
+	<div class="layui-col-md10">
 		<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"  class="layui-input">
-		<button class="layui-btn layui-btn-small layui-btn-primary" onclick="getValue()" id ="saveHtml">
-			获取信息
-		</button>
 		<textarea id="editor" placeholder="" autofocus required></textarea>
 	</div>
+	<div class="layui-col-md2">
+		<button class="layui-btn layui-btn-small layui-btn-primary" onclick="save()" id ="save">
+			暂存
+		</button>
+		<button class="layui-btn layui-btn-small layui-btn-primary" onclick="publish()" id ="publish">
+			发布
+		</button>
+	</div>
+</div>
 </body>
 <link type="include" href="/common/depjs.html" />
 <script>
@@ -51,6 +58,14 @@
 	function getValue(){
 		var value = editor.getValue();
 		console.log(value);
+	}
+	
+	function save(){
+		
+	}
+	
+	function publish(){
+		
 	}
 </script>
 </html>

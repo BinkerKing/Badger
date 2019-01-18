@@ -12,12 +12,12 @@
 </head>
 <body>
 <div class="layui-row layui-col-space15">
-	<div class="layui-col-md8">
+	<div class="layui-col-md7  layui-col-md-offset1">
 		<div id="searchTmplDiv"></div>
 		<div id="topListTmplDiv"></div>
 		<div id="articleListTmplDiv"></div>
 	</div>
-	<div class="layui-col-md4">
+	<div class="layui-col-md3">
 		<div id="outlineTmplDiv"></div>
 		<div class="fly-panel fly-signin">
 			<div class="fly-panel-title">
@@ -32,13 +32,26 @@
 			</div>
 		</div>
 	</div>
+	<div class="layui-col-md1">
+		<ul class="layui-fixbar">
+			<li class="layui-icon" lay-type="bar1" style="background-color:#009688"></li>
+			<li class="layui-icon layui-fixbar-top" lay-type="top" style="background-color: rgb(0, 150, 136); display: list-item;"></li>
+		</ul>
+	</div>
 </div>
 </body>
 <link type="include" href="/common/depjs.html" />
 <script>
 var form = layui.form, layer = layui.layer;
 
-var AtcList = [];
+//筛选组
+var AtcList = [];//所有的
+var publishList = [];//已发布的
+var unPublishList = [];//委发布的
+var goodList = [];//精选
+
+var topList = [];//置顶
+
 var lableList=[];//存放该用户所有lable
 var search_lable = "";
 var search_status = "1";
@@ -68,7 +81,7 @@ $(function() {
 		tmplTools.searchTmpl.onload(searchData);
 		//topList模板
 		var topData = {};
-		topData.article = getTopList(resp,3);
+		topData.article = getTopList(3);
 		tmplTools.topListTmpl.onload(topData);
 		//articleList模板
 		var listData = {};
@@ -88,16 +101,21 @@ $(function() {
 	})
 });
 
-function getTopList(resp,count){
+//获取topList
+function getTopList(count,resp){
 	var list = [];
+	if(resp == null){
+		resp = topList;
+	}
 	for(var i=0;i<resp.length;i++){
 		if(count == 0)
 			return list;
-		if(resp[i].starFlag == "1"){
+		if(resp[i].topFlag == "1"){
 			list.push(resp[i]);
 			count --;
 		}
 	}
+	return list;
 }
 
 //写文章
@@ -110,8 +128,8 @@ function addArticle(){
 		shadeClose : false,
 		shade : .3,
 		resize  : false,
-		area: ['80%', '90%'],
-		maxmin : true, //开启最大化最小化按钮
+		area: ['100%', '100%'],
+		maxmin : false, //开启最大化最小化按钮
 		zIndex: layer.zIndex,
 	    success: function(layero){
 	        layer.setTop(layero);
@@ -130,8 +148,8 @@ function viewArticle (id){
 		shadeClose : false,
 		shade : 0,
 		resize  : false,
-		area: ['80%', '95%'],
-		maxmin: true,
+		area: ['100%', '100%'],
+		maxmin: false,
 		zIndex: layer.zIndex,
 	    success: function(layero){
 	        layer.setTop(layero);
@@ -140,6 +158,11 @@ function viewArticle (id){
 	});
 }
 
+function view(){
+	alert("1");
+}
+
+//获取标签，遍历list
 function getLables(resp){
 	var lable = [];
 	$.each(resp,function(i,item){
@@ -154,59 +177,92 @@ function getLables(resp){
 		}
 		if(item.publishStatus == "1"){
 			outline_publish ++;
+			publishList.push(item);
 		}else{
 			outline_unpublish ++;
+			unPublishList.push(item);
 		}
 		outline_like += item.likeCount;
 		outline_view += item.scanCount;
+		
+		if(item.starFlag == "1"){
+			goodList.push(item);
+		}
+		if(item.topFlag == "1"){
+			topList.push(item);
+		}
 	});
 	return lable;
 }
 
 function search(status){
-	var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
-	var param = {};
-	param.authorId = authorId;
-	if(status != null){
-		search_status = status;
-	}
-	param.status= search_status;
-	param.search = "";
-	param.lable = search_lable;
-	View.post(url, param, function(resp) {
-		//articleList模板
-		var listData = {};
-		listData.article = resp;
-		tmplTools.articleListTmpl.onload(listData);
-		changeSearchStatus();
-		View.resetUi();
-	}, function() {
-		TmplUtils.showMsgFail("出错");
-	})
+	var data = {};
+	data.article = getStatusSearch(status);
+	tmplTools.articleListTmpl.onload(data);
+	changeSearchStatus(status);
+	View.resetUi();
 }
 
-function changeSearchStatus(){
-	if(search_status == "1"){
+function changeSearchStatus(status){
+	if(status == 1){
 		$("#a1").addClass("active");
 		$("#a2").removeClass("active");
 		$("#a3").removeClass("active");
 		$("#a4").removeClass("active");
-	}else if(search_status == "2"){
+	}else if(status == 2){
 		$("#a2").addClass("active");
 		$("#a1").removeClass("active");
 		$("#a3").removeClass("active");
 		$("#a4").removeClass("active");
-	}else if(search_status == "3"){
+	}else if(status == 3){
 		$("#a3").addClass("active");
 		$("#a1").removeClass("active");
 		$("#a2").removeClass("active");
 		$("#a4").removeClass("active");
-	}else if(search_status == "4"){
+	}else if(status == 4){
 		$("#a4").addClass("active");
 		$("#a1").removeClass("active");
 		$("#a2").removeClass("active");
 		$("#a3").removeClass("active");
 	}
+}
+
+function getStatusSearch(status){
+	var list = [];
+	switch (status) {
+		case 1: list = AtcList; break;
+		case 2: list = publishList; break;
+		case 3: list = unPublishList; break;
+		case 4: list = goodList; break;
+		default: break;
+	}
+	return list;
+}
+
+function lableSearch(lableValue){
+	//topList模板
+	var topData = {};
+	var resp = getLableSearch(lableValue);
+	topData.article = getTopList(3,resp);
+	tmplTools.topListTmpl.onload(topData);
+	//articleList模板
+	var listData = {};
+	listData.article = resp;
+	tmplTools.articleListTmpl.onload(listData);
+}
+
+function getLableSearch(lableValue){
+	var list = [];
+	for(var i=0;i<AtcList.length;i++){
+		var lableGroup = AtcList[i].labelGroup;
+		var lables = lableGroup.split(",");
+		for ( var j = 0; j<lables.length; j++){
+			if(lables[j]==lableValue){
+				list.push(AtcList[i]);
+			}
+		}
+	}
+	return list;
 }
 
 function isInArray(arr,value){

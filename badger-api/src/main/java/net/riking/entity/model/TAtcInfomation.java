@@ -90,6 +90,10 @@ public class TAtcInfomation {
 	@Column(name = "star_flag")
 	private String starFlag;
 	
+	@Comment("置顶")
+	@Column(name = "top_flag")
+	private String topFlag;
+	
 	//正文内容
 	@Transient
 	private TAtcContent tAtcContent;

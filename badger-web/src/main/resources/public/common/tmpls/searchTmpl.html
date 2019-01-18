@@ -1,12 +1,11 @@
 <script id="searchTmpl" type="text/html">
 <div class="fly-panel fly-column">
-	<div class="layui-container">
 		<ul>
 			<li>我的标签：</li>
 			{{#
 				layui.each(d.lables, function(index, item){
 			}}
-			<li><a href="">{{item.name}}</a></li>
+			<li><a href="javascript:lableSearch('{{item.name}}');">{{item.name}}</a></li>
 			{{#
 				});
 			}}
@@ -18,6 +17,5 @@
 		<div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;"> 
 		  <a href="javascript:{{d.buttonFun}};" class="layui-btn">{{d.buttonName}}</a> 
 		</div> 
-	</div>
 </div>
 </script>
