@@ -19,7 +19,7 @@
 	<div class="layui-col-md1">
 		<ul class="layui-fixbar">
 			<li class="layui-icon" lay-type="bar1" style="background-color:none" onclick="saveSet()"></li>
-			<li class="layui-icon" lay-type="bar1" style="background-color:none" onclick="getMould()"></li>
+			<li class="layui-icon" lay-type="bar1" style="background-color:none" onclick="getTemplet()"></li>
 		</ul>
 	</div>
 </div>
@@ -135,6 +135,25 @@
 		layer.open({
 			type : 2,
 			title : '编辑文章属性',
+			skin: 'layui-layer-rim',
+			shadeClose : false,
+			shade : .3,
+			resize  : false,
+			area: ['40%', '80%'],
+			maxmin : false, //开启最大化最小化按钮
+			zIndex: layer.zIndex,
+		    success: function(layero){
+		        layer.setTop(layero);
+		    },
+			content : content //iframe的url
+		});
+	}
+	
+	function getTemplet(){
+		var content = 'atcTemplet.html';
+		layer.open({
+			type : 2,
+			title : '选择模板',
 			skin: 'layui-layer-rim',
 			shadeClose : false,
 			shade : .3,

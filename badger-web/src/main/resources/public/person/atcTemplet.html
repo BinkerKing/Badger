@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>选择模板</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link type="include" href="/common/depcss.html" />
+<link type="include" href="/common/simditor.html" />
+</head>
+<body class="iframeBody">
+	<div class="fly-panel fly-signin">
+		<form class="layui-form layui-form-pane" action="">
+			<div class="layui-form-item">
+				<label class="layui-form-label">模板类型</label>
+				<div class="layui-input-block">
+			    	<select name="interest">
+				        <option value=""  selected=""></option>
+				        <option value="0">知识点模板</option>
+				        <option value="1">心得模板</option>
+				        <option value="2">功能模板</option>
+			    	</select>
+			    </div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">模板</label>
+				<div class="layui-input-block">
+			    	<select name="interest">
+				        <option value=""  selected=""></option>
+				        <option value="0">模板一</option>
+				        <option value="1">模板二</option>
+				        <option value="2">模板三</option>
+			    	</select>
+			    </div>
+			</div>
+			<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="getTemplet()" id ="save">获取模板</button>
+		</form>
+	</div>
+</body>
+<link type="include" href="/common/depjs.html" />
+<script>
+	/*全局定义*/
+	var form = layui.form, layer = layui.layer;
+
+	$(function() {
+		
+	});
+	//返回操作
+	function back() {
+		parent.View.fireEvent("TB_DATA_CHANGE", {
+			"window" : window.name
+		});
+	}
+	/*页面控制-结束*/
+</script>
+</html>
