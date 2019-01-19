@@ -1,0 +1,21 @@
+<script id="searchResultTmpl" type="text/html">
+<div class="fly-panel">
+	<div class="layui-card" style="overflow:auto">
+		<div class="layui-card-header">搜索信息</div>
+		<div class="layui-card-body layui-text">
+			{{#
+				if(d.searchContent == null){
+			}}
+				<p>Ctrl + Enter 搜索你想了解的知识点！</p>
+			{{#
+				}else{
+			}}
+				<p>搜索内容：{{d.searchContent}}</p>
+				<p>标题相关：{{d.titleCount}}条</p>
+			{{#
+				}
+			}}
+		</div>
+	</div>
+</div>
+</script>

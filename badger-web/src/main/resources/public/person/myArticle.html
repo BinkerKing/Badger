@@ -14,27 +14,16 @@
 <div class="layui-row layui-col-space15">
 	<div class="layui-col-md7  layui-col-md-offset1">
 		<div id="searchTmplDiv"></div>
-		<div id="topListTmplDiv"></div>
+		<!-- <div id="topListTmplDiv"></div> -->
 		<div id="articleListTmplDiv"></div>
 	</div>
 	<div class="layui-col-md3">
 		<div id="outlineTmplDiv"></div>
-		<div class="fly-panel fly-signin">
-			<div class="fly-panel-title">
-				签到
-				<i class="fly-mid"></i> 
-				<a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
-				<i class="fly-mid"></i> 
-				<a href="javascript:;" class="fly-link" id="LAY_signinTop">活跃榜</a>
-			</div>
-			<div class="fly-panel-main fly-signin-main">
-				<span>可获得<cite>5</cite>飞吻</span>
-			</div>
-		</div>
+		<div id="searchResultTmplDiv"></div>
 	</div>
 	<div class="layui-col-md1">
 		<ul class="layui-fixbar">
-			<li class="layui-icon" lay-type="bar1" style="background-color:#009688"></li>
+			<li class="layui-icon" lay-type="bar1" style="background-color:#009688" onclick="addArticle()"></li>
 			<li class="layui-icon layui-fixbar-top" lay-type="top" style="background-color: rgb(0, 150, 136); display: list-item;"></li>
 		</ul>
 	</div>
@@ -44,62 +33,20 @@
 <script>
 var form = layui.form, layer = layui.layer;
 
-//筛选组
-var AtcList = [];//所有的
-var publishList = [];//已发布的
-var unPublishList = [];//委发布的
-var goodList = [];//精选
-
-var topList = [];//置顶
-
-var lableList=[];//存放该用户所有lable
-var search_lable = "";
-var search_status = "1";
 var authorId = 1;
 
-var outline_unpublish=0;
-var outline_publish=0;
-var outline_like=0;
-var outline_view=0;
-
-var search_value="";
-
-function searchTitle(){
-	layer.open({
-	    type: 1
-	    ,title: false
-	    ,closeBtn: false
-	    //,shade: [0.1, '#fff']
-	    ,shadeClose: true
-	    ,maxWidth: 10000
-	    ,skin: 'fly-layer-search'
-	    ,content: ['<form action="">'
-	      ,'<input autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q">'
-	    ,'</form>'].join('')
-	    ,success: function(layero,index){
-	      	var input = layero.find('input');
-	      	input.keydown(function (e) {
-	      		if(e.which == 13){//回车
-	      			search_value = $(this).val();
-	      			searchByTitle(search_value);
-	      			layer.close(index);
-	      		}
-			});
-	      	
-			layero.find('form').submit(function(){
-				alert("in");
-		        var val = input.val();
-		        if(val.replace(/\s/g, '') === ''){
-		          //return false;
-		        }
-		        alert(val);
-		        //input.val('site:layui.com '+ input.val());
-	    	});
-	    }
-	})
-}
+jQuery(document).keydown(function(e) {
+	if(e.which == 13 && e.ctrlKey) {
+		searchTitle();
+	}
+});
 
 $(function() {
+	reloadView();
+});
+
+function reloadView(){
+	initGlobalVal();
 	var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
 	var param = {};
 	param.authorId = authorId;
@@ -108,205 +55,38 @@ $(function() {
 	param.lable = null;
 	View.post(url, param, function(resp) {
 		AtcList = resp;
+		eachAtcList();
 		var searchData = {};
-		searchData.lables = getLables(resp);
+		searchData.lables = MyAllTag;
 		searchData.buttonName = "写文章";
 		searchData.buttonFun = "addArticle()"
 		//data.article = resp;
 		//search模板
 		tmplTools.searchTmpl.onload(searchData);
 		//topList模板
-		var topData = {};
+		/* var topData = {};
 		topData.article = getTopList(3);
-		tmplTools.topListTmpl.onload(topData);
+		tmplTools.topListTmpl.onload(topData); */
 		//articleList模板
 		var listData = {};
-		listData.article = resp;
+		listData.article = orderTop(resp);
 		tmplTools.articleListTmpl.onload(listData);
 		//outline模板
 		var outlineData = {};
-		outlineData.unpublish = outline_unpublish;
-		outlineData.publish = outline_publish;
-		outlineData.like = outline_like;
-		outlineData.see = outline_view;
+		outlineData.unpublish = Outline_unpublish;
+		outlineData.publish = Outline_publish;
+		outlineData.like = Outline_like;
+		outlineData.see = Outline_view;
 		tmplTools.outlineTmpl.onload(outlineData);
+		
+		//outline模板
+		var searchResultData = {};
+		tmplTools.searchResultTmpl.onload(searchResultData);
 		
 		View.resetUi();
 	}, function() {
 		TmplUtils.showMsgFail("出错");
 	})
-});
-
-//获取topList
-function getTopList(count,resp){
-	var list = [];
-	if(resp == null){
-		resp = topList;
-	}
-	for(var i=0;i<resp.length;i++){
-		if(count == 0)
-			return list;
-		if(resp[i].topFlag == "1"){
-			list.push(resp[i]);
-			count --;
-		}
-	}
-	return list;
-}
-
-//写文章
-function addArticle(){
-	var content = 'articleEdit.html';
-	layer.open({
-		type : 2,
-		title : '写文章',
-		skin: 'layui-layer-rim',
-		shadeClose : false,
-		shade : .3,
-		resize  : false,
-		area: ['100%', '100%'],
-		maxmin : false, //开启最大化最小化按钮
-		zIndex: layer.zIndex,
-	    success: function(layero){
-	        layer.setTop(layero);
-	    },
-		content : content //iframe的url
-	});
-}
-
-//查看文章
-function viewArticle (id){
-	var content = 'myArticleView.html?id='+id;
-	layer.open({
-		type : 2,
-		title : '我的文章',
-		skin: 'layui-layer-rim',
-		shadeClose : false,
-		shade : 0,
-		resize  : false,
-		area: ['100%', '100%'],
-		maxmin: false,
-		zIndex: layer.zIndex,
-	    success: function(layero){
-	        layer.setTop(layero);
-	    },
-		content : content //iframe的url
-	});
-}
-
-function view(){
-	alert("1");
-}
-
-//获取标签，遍历list
-function getLables(resp){
-	var lable = [];
-	$.each(resp,function(i,item){
-		var lableGroup = item.labelGroup;
-		var lables = lableGroup.split(",");
-		for ( var i = 0; i <lables.length; i++){
-			if(!isInArray(lable,lables[i])){
-				var lableObj = {};
-				lableObj.name = lables[i];
-				lable.push(lableObj);
-			}
-		}
-		if(item.publishStatus == "1"){
-			outline_publish ++;
-			publishList.push(item);
-		}else{
-			outline_unpublish ++;
-			unPublishList.push(item);
-		}
-		outline_like += item.likeCount;
-		outline_view += item.scanCount;
-		
-		if(item.starFlag == "1"){
-			goodList.push(item);
-		}
-		if(item.topFlag == "1"){
-			topList.push(item);
-		}
-	});
-	return lable;
-}
-
-function searchByTitle(titleSearch){
-	AtcList
-	var data={};
-	data.article = [];
-	for(var i=0;i<AtcList.length;i++){
-		if(AtcList[i].titleInfo.indexOf(titleSearch)!=-1){
-			data.article.push(AtcList[i]);
-		}
-	}
-	tmplTools.articleListTmpl.onload(data);
-	changeSearchStatus(status);
-	View.resetUi();
-}
-
-function searchByStatus(status){
-	var data = {};
-	switch (status) {
-		case 1: data.article = AtcList; break;
-		case 2: data.article = publishList; break;
-		case 3: data.article = unPublishList; break;
-		case 4: data.article = goodList; break;
-		default: break;
-	}
-	tmplTools.articleListTmpl.onload(data);
-	changeSearchStatus(status);
-	View.resetUi();
-}
-
-function changeSearchStatus(status){
-	if(status == 1){
-		$("#a1").addClass("active");
-		$("#a2").removeClass("active");
-		$("#a3").removeClass("active");
-		$("#a4").removeClass("active");
-	}else if(status == 2){
-		$("#a2").addClass("active");
-		$("#a1").removeClass("active");
-		$("#a3").removeClass("active");
-		$("#a4").removeClass("active");
-	}else if(status == 3){
-		$("#a3").addClass("active");
-		$("#a1").removeClass("active");
-		$("#a2").removeClass("active");
-		$("#a4").removeClass("active");
-	}else if(status == 4){
-		$("#a4").addClass("active");
-		$("#a1").removeClass("active");
-		$("#a2").removeClass("active");
-		$("#a3").removeClass("active");
-	}
-}
-
-function lableSearch(lableValue){
-	//topList模板
-	var topData = {};
-	var resp = getLableSearch(lableValue);
-	topData.article = getTopList(3,resp);
-	tmplTools.topListTmpl.onload(topData);
-	//articleList模板
-	var listData = {};
-	listData.article = resp;
-	tmplTools.articleListTmpl.onload(listData);
-}
-
-function getLableSearch(lableValue){
-	var list = [];
-	for(var i=0;i<AtcList.length;i++){
-		var lableGroup = AtcList[i].labelGroup;
-		var lables = lableGroup.split(",");
-		for ( var j = 0; j<lables.length; j++){
-			if(lables[j]==lableValue){
-				list.push(AtcList[i]);
-			}
-		}
-	}
-	return list;
 }
 
 function isInArray(arr,value){
@@ -317,12 +97,22 @@ function isInArray(arr,value){
     }
     return false;
 }
+
+View.setEvent("TB_DATA_CHANGE", function(arg) {
+	reloadView();
+    if (!!arg && arg.window) {
+        var index = layer.getFrameIndex(arg.window); //获取窗口索引
+        layer.close(index);
+    }
+});
+
 </script>
 <script type="text/javascript" src="/common/tmplsJs/tmplUtils.js"></script>
 <link type="include" href="/common/tmpls/searchTmpl.html" />
 <link type="include" href="/common/tmpls/topListTmpl.html" />
 <link type="include" href="/common/tmpls/articleListTmpl.html" />
 <link type="include" href="/common/tmpls/outlineTmpl.html" />
+<link type="include" href="/common/tmpls/searchResultTmpl.html" />
 </body>
 </html>
 </html>

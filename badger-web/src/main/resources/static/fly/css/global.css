@@ -238,10 +238,12 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-list-info{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 .fly-list li h2{height: 26px; font-size: 0;}
 .fly-list li h2 a{display: inline-block; max-width: 80%; padding-right: 10px; font-size: 16px;}
-.fly-list li h2 .layui-badge{top: -2px; height: 16px; line-height: 16px; padding: 0 5px; margin-right: 10px; font-size: 12px; border: 1px solid #5FB878; background: none; color: #5FB878;}
+.fly-list li h2 .layui-badge{top: -2px; height: 16px; line-height: 16px; padding: 0 5px; margin-right: 10px; font-size: 12px;}
+/* .fly-list li h2 .layui-badge{top: -2px; height: 16px; line-height: 16px; padding: 0 5px; margin-right: 10px; font-size: 12px; border: 1px solid #5FB878; background: none; color: #5FB878;} */
 
 .fly-list-info{position: relative; font-size: 13px; color: #999;}
 .fly-list-info>*{padding-right: 15px;}
+.fly-list-info .layui-badge{top: -2px; height: 16px; line-height: 16px; padding: 0 5px; margin-right: 10px; font-size: 12px; border: 1px solid #5FB878; background: none; color: #5FB878;}
 .fly-list-info a[link]{color: #999;}
 .fly-list-info a[link]:hover{color: #5FB878;}
 .fly-list-info .icon-renzheng{position: relative; top: 1px; margin-right: 3px;}

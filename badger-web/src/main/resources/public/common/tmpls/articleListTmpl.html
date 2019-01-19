@@ -1,17 +1,17 @@
 <script id="articleListTmpl" type="text/html">
 <div class="fly-panel" style="margin-bottom: 0;">
 	<div class="fly-panel-title fly-filter">
-		<a id="a1" href="javascript:search(1);" class="layui-this">综合</a>
+		<a id="a1" href="javascript:searchByStatus(1);" class="layui-this">综合</a>
 		<span class="fly-mid"></span>
-		<a id="a2" href="javascript:search(2);">已发布</a>
+		<a id="a2" href="javascript:searchByStatus(2);">已发布</a>
 		<span class="fly-mid"></span>
-		<a id="a3" href="javascript:search(3);">未发布</a>
+		<a id="a3" href="javascript:searchByStatus(3);">待发布</a>
 		<span class="fly-mid"></span>
-		<a id="a4" href="javascript:search(1);">精选</a>
+		<a id="a4" href="javascript:searchByStatus(4);">星标</a>
 		<span class="fly-filter-right layui-hide-xs">
-		<a id="a5" href="" class="layui-this">最新</a>
+		<a id="a5" href="javascript:;" class="layui-this">最新</a>
 		<span class="fly-mid"></span>
-		<a id="a6" href="">最火</a>
+		<a id="a6" href="javascript:;" >最火</a>
 		</span>
 	</div>
 
@@ -20,22 +20,50 @@
 			layui.each(d.article, function(index, item){
 		}}
 		<li>
-			<a href="" class="fly-avatar">
-			<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+			<a href="javascript:;" class="fly-avatar">
+				<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
 			</a>
-			<h3>
+			<h2>
+				{{#
+					if(item.topFlag == "1"){
+				}}
+				<a class="layui-badge">置顶</a>
+				{{#
+					}
+				}}
 				<a href="javascript:viewArticle(1);">{{item.titleInfo}}</a>
-			</h3>
+			</h2>
 			<div class="fly-list-info">
-				<i class="layui-icon" title="标星">&#xe67a;</i> 
-				<span class="fly-list-kiss layui-hide-xs" title="33"><i class="iconfont icon-kiss"></i> 60</span>
-				<span class="layui-badge fly-badge-accept layui-hide-xs">33</span>
+				{{#
+					if(item.publishStatus == "1"){
+				}}
+				<a class="layui-badge">已发布</a>
+				{{#
+					}else{
+				}}
+				<a class="layui-badge">待发布</a>
+				{{#
+					}
+				}}
+
+				{{#
+					if(item.starFlag == "1"){
+				}}
+				<i class="layui-icon">&#xe600;</i>
+				{{#
+					}else{
+				}}
+				<i class="layui-icon">&#xe60c;</i>
+				{{#
+					}
+				}}
+
 				<span class="fly-list-nums"> 
-					<i class="layui-badge fly-badge-vip">知识树</i>
+					<i class="layui-badge">知识树:</i>
 				</span>
 			</div>
 			<div class="fly-list-badge">
-				<span class="layui-badge layui-bg-red">333</span>
+				<i class="layui-icon" onclick="setProperty({{item.id}})">&#xe614;</i>
 			</div>
 		</li>
 		{{#

@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>我的手记列表</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link type="include" href="/common/depcss.html" />
+<link type="include" href="/common/simditor.html" />
+</head>
+<body class="iframeBody">
+		<div class="fly-panel fly-signin">
+			<form class="layui-form layui-form-pane" action="">
+				<div class="layui-form-item">
+				    <label class="layui-form-label">标题名称</label>
+				    <div class="layui-input-block">
+				    	<input type="text" name="title" autocomplete="off" class="layui-input">
+				    </div>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">是否标星</label>
+				    <div class="layui-input-block">
+				    	<input type="checkbox" name="starFlag" lay-skin="switch" lay-filter="switch" lay-text="ON|OFF">
+				    </div>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">是否置顶</label>
+				    <div class="layui-input-block">
+				    	<input type="checkbox" name="topFlag" lay-skin="switch" lay-filter="switch" lay-text="ON|OFF">
+				    </div>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">是否发布</label>
+				    <div class="layui-input-block">
+				    	<input type="checkbox" name="publishStatus" lay-skin="switch" lay-filter="switch" lay-text="ON|OFF">
+				    </div>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">标签</label>
+				    <div class="layui-input-block">
+				    	<input type="text" name="labelGroup" autocomplete="off" class="layui-input">
+				    </div>
+				</div>
+			</form>
+			<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="save()" id ="save">保存</button>
+		</div>
+</body>
+<link type="include" href="/common/depjs.html" />
+<script>
+	/*全局定义*/
+	var form = layui.form, layer = layui.layer;
+	var id = View.getQStr("id");
+	var TAtcInfomation = {};
+	
+	form.on('switch(switch)',function (data){
+		if(data.elem.checked == true){
+			$(this).val(1);
+		}else{
+			$(this).val(0);
+		}
+	});
+	
+	$(function() {
+		//editor.setValue();
+		if(id){
+			TAtcInfomation = window.parent.getInfoById(id)
+			loadView();
+		}
+	});
+	
+	/*数据操作-开始*/
+	//准备数据
+	function prepareData(){
+		var tAtcInfomation = {};
+		tAtcInfomation = TAtcInfomation;
+		tAtcInfomation.titleInfo = $("input[name='title']").val();
+		tAtcInfomation.labelGroup = $("input[name='labelGroup']").val();
+		tAtcInfomation.starFlag = $("input[name='starFlag']").val();
+		tAtcInfomation.topFlag = $("input[name='topFlag']").val();
+		tAtcInfomation.publishStatus = $("input[name='publishStatus']").val();
+		return tAtcInfomation;
+	}
+	//校验数据
+	function checkData(data){
+		//新建保存前的校验
+		return "";
+	}
+	//保存操作
+	function save(){
+		var editWait = layer.load();
+		var tAtcInfomation = prepareData();//数据准备
+		var logInfo = checkData(tAtcInfomation);//校验
+		if (logInfo != "") {
+			TmplUtils.showMsgFail(logInfo);
+			return;
+		}
+		//新增
+		var url = Const.apiUrl +"/MyAtcController/saveAtcInfo";
+		View.post(url,tAtcInfomation,function(){
+			layer.close(editWait);
+			TmplUtils.showMsgSuccess("保存成功");
+			back();
+		},function(){
+			TmplUtils.showMsgFail("保存出错");
+		})
+	}
+	/*数据操作-结束*/
+	/*页面控制-开始*/
+	//渲染页面
+	function loadView(){
+		$("input[name='title']").val(TAtcInfomation.titleInfo);
+		$("input[name='labelGroup']").val(TAtcInfomation.labelGroup);
+		if(TAtcInfomation.starFlag == "1")
+			$("input[name='starFlag']").attr("checked", true);
+		if(TAtcInfomation.topFlag == "1")
+			$("input[name='topFlag']").attr("checked", true);
+		if(TAtcInfomation.publishStatus == "1")
+			$("input[name='publishStatus']").attr("checked", true);
+		View.resetUi();
+	}
+	//返回操作
+	function back() {
+		parent.View.fireEvent("TB_DATA_CHANGE", {
+			"window" : window.name
+		});
+	}
+	/*页面控制-结束*/
+</script>
+</html>
