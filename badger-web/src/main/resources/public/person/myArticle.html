@@ -63,6 +63,42 @@ var outline_like=0;
 var outline_view=0;
 
 var search_value="";
+
+function searchTitle(){
+	layer.open({
+	    type: 1
+	    ,title: false
+	    ,closeBtn: false
+	    //,shade: [0.1, '#fff']
+	    ,shadeClose: true
+	    ,maxWidth: 10000
+	    ,skin: 'fly-layer-search'
+	    ,content: ['<form action="">'
+	      ,'<input autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q">'
+	    ,'</form>'].join('')
+	    ,success: function(layero,index){
+	      	var input = layero.find('input');
+	      	input.keydown(function (e) {
+	      		if(e.which == 13){//回车
+	      			search_value = $(this).val();
+	      			searchByTitle(search_value);
+	      			layer.close(index);
+	      		}
+			});
+	      	
+			layero.find('form').submit(function(){
+				alert("in");
+		        var val = input.val();
+		        if(val.replace(/\s/g, '') === ''){
+		          //return false;
+		        }
+		        alert(val);
+		        //input.val('site:layui.com '+ input.val());
+	    	});
+	    }
+	})
+}
+
 $(function() {
 	var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
 	var param = {};
@@ -195,9 +231,29 @@ function getLables(resp){
 	return lable;
 }
 
-function search(status){
+function searchByTitle(titleSearch){
+	AtcList
+	var data={};
+	data.article = [];
+	for(var i=0;i<AtcList.length;i++){
+		if(AtcList[i].titleInfo.indexOf(titleSearch)!=-1){
+			data.article.push(AtcList[i]);
+		}
+	}
+	tmplTools.articleListTmpl.onload(data);
+	changeSearchStatus(status);
+	View.resetUi();
+}
+
+function searchByStatus(status){
 	var data = {};
-	data.article = getStatusSearch(status);
+	switch (status) {
+		case 1: data.article = AtcList; break;
+		case 2: data.article = publishList; break;
+		case 3: data.article = unPublishList; break;
+		case 4: data.article = goodList; break;
+		default: break;
+	}
 	tmplTools.articleListTmpl.onload(data);
 	changeSearchStatus(status);
 	View.resetUi();
@@ -225,18 +281,6 @@ function changeSearchStatus(status){
 		$("#a2").removeClass("active");
 		$("#a3").removeClass("active");
 	}
-}
-
-function getStatusSearch(status){
-	var list = [];
-	switch (status) {
-		case 1: list = AtcList; break;
-		case 2: list = publishList; break;
-		case 3: list = unPublishList; break;
-		case 4: list = goodList; break;
-		default: break;
-	}
-	return list;
 }
 
 function lableSearch(lableValue){
