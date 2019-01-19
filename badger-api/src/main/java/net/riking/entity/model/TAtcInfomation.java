@@ -82,7 +82,7 @@ public class TAtcInfomation {
 	@Column(name = "collection_count")
 	private Integer collectionCount;
 	
-	@Comment("发布状态")
+	@Comment("发布状态 1:发布 0：未发布")
 	@Column(name = "publish_status")
 	private String publishStatus;
 	
@@ -96,11 +96,11 @@ public class TAtcInfomation {
 	
 	//正文内容
 	@Transient
-	private TAtcContent tAtcContent;
+	private TAtcContent tatcContent;
 	
 	//评论
 	@Transient
-	private List<TAtcComment> tAtcCommentList;
+	private List<TAtcComment> tatcCommentList;
 	
 	
 }

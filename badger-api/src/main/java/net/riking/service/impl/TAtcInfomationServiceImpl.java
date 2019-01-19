@@ -72,7 +72,7 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 
 	@Override
 	public String saveAtc(TAtcInfomation lc) {
-		TAtcContent content = tAtcContentRepo.save(lc.getTAtcContent());
+		TAtcContent content = tAtcContentRepo.save(lc.getTatcContent());
 		lc.setContentId(content.getId());
 		lc.setCreateTime(new Date());
 		tAtcInfomationRepo.save(lc);
@@ -91,7 +91,7 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 		if(atcInfo == null)
 			return null;
 		TAtcContent content = tAtcContentRepo.findOne(atcInfo.getContentId());
-		atcInfo.setTAtcContent(content);
+		atcInfo.setTatcContent(content);
 		return atcInfo;
 	}
 	

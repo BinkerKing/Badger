@@ -12,26 +12,92 @@
 </head>
 <body class="iframeBody">
 <div class="layui-row layui-col-space15">
-	<div class="layui-col-md10">
+	<div class="layui-col-md9">
 		<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"  class="layui-input">
 		<textarea id="editor" placeholder="" autofocus required></textarea>
 	</div>
-	<div class="layui-col-md2">
-		<button class="layui-btn layui-btn-small layui-btn-primary" onclick="save()" id ="save">
-			暂存
-		</button>
-		<button class="layui-btn layui-btn-small layui-btn-primary" onclick="publish()" id ="publish">
-			发布
-		</button>
+	<div class="layui-col-md3">
+		<div class="fly-panel fly-signin">
+			<div class="layui-card" style="height:300px; overflow:auto">
+				<div class="layui-card-header">操作</div>
+				<div class="layui-card-body layui-text">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="layui-form-item">
+						    <label class="layui-form-label">是否标星</label>
+						    <div class="layui-input-block">
+						      <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
+						    </div>
+						</div>
+						<div class="layui-form-item">
+						    <label class="layui-form-label">是否置顶</label>
+						    <div class="layui-input-block">
+						      <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
+						    </div>
+						</div>
+					</form>
+					<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="save()" id ="save">暂存</button>
+					<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="publish()" id ="publish">发布</button>
+				</div>
+			</div>
+		</div>
+		<div class="fly-panel">
+			<div class="layui-card" style="height:300px; overflow:auto">
+				<div class="layui-card-header">选择模板</div>
+				<div class="layui-card-body layui-text">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="layui-form-item">
+							<label class="layui-form-label">模板类型</label>
+							<div class="layui-input-block">
+						    	<select name="interest">
+							        <option value=""  selected=""></option>
+							        <option value="0">知识点模板</option>
+							        <option value="1">心得模板</option>
+							        <option value="2">功能模板</option>
+						    	</select>
+						    </div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">模板</label>
+							<div class="layui-input-block">
+						    	<select name="interest">
+							        <option value=""  selected=""></option>
+							        <option value="0">模板一</option>
+							        <option value="1">模板二</option>
+							        <option value="2">模板三</option>
+						    	</select>
+						    </div>
+						</div>
+						<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="getTemplet()" id ="save">获取模板</button>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 </body>
 <link type="include" href="/common/depjs.html" />
 <script>
+	/*全局定义*/
 	var form = layui.form, layer = layui.layer;
+	var id = View.getQStr("id");
+	var TAtcInfomation = {};
+	$(function() {
+		//editor.setValue();
+		if(id){
+			var url = Const.apiUrl + "/MyAtcController/getContent";
+			View.get(url,"id="+id,function(resp){
+				TAtcInfomation = resp;
+				loadView(resp);
+			},function(){
+				TmplUtils.showMsgFail("打开文件出错");
+			})
+		}
+	});
+	
+	/*富文本框定义-开始*/
 	var toolbar = ['title','bold','italic','underline','strikethrough','fontScale','color','ol','ul','blockquote',
 		  'code','table','link','image','hr','indent','outdent','alignment'];
-
+	
 	var editor = new Simditor({
 		  textarea: $('#editor'),
 		  placeholder: ' ', //占位符
@@ -43,29 +109,89 @@
 		  allowerTags: null,
 		  cleanPaste: true,
 		  upload : {
-              url : Const.apiUrl + "/TCustInfoController/savePic", //文件上传的接口地址
-              params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
-              fileKey: 'upload_file', //服务器端获取文件数据的参数名
-              connectionCount: 3,
-              leaveConfirm: '正在上传文件'
-          }
-	});
-	
-	$(function() {
-		editor.setValue();
+            url : Const.apiUrl + "/TCustInfoController/savePic", //文件上传的接口地址
+            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+            fileKey: 'upload_file', //服务器端获取文件数据的参数名
+            connectionCount: 3,
+            leaveConfirm: '正在上传文件'
+        }
 	});
 	
 	function getValue(){
 		var value = editor.getValue();
 		console.log(value);
 	}
+	/*富文本框定义-结束*/
 	
-	function save(){
-		
+	/*数据操作-开始*/
+	//准备数据
+	function prepareData(operateType){
+		var tAtcInfomation = {};
+		if(TAtcInfomation!=null)
+			tAtcInfomation = TAtcInfomation;
+		tAtcInfomation.titleInfo = $("input[name='title']").val();
+		tAtcInfomation.tatcContent = {};
+		tAtcInfomation.tatcContent.titleInfo = $("input[name='title']").val();
+		tAtcInfomation.tatcContent.htmlContent = $("#editor").val();
+		switch (operateType) {
+		case "save":
+			tAtcInfomation.publishStatus = "0";//未发布
+			break;
+		case "publish":
+			tAtcInfomation.publishStatus = "1";//已发布
+			break;
+		default:
+			break;
+		}
+		return tAtcInfomation;
 	}
-	
+	//校验数据
+	function checkData(data){
+		//新建保存前的校验
+		return "";
+	}
+	//保存操作
+	function save(){
+		var editWait = layer.load();
+		var tAtcInfomation = prepareData();//数据准备
+		var logInfo = checkData(tAtcInfomation);//校验
+		if (logInfo != "") {
+			TmplUtils.showMsgFail(logInfo);
+			return;
+		}
+		if(id){
+			//修改
+			
+		}else{
+			//新增
+			var url = Const.apiUrl +"/MyAtcController/saveAtc";
+			View.post(url,tAtcInfomation,function(){
+				layer.close(editWait);
+				TmplUtils.showMsgSuccess("保存成功");
+				back();
+			},function(){
+				TmplUtils.showMsgFail("保存出错");
+			})
+		}
+	}
+	//发布操作
 	function publish(){
 		
 	}
+	/*数据操作-结束*/
+	/*页面控制-开始*/
+	//渲染页面
+	function loadView(){
+		$("input[name='title']").val(TAtcInfomation.titleInfo);
+		$("#editor").val(TAtcInfomation.tatcContent.htmlContent);
+		View.resetUi();
+	}
+	//返回操作
+	function back() {
+		parent.View.fireEvent("TB_DATA_CHANGE", {
+			"window" : window.name
+		});
+	}
+	/*页面控制-结束*/
 </script>
 </html>
