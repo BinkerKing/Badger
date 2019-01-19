@@ -183,13 +183,12 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 
 /* 涓撴爮 */
 .fly-column{height: 50px; line-height: 50px;}
-.fly-column ul li{position: relative; display: inline-block; height: 50px;}
-.fly-column ul li a{padding: 0 20px;}
-.fly-column ul li.layui-this:after{ position: absolute; bottom: 13px; left: 8px; z-index: 0; width: 50px; height: 22px; border: 1px solid #5FB878; border-radius: 2px;}
-.fly-column ul li.layui-this a{color: #5FB878;}
-.fly-column ul li .fly-mid{margin: 0 20px;}
-.fly-column-right{position: absolute; right: 0; top: 0; margin: 8px 10px;}
-.fly-column-right .layui-btn{vertical-align: initial;}
+.fly-column .fly-filter ul li{position: relative; display: inline-block; height: 50px;}
+.fly-column .fly-filter ul li a{padding: 0 20px;}
+.fly-column .fly-filter ul li.layui-this:after{ position: absolute; bottom: 13px; left: 8px; z-index: 0; width: 50px; height: 22px; border: 1px solid #5FB878; border-radius: 2px;}
+.fly-column .fly-filter ul li.layui-this a{color: #5FB878;}
+.fly-column .fly-filter ul li .fly-mid{margin: 0 20px;}
+.fly-column-right{position: absolute; right: 15px; top: 0;}
 .fly-column .layui-badge-dot{position: absolute; top: 50%; left: 50%; margin: -4px 0 0 20px;}
 
 /* 鎼滅储 */
@@ -517,10 +516,10 @@ body .fly-user-main{position: relative; min-height: 600px;}
 
   /* 涓撴爮 */
   .fly-column{height: auto;}
-  .fly-column ul{padding: 10px; font-size: 0;}
-  .fly-column ul li{float: left; width: 33.33%; height: 36px; line-height: 36px; font-size: 14px; vertical-align: middle; text-align: center; box-sizing: border-box;}
+  .fly-column .fly-filter ul{padding: 10px; font-size: 0;}
+  .fly-column .fly-filterul li{float: left; width: 33.33%; height: 36px; line-height: 36px; font-size: 14px; vertical-align: middle; text-align: center; box-sizing: border-box;}
   .fly-column-right{right: 10px;}
-  .fly-column ul li.layui-this:after{display: none;}
+  .fly-column .fly-filter ul li.layui-this:after{display: none;}
 
   /* 椤佃剼 */
   .fly-footer{margin-top: 0; border-top: none;}

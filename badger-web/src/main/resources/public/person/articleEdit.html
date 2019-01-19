@@ -12,66 +12,15 @@
 </head>
 <body class="iframeBody">
 <div class="layui-row layui-col-space15">
-	<div class="layui-col-md9">
+	<div class="layui-col-md10 layui-col-md-offset1">
 		<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"  class="layui-input">
 		<textarea id="editor" placeholder="" autofocus required></textarea>
 	</div>
-	<div class="layui-col-md3">
-		<div class="fly-panel fly-signin">
-			<div class="layui-card" style="height:300px; overflow:auto">
-				<div class="layui-card-header">操作</div>
-				<div class="layui-card-body layui-text">
-					<form class="layui-form layui-form-pane" action="">
-						<div class="layui-form-item">
-						    <label class="layui-form-label">是否标星</label>
-						    <div class="layui-input-block">
-						      <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-						    </div>
-						</div>
-						<div class="layui-form-item">
-						    <label class="layui-form-label">是否置顶</label>
-						    <div class="layui-input-block">
-						      <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-						    </div>
-						</div>
-					</form>
-					<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="save()" id ="save">暂存</button>
-					<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="publish()" id ="publish">发布</button>
-				</div>
-			</div>
-		</div>
-		<div class="fly-panel">
-			<div class="layui-card" style="height:300px; overflow:auto">
-				<div class="layui-card-header">选择模板</div>
-				<div class="layui-card-body layui-text">
-					<form class="layui-form layui-form-pane" action="">
-						<div class="layui-form-item">
-							<label class="layui-form-label">模板类型</label>
-							<div class="layui-input-block">
-						    	<select name="interest">
-							        <option value=""  selected=""></option>
-							        <option value="0">知识点模板</option>
-							        <option value="1">心得模板</option>
-							        <option value="2">功能模板</option>
-						    	</select>
-						    </div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">模板</label>
-							<div class="layui-input-block">
-						    	<select name="interest">
-							        <option value=""  selected=""></option>
-							        <option value="0">模板一</option>
-							        <option value="1">模板二</option>
-							        <option value="2">模板三</option>
-						    	</select>
-						    </div>
-						</div>
-						<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="getTemplet()" id ="save">获取模板</button>
-					</form>
-				</div>
-			</div>
-		</div>
+	<div class="layui-col-md1">
+		<ul class="layui-fixbar">
+			<li class="layui-icon" lay-type="bar1" style="background-color:none" onclick="saveSet()"></li>
+			<li class="layui-icon" lay-type="bar1" style="background-color:none" onclick="getMould()"></li>
+		</ul>
 	</div>
 </div>
 </body>
@@ -91,6 +40,12 @@
 			},function(){
 				TmplUtils.showMsgFail("打开文件出错");
 			})
+		}else{
+			TAtcInfomation.starFlag="0";
+			TAtcInfomation.topFlag="0";
+			TAtcInfomation.labelGroup="";
+			TAtcInfomation.publishStatus="0";
+			
 		}
 	});
 	
@@ -174,9 +129,24 @@
 			})
 		}
 	}
-	//发布操作
-	function publish(){
-		
+	//保存配置
+	function saveSet(){
+		var content = 'atcProperty.html';
+		layer.open({
+			type : 2,
+			title : '编辑文章属性',
+			skin: 'layui-layer-rim',
+			shadeClose : false,
+			shade : .3,
+			resize  : false,
+			area: ['40%', '80%'],
+			maxmin : false, //开启最大化最小化按钮
+			zIndex: layer.zIndex,
+		    success: function(layero){
+		        layer.setTop(layero);
+		    },
+			content : content //iframe的url
+		});
 	}
 	/*数据操作-结束*/
 	/*页面控制-开始*/
@@ -191,6 +161,17 @@
 		parent.View.fireEvent("TB_DATA_CHANGE", {
 			"window" : window.name
 		});
+	}
+	View.setEvent("TB_DATA_CHANGE", function(arg) {
+	    if (!!arg && arg.window) {
+	        var index = layer.getFrameIndex(arg.window); //获取窗口索引
+	        layer.close(index);
+	    }
+	    $("input[name='title']").val(TAtcInfomation.titleInfo)
+    	View.resetUi();
+	});
+	function getInfoById(){
+		
 	}
 	/*页面控制-结束*/
 </script>

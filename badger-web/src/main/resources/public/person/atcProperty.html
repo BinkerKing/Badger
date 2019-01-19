@@ -44,6 +44,7 @@
 				    </div>
 				</div>
 			</form>
+			<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="leave()" id ="leave">继续编辑</button>
 			<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="save()" id ="save">保存</button>
 		</div>
 </body>
@@ -67,6 +68,29 @@
 		if(id){
 			TAtcInfomation = window.parent.getInfoById(id)
 			loadView();
+		}else{
+			//新文章，读父页面全局变量
+			$("input[name='title']").val(window.parent.$("input[name='title']").val());
+			$("input[name='labelGroup']").val(window.parent.TAtcInfomation.labelGroup);
+			if(window.parent.TAtcInfomation.starFlag == "1"){
+				$("input[name='starFlag']").attr("checked", true);
+				$("input[name='starFlag']").val(1);
+			}else{
+				$("input[name='starFlag']").val(0);
+			}
+			if(window.parent.TAtcInfomation.topFlag == "1"){
+				$("input[name='topFlag']").attr("checked", true);
+				$("input[name='topFlag']").val(1);
+			}else{
+				$("input[name='topFlag']").val(0);
+			}
+			if(window.parent.TAtcInfomation.publishStatus == "1"){
+				$("input[name='publishStatus']").attr("checked", true);
+				$("input[name='publishStatus']").val(1);
+			}else{
+				$("input[name='publishStatus']").val(0);
+			}
+			View.resetUi();
 		}
 	});
 	
@@ -108,16 +132,37 @@
 	}
 	/*数据操作-结束*/
 	/*页面控制-开始*/
+	//继续编辑
+	function leave(){
+		window.parent.TAtcInfomation.titleInfo = $("input[name='title']").val();
+		window.parent.TAtcInfomation.labelGroup = $("input[name='labelGroup']").val();
+		window.parent.TAtcInfomation.starFlag = $("input[name='starFlag']").val();
+		window.parent.TAtcInfomation.topFlag = $("input[name='topFlag']").val();
+		window.parent.TAtcInfomation.publishStatus = $("input[name='publishStatus']").val();
+		back();
+	}
 	//渲染页面
 	function loadView(){
 		$("input[name='title']").val(TAtcInfomation.titleInfo);
 		$("input[name='labelGroup']").val(TAtcInfomation.labelGroup);
-		if(TAtcInfomation.starFlag == "1")
+		if(TAtcInfomation.starFlag == "1"){
 			$("input[name='starFlag']").attr("checked", true);
-		if(TAtcInfomation.topFlag == "1")
+			$("input[name='starFlag']").val(1);
+		}else{
+			$("input[name='starFlag']").val(0);
+		}
+		if(TAtcInfomation.topFlag == "1"){
 			$("input[name='topFlag']").attr("checked", true);
-		if(TAtcInfomation.publishStatus == "1")
+			$("input[name='topFlag']").val(1);
+		}else{
+			$("input[name='topFlag']").val(0);
+		}
+		if(TAtcInfomation.publishStatus == "1"){
 			$("input[name='publishStatus']").attr("checked", true);
+			$("input[name='publishStatus']").val(1);
+		}else{
+			$("input[name='publishStatus']").val(0);
+		}
 		View.resetUi();
 	}
 	//返回操作
