@@ -98,12 +98,19 @@
 	//准备数据
 	function prepareData(){
 		var tAtcInfomation = {};
+		//编辑文章信息
 		tAtcInfomation = TAtcInfomation;
 		tAtcInfomation.titleInfo = $("input[name='title']").val();
 		tAtcInfomation.labelGroup = $("input[name='labelGroup']").val();
 		tAtcInfomation.starFlag = $("input[name='starFlag']").val();
 		tAtcInfomation.topFlag = $("input[name='topFlag']").val();
 		tAtcInfomation.publishStatus = $("input[name='publishStatus']").val();
+		tAtcInfomation.authorId = window.parent.authorId;
+		if(!id){
+			tAtcInfomation.tatcContent = {};
+			tAtcInfomation.tatcContent.htmlContent = window.parent.$("#editor").val();
+			tAtcInfomation.tatcContent.titleInfo = $("input[name='title']").val();
+		}
 		return tAtcInfomation;
 	}
 	//校验数据
@@ -120,15 +127,27 @@
 			TmplUtils.showMsgFail(logInfo);
 			return;
 		}
-		//新增
-		var url = Const.apiUrl +"/MyAtcController/saveAtcInfo";
-		View.post(url,tAtcInfomation,function(){
-			layer.close(editWait);
-			TmplUtils.showMsgSuccess("保存成功");
-			back();
-		},function(){
-			TmplUtils.showMsgFail("保存出错");
-		})
+		if(id){
+			//编辑文章信息
+			var url = Const.apiUrl +"/MyAtcController/saveAtcInfo";
+			View.post(url,tAtcInfomation,function(){
+				layer.close(editWait);
+				TmplUtils.showMsgSuccess("保存成功");
+				back();
+			},function(){
+				TmplUtils.showMsgFail("保存出错");
+			})
+		}else{
+			//新增文章内容
+			var url = Const.apiUrl +"/MyAtcController/saveAtc";
+			View.post(url,tAtcInfomation,function(){
+				layer.close(editWait);
+				TmplUtils.showMsgSuccess("保存成功");
+				back();
+			},function(){
+				TmplUtils.showMsgFail("保存出错");
+			})
+		}
 	}
 	/*数据操作-结束*/
 	/*页面控制-开始*/

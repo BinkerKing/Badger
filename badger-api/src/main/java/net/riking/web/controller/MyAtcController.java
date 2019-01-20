@@ -32,7 +32,6 @@ public class MyAtcController {
 		return new Resp(tAtcInfomationList,CodeDef.SUCCESS);
 	}
 	
-	@InFunLog(funName = "保存文章", args = { 0 })
 	@RequestMapping(value = "/saveAtc", method = RequestMethod.POST)
 	public Resp saveAtc(@RequestBody TAtcInfomation lc){
 		tAtcInfomationService.saveAtc(lc);
