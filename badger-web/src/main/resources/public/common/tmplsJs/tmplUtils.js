@@ -1,6 +1,7 @@
 var tmplTools = {
 		person_atcListTmpl : {//我的文章列表
 			onload : function(data){
+				data.article = formateTags(data.article);
 				var getTpl = document.getElementById("person_atcListTmpl").innerHTML;
 				var view = document.getElementById("person_atcListTmplDiv");
 				layui.laytpl(getTpl).render(data, function(html){
@@ -28,6 +29,7 @@ var tmplTools = {
 		},
 		communion_topListTmpl : {
 			onload : function(data){
+				data.article = formateTags(data.article);
 				var getTpl = document.getElementById("communion_topListTmpl").innerHTML;
 				var view = document.getElementById("communion_topListTmplDiv");
 				layui.laytpl(getTpl).render(data, function(html){
@@ -37,6 +39,7 @@ var tmplTools = {
 		},
 		communion_atcListTmpl : {//我的文章列表
 			onload : function(data){
+				data.article = formateTags(data.article);
 				var getTpl = document.getElementById("communion_atcListTmpl").innerHTML;
 				var view = document.getElementById("communion_atcListTmplDiv");
 				layui.laytpl(getTpl).render(data, function(html){
@@ -123,6 +126,28 @@ function lableSearch(lableValue){
 	tmplTools.searchResultTmpl.onload(searchResultData);
 	reOutAll();
 }
+
+function formateTags(atcList){
+	$.each(atcList,function(i,item){
+		var lables = JSON.parse(item.labelGroup);
+		if(lables.length == 0){
+			item.tag = null;
+		}else{
+			var tag = "";
+			for ( var j = 0; j<lables.length; j++){
+				tag += lables[j] + " | ";
+			}
+			if(tag.length>0){
+				tag = tag.substring(0,tag.length-3);
+				item.tag = tag;
+			}else{
+				item.tag = null;
+			}
+		}
+	});
+	return atcList;
+}
+
 //个人：内存搜索-AtcList
 function getLableSearch(lableValue){
 	var list = [];

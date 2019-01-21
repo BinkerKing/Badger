@@ -16,7 +16,13 @@
 				<a href="javascript:viewArticle({{item.id}});"><b>{{item.titleInfo}}</b></a>
 			</h2>
 			<div class="fly-list-info">
-
+				{{#
+					if(item.tag.length>0){
+				}}
+				<a class="layui-badge" style="color:#3399FF;">{{item.tag}}</a>
+				{{#
+					}
+				}}
 			</div>
 			<div class="fly-list-badge">
 
