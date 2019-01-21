@@ -79,6 +79,8 @@ function reloadView(){
 
 function eachAtcList(){
 	$.each(AtcList,function(i,item){
+		if(item==null)
+			return;
 		//获取我的所有标签
 		var labelGroup = item.labelGroup;
 		var lables = JSON.parse(labelGroup);

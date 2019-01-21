@@ -121,6 +121,7 @@ function lableSearch(lableValue){
 	//searchResult模板初始化
 	var searchResultData = {};
 	tmplTools.searchResultTmpl.onload(searchResultData);
+	reOutAll();
 }
 //个人：内存搜索-AtcList
 function getLableSearch(lableValue){
@@ -186,6 +187,7 @@ function searchByTitle(titleSearch){
 	searchResultData.searchContent = titleSearch;
 	searchResultData.titleCount = data.article.length;
 	tmplTools.searchResultTmpl.onload(searchResultData);
+	reOutAll();
 	View.resetUi();
 }
 
@@ -239,11 +241,16 @@ function searchByStatus(status){
 		case 4: data.article = GoodList; break;
 		default: break;
 	}
-	tmplTools.person_atcListTmpl.onload(data);
-	changeSearchStatus(status);
+	if(role==1){
+		tmplTools.person_atcListTmpl.onload(data);
+		changeSearchStatus(status);
+	}else if(role==2){
+		tmplTools.communion_atcListTmpl.onload(data);
+	}
 	//searchResult模板初始化
 	var searchResultData = {};
 	tmplTools.searchResultTmpl.onload(searchResultData);
+	reOutAll();
 	View.resetUi();
 }
 //个人：改变选中状态颜色
@@ -314,6 +321,29 @@ function setProperty(id){
 	    },
 		content : content //iframe的url
 	});
+}
+//个人：点击li,刷新改文章的统计信息
+function reOutOne(id){
+	var info = getInfoById(id);
+	var outlineData = {};
+	outlineData.mod = "one";
+	outlineData.collect = info.collectionCount;
+	outlineData.comment = 0;
+	outlineData.like = info.likeCount;
+	outlineData.see = info.scanCount;
+	tmplTools.person_outlineTmpl.onload(outlineData);
+	View.resetUi();
+}
+
+//个人：统计所有信息
+function reOutAll(){
+	var outlineData = {};
+	outlineData.mod = "all";
+	outlineData.unpublish = Outline_unpublish;
+	outlineData.publish = Outline_publish;
+	outlineData.like = Outline_like;
+	outlineData.see = Outline_view;
+	tmplTools.person_outlineTmpl.onload(outlineData);
 }
 
 /*TopListTmpl-end*/

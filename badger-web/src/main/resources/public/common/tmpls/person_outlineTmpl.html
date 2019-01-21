@@ -3,6 +3,9 @@
 	<div class="layui-card" style="height:230px; overflow:auto">
 		<div class="layui-card-header"><b>统计信息</b></div>
 		<div class="layui-card-body layui-text">
+		{{#
+			if(d.mod == "all"){
+		}}
 			<table class="layui-table">
 				<colgroup>
 				  <col width="200">
@@ -18,15 +21,48 @@
 					<td><p>{{d.publish}}</p></td>
 				  </tr>
 				  <tr>
-					<td>点赞量</td>
+					<td>总点赞量</td>
 					<td>{{d.like}}</td>
 				  </tr>
 				  <tr>
-					<td>浏览量</td>
+					<td>总浏览量</td>
 					<td><p>{{d.see}}</p></td>
 				  </tr>
 				</tbody>
 			</table>
+		{{#
+			}
+		}}
+		{{#
+			if(d.mod == "one"){
+		}}
+			<table class="layui-table">
+				<colgroup>
+				  <col width="200">
+				  <col>
+				</colgroup>
+				<tbody>
+				  <tr>
+					<td>浏览量</td>
+					<td><p>{{d.see}}</p></td>
+				  </tr>
+				  <tr>
+					<td>评论数</td>
+					<td><p>{{d.comment}}</p></td>
+				  </tr>
+				  <tr>
+					<td>点赞数</td>
+					<td>{{d.like}}</td>
+				  </tr>
+				  <tr>
+					<td>收藏数</td>
+					<td><p>{{d.collect}}</p></td>
+				  </tr>
+				</tbody>
+			</table>
+		{{#
+			}
+		}}
 		</div>
 	</div>
 </div>

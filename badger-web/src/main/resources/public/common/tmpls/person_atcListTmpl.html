@@ -19,7 +19,7 @@
 		{{#
 			layui.each(d.article, function(index, item){
 		}}
-		<li>
+		<li onclick="reOutOne({{item.id}})">
 			<a href="javascript:;" class="fly-avatar">
 				<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
 			</a>
@@ -27,6 +27,20 @@
 				<a href="javascript:viewArticle({{item.id}});"><b>{{item.titleInfo}}</b></a>
 			</h2>
 			<div class="fly-list-info">
+				
+
+				{{#
+					if(item.starFlag == "1"){
+				}}
+				<i class="layui-icon" style="color:#CCFF00;">&#xe658;</i>
+				{{#
+					}else{
+				}}
+				<i class="layui-icon" style="color:#C0C0C0;">&#xe60c;</i>
+				{{#
+					}
+				}}
+
 				{{#
 					if(item.publishStatus == "1"){
 				}}
@@ -34,19 +48,7 @@
 				{{#
 					}else{
 				}}
-				<a class="layui-badge">待发布</a>
-				{{#
-					}
-				}}
-
-				{{#
-					if(item.starFlag == "1"){
-				}}
-				<i class="layui-icon">&#xe600;</i>
-				{{#
-					}else{
-				}}
-				<i class="layui-icon">&#xe60c;</i>
+				<a class="layui-badge" style="color:#CC3333;">待发布</a>
 				{{#
 					}
 				}}
@@ -56,7 +58,7 @@
 				</span>
 			</div>
 			<div class="fly-list-badge">
-				<i class="layui-icon" onclick="setProperty({{item.id}})">&#xe614;</i>
+				<i class="layui-icon" onclick="setProperty({{item.id}})" style="color:#3399FF;">&#xe614;</i>
 			</div>
 		</li>
 		{{#
