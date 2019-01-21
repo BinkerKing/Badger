@@ -170,7 +170,9 @@ function searchTitle(){
 	      	input.keydown(function (e) {
 	      		if(e.which == 13){//回车
 	      			search_value = $(this).val();
-	      			searchByTitle(search_value);
+	      			if(search_value!=""){
+	      				searchByTitle(search_value);
+	      			}
 	      			layer.close(index);
 	      		}
 			});
@@ -268,6 +270,7 @@ function viewArticle (id){
 		shadeClose : false,
 		shade : 0,
 		resize  : false,
+		scrollbar: false,
 		area: ['100%', '100%'],
 		maxmin: false,
 		zIndex: layer.zIndex,

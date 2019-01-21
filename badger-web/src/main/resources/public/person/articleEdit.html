@@ -10,73 +10,37 @@
 <link type="include" href="/common/depcss.html" />
 <link type="include" href="/common/simditor.html" />
 </head>
-<body class="iframeBody">
+<body>
 <div class="layui-row layui-col-space15">
 	<div class="layui-col-md10 layui-col-md-offset1">
 		<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"  class="layui-input">
-		<textarea id="editor" placeholder="" autofocus required></textarea>
+		<textarea id="editor"></textarea>
 	</div>
 	<div class="layui-col-md1">
 		<ul class="layui-fixbar">
-			<li class="layui-icon" lay-type="bar1" style="background-color:none" onclick="saveSet()"></li>
-			<li class="layui-icon" lay-type="bar1" style="background-color:none" onclick="getTemplet()"></li>
+			<li class="layui-icon" lay-type="bar1" style="background-color: rgb(0, 150, 136);" onclick="saveSet()">&#xe621;</li>
+			<li class="layui-icon" lay-type="bar2" style="background-color: rgb(0, 150, 136);" onclick="getTemplet()">&#xe630;</li>
+			<li class="layui-icon layui-fixbar-top" lay-type="top" onclick='$("html,body").animate({"scrollTop":0});' style="background-color: rgb(0, 150, 136); display: list-item;"></li>
 		</ul>
 	</div>
 </div>
 </body>
 <link type="include" href="/common/depjs.html" />
+<script type="text/javascript" src="{=ctx}/tools/tinymce/js/tinymce/tinymce.min.js"></script>
 <script>
 	/*全局定义*/
 	var form = layui.form, layer = layui.layer;
 	var id = View.getQStr("id");
 	var authorId = window.parent.authorId;
 	var TAtcInfomation = {};
-	$(function() {
-		//editor.setValue();
-		if(id){
-			var url = Const.apiUrl + "/MyAtcController/getContent";
-			View.get(url,"id="+id,function(resp){
-				TAtcInfomation = resp;
-				loadView(resp);
-			},function(){
-				TmplUtils.showMsgFail("打开文件出错");
-			})
-		}else{
-			TAtcInfomation.starFlag="0";
-			TAtcInfomation.topFlag="0";
-			TAtcInfomation.labelGroup="";
-			TAtcInfomation.publishStatus="0";
-			
-		}
-	});
 	
 	/*富文本框定义-开始*/
-	var toolbar = ['title','bold','italic','underline','strikethrough','fontScale','color','ol','ul','blockquote',
-		  'code','table','link','image','hr','indent','outdent','alignment'];
-	
-	var editor = new Simditor({
-		  textarea: $('#editor'),
-		  placeholder: ' ', //占位符
-		  params: {},
-		  upload: true,
-		  tabIndent: true,
-		  toolbar: toolbar,
-		  pasteImage: true,
-		  allowerTags: null,
-		  cleanPaste: true,
-		  upload : {
-            url : Const.apiUrl + "/TCustInfoController/savePic", //文件上传的接口地址
-            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
-            fileKey: 'upload_file', //服务器端获取文件数据的参数名
-            connectionCount: 3,
-            leaveConfirm: '正在上传文件'
-        }
+	tinymce.init({
+	  selector: '#editor',  // change this value according to your HTML
+	  plugin: 'a_tinymce_plugin',
+	  a_plugin_option: true,
+	  a_configuration_option: 400
 	});
-	
-	function getValue(){
-		var value = editor.getValue();
-		console.log(value);
-	}
 	/*富文本框定义-结束*/
 	
 	/*数据操作-开始*/
