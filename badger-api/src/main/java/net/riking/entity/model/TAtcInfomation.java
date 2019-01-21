@@ -82,17 +82,21 @@ public class TAtcInfomation {
 	@Column(name = "collection_count")
 	private Integer collectionCount;
 	
-	@Comment("发布状态 1:发布 0：未发布")
+	@Comment("发布状态 0：未发布 1:发布 ")
 	@Column(name = "publish_status")
-	private String publishStatus;
+	private Byte publishStatus;
 	
-	@Comment("标星")
+	@Comment("标星 0-未标星 1-标星")
 	@Column(name = "star_flag")
-	private String starFlag;
+	private Byte starFlag;
 	
-	@Comment("置顶")
+	@Comment("置顶 0-未置顶 1-置顶")
 	@Column(name = "top_flag")
-	private String topFlag;
+	private Byte topFlag;
+	
+	@Comment("文章状态  0-无效 1-有效")
+	@Column(name = "valid_flag")
+	private Byte validFlag;
 	
 	//正文内容
 	@Transient

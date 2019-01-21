@@ -15,5 +15,5 @@ public interface TAskInfomationRepo extends JpaRepository<TAskInfomation, Long> 
 	List<TAskInfomation> findByAuthorId(Long authorId);
 	
 	@Query("from TAskInfomation where authorId = ?1 and publishStatus = ?2")
-	List<TAskInfomation> findByAuthorIdAndPublishStatus(Long authorId,String publishStatus);
+	List<TAskInfomation> findByAuthorIdAndPublishStatus(Long authorId,Byte publishStatus);
 }

@@ -8,7 +8,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link type="include" href="/common/depcss.html" />
-<link type="include" href="/common/simditor.html" />
+<link rel="stylesheet" href="{=ctx}/fly/css/global.css">
 </head>
 <style>
 .my-lablist-head{
@@ -30,41 +30,40 @@
 </style>
 <body>
 <div class="my-lablist-head">
-	<p class="my-lablist-title">sign</p>
+	<p id="tagTitle" class="my-lablist-title"></p>
 </div>
 <div class="my-lablist-body">
 	<div class="layui-row layui-col-space15">
 		<div class="layui-col-md8 layui-col-md-offset2">
-			<div id="atcListTmplDiv"></div>
+			<div id="communion_atcListTmplDiv"></div>
 		</div>
 	</div>
 </div>
 </body>
 <link type="include" href="/common/depjs.html" />
-<script type="text/javascript" src="{=ctx}/tinymce/tinymce.min.js"></script>
 <script>
 	/*全局定义*/
 	var form = layui.form, layer = layui.layer;
-	var id = View.getQStr("id");
+	var tag = View.getQStr("tag");
 	var TAtcInfomation = {};
 	
 	$(function() {
+		$("#tagTitle").text(tag);
 		reloadView();
 	});
 
 	function reloadView(){
-		var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
+		initGlobalVal(2);
+		var url = Const.apiUrl + "/AtcController/getAtcList"
 		var param = {};
-		param.authorId = authorId;
 		param.status= search_status;
-		param.search= null;
-		param.lable = null;
+		param.lable = tag;
 		View.post(url, param, function(resp) {
 			AtcList = resp;
 			//articleList模板
 			var listData = {};
 			listData.article = orderTop(resp);
-			tmplTools.atcListTmpl.onload(listData);
+			tmplTools.communion_atcListTmpl.onload(listData);
 			View.resetUi();
 		}, function() {
 			TmplUtils.showMsgFail("出错");
@@ -72,5 +71,5 @@
 	}
 </script>
 <script type="text/javascript" src="/common/tmplsJs/tmplUtils.js"></script>
-<link type="include" href="/common/tmpls/atcListTmpl.html" />
+<link type="include" href="/common/tmpls/communion_atcListTmpl.html" />
 </html>

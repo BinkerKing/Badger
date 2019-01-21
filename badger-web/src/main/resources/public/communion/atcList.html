@@ -12,11 +12,11 @@
 <body>
 <div class="layui-row layui-col-space15">
 	<div class="layui-col-md7  layui-col-md-offset1">
-		<div id="person_searchTmplDiv"></div>
-		<div id="person_atcListTmplDiv"></div>
+		<div id="communion_searchTmplDiv"></div>
+		<div id="communion_topListTmplDiv"></div>
+		<div id="communion_atcListTmplDiv"></div>
 	</div>
 	<div class="layui-col-md3">
-		<div id="person_outlineTmplDiv"></div>
 		<div id="searchResultTmplDiv"></div>
 	</div>
 	<ul class="layui-fixbar">
@@ -30,6 +30,7 @@
 var form = layui.form, layer = layui.layer;
 var authorId = 1;
 
+//监听搜索快捷键
 jQuery(document).keydown(function(e) {
 	if(e.which == 13 && e.ctrlKey) {
 		searchTitle();
@@ -40,35 +41,33 @@ $(function() {
 	reloadView();
 });
 
+//加载整个页面
 function reloadView(){
-	initGlobalVal(1);//1-个人
-	var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
+	initGlobalVal(2);//初始化全局变量 2-共享
+	var url = Const.apiUrl + "/AtcController/getAtcList"
 	var param = {};
-	param.authorId = authorId;
-	param.status= search_status;
+	param.status= search_status;//首次全部搜索
 	View.post(url, param, function(resp) {
 		AtcList = resp;
-		eachMyAtcList();
+		eachAtcList();
+		//search模板
 		var searchData = {};
 		searchData.lables = MyAllTag;
 		searchData.buttonName = "写文章";
 		searchData.buttonFun = "addArticle()"
-		//data.article = resp;
-		//search模板
-		tmplTools.person_searchTmpl.onload(searchData);
-		//articleList模板
-		var listData = {};
-		listData.article = resp;
-		tmplTools.person_atcListTmpl.onload(listData);
-		//outline模板
-		var outlineData = {};
-		outlineData.unpublish = Outline_unpublish;
-		outlineData.publish = Outline_publish;
-		outlineData.like = Outline_like;
-		outlineData.see = Outline_view;
-		tmplTools.person_outlineTmpl.onload(outlineData);
+		tmplTools.communion_searchTmpl.onload(searchData);
 		
-		//outline模板
+		//topList模板
+		var topData = {};
+		topData.article = TopList;
+		tmplTools.communion_topListTmpl.onload(topData);
+		
+		//atcList模板
+		var listData = {};
+		listData.article = orderTop(resp);
+		tmplTools.communion_atcListTmpl.onload(listData);
+		
+		//search结果模板
 		var searchResultData = {};
 		tmplTools.searchResultTmpl.onload(searchResultData);
 		
@@ -78,7 +77,7 @@ function reloadView(){
 	})
 }
 
-function eachMyAtcList(){
+function eachAtcList(){
 	$.each(AtcList,function(i,item){
 		//获取我的所有标签
 		var labelGroup = item.labelGroup;
@@ -98,13 +97,11 @@ function eachMyAtcList(){
 			Outline_unpublish ++;
 			UnPublishList.push(item);
 		}
-		//统计查看总数和点赞总数
-		Outline_like += item.likeCount;
-		Outline_view += item.scanCount;
 		
-		//获取标星组
-		if(item.starFlag == 1){
-			GoodList.push(item);
+		//获取置顶组
+		if(item.topFlag == 1){
+			TopList.push(item);
+			AtcList.splice(i-1,1);
 		}
 	});
 }
@@ -128,9 +125,9 @@ View.setEvent("TB_DATA_CHANGE", function(arg) {
 
 </script>
 <script type="text/javascript" src="/common/tmplsJs/tmplUtils.js"></script>
-<link type="include" href="/common/tmpls/person_searchTmpl.html" />
-<link type="include" href="/common/tmpls/person_atcListTmpl.html" />
-<link type="include" href="/common/tmpls/person_outlineTmpl.html" />
+<link type="include" href="/common/tmpls/communion_searchTmpl.html" />
+<link type="include" href="/common/tmpls/communion_topListTmpl.html" />
+<link type="include" href="/common/tmpls/communion_atcListTmpl.html" />
 <link type="include" href="/common/tmpls/searchResultTmpl.html" />
 </body>
 </html>

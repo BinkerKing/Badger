@@ -1,0 +1,30 @@
+<script id="communion_topListTmpl" type="text/html">
+<div class="fly-panel">
+	<div class="fly-panel-title fly-filter">
+		<a>置顶</a>
+	</div>
+	<ul class="fly-list">
+		{{#
+			layui.each(d.article, function(index, item){
+		}}
+		<li>
+			<a href="user/home.html" class="fly-avatar">
+				<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+			</a>
+			<h2>
+				<a class="layui-badge">置顶</a>
+				<a href="javascript:viewArticle({{item.id}});"><b>{{item.titleInfo}}</b></a>
+			</h2>
+			<div class="fly-list-info">
+
+			</div>
+			<div class="fly-list-badge">
+
+			</div>
+		</li>
+		{{#
+			});
+		}}
+	</ul>
+</div>
+</script>

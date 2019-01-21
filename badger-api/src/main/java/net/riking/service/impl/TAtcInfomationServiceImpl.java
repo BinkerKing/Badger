@@ -8,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+
 import net.riking.config.Const;
 import net.riking.entity.model.TAtcContent;
 import net.riking.entity.model.TAtcInfomation;
@@ -48,12 +50,13 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 		return tAtcInfomationList;
 	}
 	
-	private List<TAtcInfomation> filterLable(List<TAtcInfomation> tAtcInfomationList,String lable){
-		if(StringUtils.isBlank(lable))
+	private List<TAtcInfomation> filterLable(List<TAtcInfomation> tAtcInfomationList,String tag){
+		if(StringUtils.isBlank(tag))
 			return tAtcInfomationList;
 		List<TAtcInfomation> infoList = new ArrayList<>();
 		for(TAtcInfomation info : tAtcInfomationList){
-			if(info.getLabelGroup().contains(lable+";"))
+			List<String> labelList = JSON.parseArray(info.getLabelGroup(), String.class);
+			if(labelList.contains(tag))
 				infoList.add(info);
 		}
 		return infoList;
@@ -93,6 +96,17 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 		TAtcContent content = tAtcContentRepo.findOne(atcInfo.getContentId());
 		atcInfo.setTatcContent(content);
 		return atcInfo;
+	}
+	
+	@Override
+	public List<TAtcInfomation> getAtcList(String status,String search,String lable) {
+		//查询所有有效的，并且发布的文章列表
+		List<TAtcInfomation> tAtcInfomationList = tAtcInfomationRepo.findByPublish();
+		//一层过滤：标签
+		tAtcInfomationList = filterLable(tAtcInfomationList,lable);
+		//二层过滤：搜索框
+		tAtcInfomationList = filterSearch(tAtcInfomationList,search);
+		return tAtcInfomationList;
 	}
 	
 	

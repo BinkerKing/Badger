@@ -1,0 +1,23 @@
+<script id="communion_searchTmpl" type="text/html">
+<div class="fly-panel fly-column">
+	<div class="fly-panel-title fly-filter">
+		<ul>
+			<li>我的关注：</li>
+			{{#
+				layui.each(d.lables, function(index, item){
+			}}
+			<li><a href="javascript:toTag('{{item.name}}');">{{item.name}}</a></li>
+			{{#
+				});
+			}}
+		</ul> 
+		<div class="fly-column-right layui-hide-xs"> 
+			<span class="fly-search" onclick="searchTitle()"><i class="layui-icon" title="Ctrl+Enter"></i></span> 
+			<a href="javascript:{{d.buttonFun}};" class="layui-btn  layui-btn-sm">{{d.buttonName}}</a> 
+		</div> 
+		<div class="layui-hide-sm layui-show-xs-block"> 
+			<a href="javascript:{{d.buttonFun}};" class="layui-btn  layui-btn-sm">{{d.buttonName}}</a> 
+		</div> 
+	</div>
+</div>
+</script>

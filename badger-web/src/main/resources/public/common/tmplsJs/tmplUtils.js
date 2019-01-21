@@ -1,35 +1,53 @@
 var tmplTools = {
-		searchTmpl : {
+		person_atcListTmpl : {//我的文章列表
 			onload : function(data){
-				var getTpl = document.getElementById("searchTmpl").innerHTML;
-				var view = document.getElementById("searchTmplDiv");
+				var getTpl = document.getElementById("person_atcListTmpl").innerHTML;
+				var view = document.getElementById("person_atcListTmplDiv");
 				layui.laytpl(getTpl).render(data, function(html){
 					view.innerHTML = html;
 				});
 			}
 		},
-		TopListTmpl : {
+		person_searchTmpl : {
 			onload : function(data){
-				var getTpl = document.getElementById("TopListTmpl").innerHTML;
-				var view = document.getElementById("TopListTmplDiv");
+				var getTpl = document.getElementById("person_searchTmpl").innerHTML;
+				var view = document.getElementById("person_searchTmplDiv");
 				layui.laytpl(getTpl).render(data, function(html){
 					view.innerHTML = html;
 				});
 			}
 		},
-		articleListTmpl : {
+		person_outlineTmpl : {
 			onload : function(data){
-				var getTpl = document.getElementById("articleListTmpl").innerHTML;
-				var view = document.getElementById("articleListTmplDiv");
+				var getTpl = document.getElementById("person_outlineTmpl").innerHTML;
+				var view = document.getElementById("person_outlineTmplDiv");
 				layui.laytpl(getTpl).render(data, function(html){
 					view.innerHTML = html;
 				});
 			}
 		},
-		outlineTmpl : {
+		communion_topListTmpl : {
 			onload : function(data){
-				var getTpl = document.getElementById("outlineTmpl").innerHTML;
-				var view = document.getElementById("outlineTmplDiv");
+				var getTpl = document.getElementById("communion_topListTmpl").innerHTML;
+				var view = document.getElementById("communion_topListTmplDiv");
+				layui.laytpl(getTpl).render(data, function(html){
+					view.innerHTML = html;
+				});
+			}
+		},
+		communion_atcListTmpl : {//我的文章列表
+			onload : function(data){
+				var getTpl = document.getElementById("communion_atcListTmpl").innerHTML;
+				var view = document.getElementById("communion_atcListTmplDiv");
+				layui.laytpl(getTpl).render(data, function(html){
+					view.innerHTML = html;
+				});
+			}
+		},
+		communion_searchTmpl : {
+			onload : function(data){
+				var getTpl = document.getElementById("communion_searchTmpl").innerHTML;
+				var view = document.getElementById("communion_searchTmplDiv");
 				layui.laytpl(getTpl).render(data, function(html){
 					view.innerHTML = html;
 				});
@@ -62,12 +80,15 @@ var Outline_view=0;
 
 //筛选组
 var search_lable = "";
-var search_status = "1";
+var search_status = "1";//全部搜索
 var search_value="";
+
+//角色 1-个人 2-共享
+var role = 1;
 
 /*searchTmpl-start*/
 //遍历我的文章列表
-function initGlobalVal(){
+function initGlobalVal(r){
 	//初始化全局统计变量
 	Outline_unpublish=0;
 	Outline_publish=0;
@@ -86,62 +107,27 @@ function initGlobalVal(){
 	search_lable = "";
 	search_status = "1";
 	search_value="";
+	
+	role = r;
 }
-function eachAtcList(){
-	$.each(AtcList,function(i,item){
-		//获取我的所有标签
-		var lableGroup = item.labelGroup;
-		var lables = lableGroup.split(",");
-		for ( var i = 0; i <lables.length; i++){
-			if(!isInArray(MyAllTag,lables[i])){
-				var lableObj = {};
-				lableObj.name = lables[i];
-				MyAllTag.push(lableObj);
-			}
-		}
-		//获取发布组和未发布组
-		if(item.publishStatus == "1"){
-			Outline_publish ++;
-			PublishList.push(item);
-		}else{
-			Outline_unpublish ++;
-			UnPublishList.push(item);
-		}
-		//统计查看总数和点赞总数
-		Outline_like += item.likeCount;
-		Outline_view += item.scanCount;
-		
-		//获取标星组
-		if(item.starFlag == "1"){
-			GoodList.push(item);
-		}
-		//获取置顶组
-		if(item.topFlag == "1"){
-			TopList.push(item);
-		}
-	});
-}
-//标签搜索
+
+//个人：标签搜索
 function lableSearch(lableValue){
 	var resp = getLableSearch(lableValue);
-	//topList模板
-	/* var topData = {};
-	topData.article = getTopList(3,resp);
-	tmplTools.topListTmpl.onload(topData); */
 	//articleList模板
 	var listData = {};
-	listData.article = orderTop(resp);
-	tmplTools.articleListTmpl.onload(listData);
+	listData.article = resp;
+	tmplTools.person_atcListTmpl.onload(listData);
 	//searchResult模板初始化
 	var searchResultData = {};
 	tmplTools.searchResultTmpl.onload(searchResultData);
 }
-
+//个人：内存搜索-AtcList
 function getLableSearch(lableValue){
 	var list = [];
 	for(var i=0;i<AtcList.length;i++){
-		var lableGroup = AtcList[i].labelGroup;
-		var lables = lableGroup.split(",");
+		var labelGroup = AtcList[i].labelGroup;
+		var lables = JSON.parse(labelGroup);
 		for ( var j = 0; j<lables.length; j++){
 			if(lables[j]==lableValue){
 				list.push(AtcList[i]);
@@ -151,7 +137,7 @@ function getLableSearch(lableValue){
 	return list;
 }
 
-//搜索方法
+//公用：模糊搜索弹框
 function searchTitle(){
 	layer.open({
 	    type: 1
@@ -180,7 +166,7 @@ function searchTitle(){
 	})
 }
 
-//标题模糊查询
+//公用：标题模糊查询
 function searchByTitle(titleSearch){
 	var data={};
 	data.article = [];
@@ -189,9 +175,13 @@ function searchByTitle(titleSearch){
 			data.article.push(AtcList[i]);
 		}
 	}
-	data.article = orderTop(data.article);
-	tmplTools.articleListTmpl.onload(data);
-	
+	data.article = data.article;
+	if(role == 1){//个人
+		tmplTools.person_atcListTmpl.onload(data);
+	}else{//共享
+		tmplTools.communion_atcListTmpl.onload(data);
+	}
+	//刷新搜索结果块
 	var searchResultData = {};
 	searchResultData.searchContent = titleSearch;
 	searchResultData.titleCount = data.article.length;
@@ -199,9 +189,9 @@ function searchByTitle(titleSearch){
 	View.resetUi();
 }
 
-//写文章
+//公用：写文章弹框
 function addArticle(){
-	var content = 'articleEdit.html';
+	var content = '/part/articleEdit.html';
 	layer.open({
 		type : 2,
 		title : '写文章',
@@ -218,25 +208,45 @@ function addArticle(){
 		content : content //iframe的url
 	});
 }
+//共享：跳转到标签相关文章列表
+function toTag(tag){
+	var content = 'tagList.html?tag='+tag;
+	layer.open({
+		type : 2,
+		title : tag+'文章组',
+		skin: 'layui-layer-rim',
+		shadeClose : false,
+		shade : .3,
+		resize  : false,
+		area: ['100%', '100%'],
+		maxmin : false,
+		zIndex: layer.zIndex,
+	    success: function(layero){
+	        layer.setTop(layero);
+	    },
+		content : content
+	});
+}
 /*searchTmpl-end*/
 /*TopListTmpl-start*/
-//按状态搜索
+//个人：按状态搜索
 function searchByStatus(status){
 	var data = {};
 	switch (status) {
-		case 1: data.article = orderTop(AtcList); break;
-		case 2: data.article = orderTop(PublishList); break;
-		case 3: data.article = orderTop(UnPublishList); break;
-		case 4: data.article = orderTop(GoodList); break;
+		case 1: data.article = AtcList; break;
+		case 2: data.article = PublishList; break;
+		case 3: data.article = UnPublishList; break;
+		case 4: data.article = GoodList; break;
 		default: break;
 	}
-	tmplTools.articleListTmpl.onload(data);
+	tmplTools.person_atcListTmpl.onload(data);
 	changeSearchStatus(status);
 	//searchResult模板初始化
 	var searchResultData = {};
 	tmplTools.searchResultTmpl.onload(searchResultData);
 	View.resetUi();
 }
+//个人：改变选中状态颜色
 function changeSearchStatus(status){
 	if(status == 1){
 		$("#a1").addClass("layui-this");
@@ -260,9 +270,14 @@ function changeSearchStatus(status){
 		$("#a3").removeClass("layui-this");
 	}
 }
-//查看文章
+//公用：查看文章
 function viewArticle (id){
-	var content = 'myArticleView.html?id='+id;
+	var content;
+	if(role==1){
+		content = 'myArticleView.html?id='+id;
+	}else if(role==2){
+		content = 'atcView.html?id='+id;
+	}
 	layer.open({
 		type : 2,
 		title : '我的文章',
@@ -280,9 +295,10 @@ function viewArticle (id){
 		content : content //iframe的url
 	});
 }
-//设置文章属性
+
+//个人：设置文章属性
 function setProperty(id){
-	var content = 'atcProperty.html?id='+id;
+	var content = 'myAtcProperty.html?id='+id;
 	layer.open({
 		type : 2,
 		title : '编辑文章属性',
@@ -299,30 +315,15 @@ function setProperty(id){
 		content : content //iframe的url
 	});
 }
-//获取TopList
-function getTopList(count,resp){
-	var list = [];
-	if(resp == null){
-		resp = TopList;
-	}
-	for(var i=0;i<resp.length;i++){
-		if(count == 0)
-			return list;
-		if(resp[i].topFlag == "1"){
-			list.push(resp[i]);
-			count --;
-		}
-	}
-	return list;
-}
+
 /*TopListTmpl-end*/
-//获取标签，遍历list
+//共享：获取标签，遍历list
 function orderTop(list){
 	var top = [];
 	var untop = [];
 	var list2 = [];
 	for(var i=0;i<list.length;i++){
-		if(list[i].topFlag=="1"){
+		if(list[i].topFlag==1){
 			top.push(list[i]);
 		}else{
 			untop.push(list[i]);
@@ -333,6 +334,24 @@ function orderTop(list){
 	return list2;
 }
 
+//共享：获取TopList
+function getTopList(count,resp){
+	var list = [];
+	if(resp == null){
+		resp = TopList;
+	}
+	for(var i=0;i<resp.length;i++){
+		if(count == 0)
+			return list;
+		if(resp[i].topFlag == 1){
+			list.push(resp[i]);
+			count --;
+		}
+	}
+	return list;
+}
+
+//公用：通过id获取文章信息
 function getInfoById(id){
 	for(var i=0;i<AtcList.length;i++){
 		if(AtcList[i].id==id){

@@ -15,5 +15,8 @@ public interface TAtcInfomationRepo extends JpaRepository<TAtcInfomation, Long> 
 	List<TAtcInfomation> findByAuthorId(Long authorId);
 	
 	@Query("from TAtcInfomation where authorId = ?1 and publishStatus = ?2")
-	List<TAtcInfomation> findByAuthorIdAndPublishStatus(Long authorId,String publishStatus);
+	List<TAtcInfomation> findByAuthorIdAndPublishStatus(Long authorId,Byte publishStatus);
+	
+	@Query("from TAtcInfomation where publishStatus = 1 and validFlag = 1")
+	List<TAtcInfomation> findByPublish();
 }

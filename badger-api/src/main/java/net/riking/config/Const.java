@@ -21,8 +21,8 @@ public class Const {
 	public static final String SEARCH_LIST_STATUS_NOT_PUBLISH = "3";
 	
 	//发布
-	public static final String ATC_INFO_PUBLISH_STATUS_YES = "1";
+	public static final Byte ATC_INFO_PUBLISH_STATUS_YES = 1;
 	
 	//未发布
-	public static final String ATC_INFO_PUBLISH_STATUS_NO= "0";
+	public static final Byte ATC_INFO_PUBLISH_STATUS_NO= 0;
 }
