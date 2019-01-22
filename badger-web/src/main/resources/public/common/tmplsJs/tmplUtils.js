@@ -237,22 +237,23 @@ function addArticle(){
 }
 //共享：跳转到标签相关文章列表
 function toTag(tag){
-	var content = 'tagList.html?tag='+tag;
-	layer.open({
-		type : 2,
-		title : tag+'文章组',
-		skin: 'layui-layer-rim',
-		shadeClose : false,
-		shade : .3,
-		resize  : false,
-		area: ['100%', '100%'],
-		maxmin : false,
-		zIndex: layer.zIndex,
-	    success: function(layero){
-	        layer.setTop(layero);
-	    },
-		content : content
-	});
+	var content = '/communion/tagList.html?tag='+tag;
+	TmplUtils.openInNewTab(content,tag+"相关");
+//	layer.open({
+//		type : 2,
+//		title : tag+'文章组',
+//		skin: 'layui-layer-rim',
+//		shadeClose : false,
+//		shade : .3,
+//		resize  : false,
+//		area: ['100%', '100%'],
+//		maxmin : false,
+//		zIndex: layer.zIndex,
+//	    success: function(layero){
+//	        layer.setTop(layero);
+//	    },
+//		content : content
+//	});
 }
 /*searchTmpl-end*/
 /*TopListTmpl-start*/
@@ -306,26 +307,27 @@ function changeSearchStatus(status){
 function viewArticle (id){
 	var content;
 	if(role==1){
-		content = 'myArticleView.html?id='+id;
+		content = '/person/myArticleView.html?id='+id;
 	}else if(role==2){
-		content = 'atcView.html?id='+id;
+		content = '/communion/atcView.html?id='+id;
 	}
-	layer.open({
-		type : 2,
-		title : '我的文章',
-		skin: 'layui-layer-rim',
-		shadeClose : false,
-		shade : 0,
-		resize  : false,
-		scrollbar: false,
-		area: ['100%', '100%'],
-		maxmin: false,
-		zIndex: layer.zIndex,
-	    success: function(layero){
-	        layer.setTop(layero);
-	    },
-		content : content //iframe的url
-	});
+	TmplUtils.openInNewTab(content,"文章");
+//	layer.open({
+//		type : 2,
+//		title : '我的文章',
+//		skin: 'layui-layer-rim',
+//		shadeClose : false,
+//		shade : 0,
+//		resize  : false,
+//		scrollbar: false,
+//		area: ['100%', '100%'],
+//		maxmin: false,
+//		zIndex: layer.zIndex,
+//	    success: function(layero){
+//	        layer.setTop(layero);
+//	    },
+//		content : content //iframe的url
+//	});
 }
 
 //个人：设置文章属性
