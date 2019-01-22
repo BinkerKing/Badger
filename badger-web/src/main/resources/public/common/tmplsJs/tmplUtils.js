@@ -318,7 +318,7 @@ function viewArticle (id){
 	if(role==1){
 		content = '/person/myArticleView.html?id='+id;
 	}else if(role==2){
-		content = '/communion/atcView.html?id='+id;
+		content = '/communion/atcView.html?id='+id+"&authorId="+authorId;
 	}
 	TmplUtils.openInNewTab(content,"文章");
 //	layer.open({
