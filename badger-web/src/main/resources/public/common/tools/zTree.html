@@ -1,9 +1,9 @@
-<link rel="stylesheet" href="{=ctx}/widget/zTree/css/demo.css" type="text/css">
-<link rel="stylesheet" href="{=ctx}/widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-<script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery.ztree.core.js"></script>
-<script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery.ztree.excheck.js"></script>
-<script type="text/javascript" src="{=ctx}/widget/zTree/js/jquery.ztree.exedit.js"></script>
+<link rel="stylesheet" href="{=ctx}/tools/zTree/css/demo.css" type="text/css">
+<link rel="stylesheet" href="{=ctx}/tools/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="{=ctx}/tools/zTree/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/zTree/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/zTree/js/jquery.ztree.exedit.js"></script>
 <style type="text/css">
 div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
 div#rMenu ul li{
@@ -16,7 +16,7 @@ div#rMenu ul li{
 </style>
 <script>
 var zTree, rMenu;
-//zTree µÄ²ÎÊıÅäÖÃ£¬ÉîÈëÊ¹ÓÃÇë²Î¿¼ API ÎÄµµ£¨setting ÅäÖÃÏê½â£©
+//zTree ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ API ï¿½Äµï¿½ï¿½ï¿½setting ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£©
 var setting = {
 		edit: {
 			enable: true,
@@ -42,7 +42,7 @@ var setting = {
 		}
 };
 
-// zTree µÄÊı¾İÊôĞÔ£¬ÉîÈëÊ¹ÓÃÇë²Î¿¼ API ÎÄµµ£¨zTreeNode ½ÚµãÊı¾İÏê½â£©
+// zTree ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ API ï¿½Äµï¿½ï¿½ï¿½zTreeNode ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£©
 var zNodes = [
 {name:"test1", open:true, children:[
    {name:"test1_1"}, {name:"test1_2"}]},
@@ -69,7 +69,7 @@ function beforeDrop(treeId, treeNodes, targetNode, moveType) {
 	return targetNode ? targetNode.drop !== false : true;
 }
 
-//ÓÒ¼ü²Ëµ¥
+//ï¿½Ò¼ï¿½ï¿½Ëµï¿½
 function OnRightClick(event, treeId, treeNode) {
 	if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
 		zTree.cancelSelectedNode();
