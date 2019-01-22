@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>标签管理</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+</head>
+<body class="iframeBody">
+<div class="layui-row layui-col-space15">
+	<div class="layui-col-md7  layui-col-md-offset1">
+		<div id="tagsManagerTmplDiv"></div>
+	</div>
+</div>
+</body>
+<link type="include" href="/common/depjs.html" />
+<script type="text/javascript">
+var authorId = 1;
+$(function() {
+	var url = Const.apiUrl + "/tLabManager/findTLabMap";
+	var param = {};
+	param.authorId = authorId;
+	View.post(url, param, function(resp) {
+		var searchData = {};
+		searchData.lables = getLabTags(resp);
+		searchData.buttonName = "标签栏";
+		searchData.buttonFun = "addArticle()"
+		//search模板
+		tmplTools.tagsManagerTmpl.onload(searchData);
+		View.resetUi();
+	}, function() {
+		TmplUtils.showMsgFail("出错");
+	})
+});
+
+//获取标签，遍历list
+function getLabTags(resp){
+	debugger;
+	var group = [];
+	$.each(resp,function(i,item){
+		$.each(item,function(i,data){
+			var tag = {
+				name : data.labelName,
+				title : data.labelDesc,
+			}
+			group.push(tag);
+		});
+	});
+	return group;
+}
+</script>
+<script type="text/javascript" src="/common/tmplsJs/tmplUtils.js"></script>
+<link type="include" href="/common/tmpls/tagsManagerTmpl.html" />
+</html>

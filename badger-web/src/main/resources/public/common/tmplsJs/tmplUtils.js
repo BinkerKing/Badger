@@ -64,6 +64,15 @@ var tmplTools = {
 					view.innerHTML = html;
 				});
 			}
+		},
+		tagsManagerTmpl : {
+			onload : function(data){
+				var getTpl = document.getElementById("tagsManagerTmpl").innerHTML;
+				var view = document.getElementById("tagsManagerTmplDiv");
+				layui.laytpl(getTpl).render(data, function(html){
+					view.innerHTML = html;
+				});
+			}
 		}
 };
 /*全局变量*/

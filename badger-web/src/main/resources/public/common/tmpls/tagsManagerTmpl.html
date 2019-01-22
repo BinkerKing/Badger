@@ -1,0 +1,14 @@
+<script id="tagsManagerTmpl" type="text/html">
+<div class="fly-panel fly-column">
+		<ul>
+			<li>苹果系</li>
+			{{#
+				layui.each(d.lables, function(index, item){
+			}}
+			<li><a href="javascript:lableSearch('{{item.name}}');" title='{{item.title}}' style="list-style:none;text-decoration:none;">{{item.name}}</a></li>
+			{{#
+				});
+			}}
+		</ul>
+</div>
+</script>

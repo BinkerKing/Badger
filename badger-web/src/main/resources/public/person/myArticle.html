@@ -40,6 +40,19 @@ $(function() {
 	reloadView();
 });
 
+function tagManager(){
+	var url = "tagsManager.html";
+	layer.open({
+	    type: 2,
+	    content: url,
+	    title: "标签管理",
+	    shadeClose: true,
+	    shade: 0.5,
+	    maxmin: true,
+	    area: ['500px', '500px'] //宽高
+	  });
+}
+
 function reloadView(){
 	initGlobalVal(1);//1-个人
 	var url = Const.apiUrl + "/MyAtcController/getMyAtcList"

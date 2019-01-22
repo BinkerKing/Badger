@@ -16,7 +16,6 @@ div#rMenu ul li{
 </style>
 <script>
 var zTree, rMenu;
-//zTree �Ĳ������ã�����ʹ����ο� API �ĵ���setting ������⣩
 var setting = {
 		edit: {
 			enable: true,
@@ -42,7 +41,6 @@ var setting = {
 		}
 };
 
-// zTree ���������ԣ�����ʹ����ο� API �ĵ���zTreeNode �ڵ�������⣩
 var zNodes = [
 {name:"test1", open:true, children:[
    {name:"test1_1"}, {name:"test1_2"}]},
@@ -69,7 +67,6 @@ function beforeDrop(treeId, treeNodes, targetNode, moveType) {
 	return targetNode ? targetNode.drop !== false : true;
 }
 
-//�Ҽ��˵�
 function OnRightClick(event, treeId, treeNode) {
 	if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
 		zTree.cancelSelectedNode();
