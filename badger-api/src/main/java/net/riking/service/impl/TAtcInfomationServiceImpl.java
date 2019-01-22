@@ -13,9 +13,11 @@ import com.alibaba.fastjson.JSON;
 import net.riking.config.Const;
 import net.riking.entity.model.TAtcContent;
 import net.riking.entity.model.TAtcInfomation;
+import net.riking.entity.model.TAtcNote;
 import net.riking.service.TAtcInfomationService;
 import net.riking.service.repo.TAtcContentRepo;
 import net.riking.service.repo.TAtcInfomationRepo;
+import net.riking.service.repo.TAtcNoteRepo;
 
 @Service
 public class TAtcInfomationServiceImpl implements TAtcInfomationService{
@@ -25,6 +27,9 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 	
 	@Autowired
 	private TAtcContentRepo tAtcContentRepo;
+	
+	@Autowired
+	private TAtcNoteRepo tAtcNoteRepo;
 
 	@Override
 	public List<TAtcInfomation> getMyAtcList(Long authorId,String status,String search,String lable) {
@@ -108,6 +113,27 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 		tAtcInfomationList = filterSearch(tAtcInfomationList,search);
 		return tAtcInfomationList;
 	}
+
+	@Override
+	public String saveNote(TAtcNote note) {
+		tAtcNoteRepo.save(note);
+		return null;
+	}
 	
-	
+	@Override
+	public String deleteNote(Long id) {
+		tAtcNoteRepo.delete(id);
+		return null;
+	}
+
+	@Override
+	public List<TAtcNote> getNotes(Long id, Long custId) {
+		return tAtcNoteRepo.findByAtcIdAndCustId(id,custId);
+	}
+
+	@Override
+	public String updateNotes(List<TAtcNote> notes) {
+		tAtcNoteRepo.save(notes);
+		return null;
+	}
 }

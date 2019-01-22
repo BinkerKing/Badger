@@ -11,35 +11,66 @@
 <link rel="stylesheet" href="{=ctx}/fly/css/global.css">
 </head>
 <body>
-<div class="layui-collapse" lay-accordion="">
-	<div class="layui-colla-item">
-		<h2 class="layui-colla-title">layui 更适合哪些开发者？</h2>
-		<div class="layui-colla-content">
-			<textarea class="layui-textarea" name="note" style="height:300px"></textarea>
-		</div>
-	</div>	
-	<div class="layui-colla-item">
-		<h2 class="layui-colla-title">layui 更适合哪些开发者？</h2>
-		<div class="layui-colla-content">
-			<textarea class="layui-textarea" name="note1" style="height:300px"></textarea>
-		</div>
-	</div>
-	<div class="layui-colla-item">
-		<h2 class="layui-colla-title">layui 更适合哪些开发者？</h2>
-		<div class="layui-colla-content">
-			<textarea class="layui-textarea" name="note1" style="height:300px"></textarea>
-		</div>
-	</div>
-</div>
+<div id="noteDiv"></div>
 </body>
 <link type="include" href="/common/depjs.html" />
 <script>
 var form = layui.form, layer = layui.layer;
-
+var id=View.getQStr("id");
+var custId = View.getQStr("custId");
+var notes = [];
 $(function() {
-	$("textarea[name='note']").val("在前端技术快速变革的今天，layui 仍然坚持语。");
+	var url = Const.apiUrl + "/MyAtcController/getNotes"
+	var param = "id="+id+"&custId="+custId;
+	View.get(url, param, function(resp) {
+		var data = {};
+		notes = resp;
+		data.content = resp;
+		var getTpl = noteTmpl.innerHTML;
+		var view = document.getElementById("noteDiv");
+		layui.laytpl(getTpl).render(data, function(html){
+		  view.innerHTML = html;
+		});
+		View.resetUi();
+	}, function() {
+		TmplUtils.showMsgFail("出错");
+	})
 });
 
+jQuery(document).keydown(function(e) {
+	if(e.which == 83 && e.altKey) {
+		saveNotes();
+	}
+});
+
+//获取所有tip，并保存
+function saveNotes(){
+	layer.msg('笔记保存成功', function(){});
+	$.each(notes,function(i,item){
+		item.note = $("textarea[name="+item.id+"]").val();
+	});
+	var url = Const.apiUrl + "/MyAtcController/udpateNotes"
+	View.post(url, notes, function(resp) {
+	}, function() {
+		TmplUtils.showMsgFail("出错");
+	})
+}
+</script>
+<script id="noteTmpl" type="text/html">
+<div class="layui-collapse" lay-accordion="">
+	{{#
+		layui.each(d.content, function(index, item){
+	}}
+	<div class="layui-colla-item">
+		<h2 class="layui-colla-title">{{item.noteTitle}}</h2>
+		<div class="layui-colla-content">
+			<textarea class="layui-textarea" name="{{item.id}}" style="height:300px">{{item.note}}</textarea>
+		</div>
+	</div>
+	{{#
+		});
+	}}
+</div>
 </script>
 </body>
 </html>

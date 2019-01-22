@@ -24,7 +24,8 @@ z-index: 9999;
 		<div id="articleViewDiv"></div>
 </div>
 <ul class="layui-fixbar layui-fixbar-left">
-	<li class="layui-icon" lay-type="bar1" style="background-color: rgb(0, 150, 136);" onclick="note()">&#xe621;</li>
+	<li class="layui-icon" lay-type="bar2" style="background-color: rgb(0, 150, 136);" onclick="tip()" title="Alt+Enter">&#xe606;</li>
+	<li class="layui-icon" lay-type="bar1" style="background-color: rgb(0, 150, 136);" onclick="note()" title="Ctrl+Enter">&#xe6b2;</li>
 	<li class="layui-icon" lay-type="bar2" style="background-color: rgb(0, 150, 136);" onclick="edit()">&#xe642;</li>
 	<li class="layui-icon layui-fixbar-top" lay-type="top" onclick='$("html,body").animate({"scrollTop":0});' style="background-color: rgb(0, 150, 136); display: list-item;">&#xe604;</li>
 </ul>
@@ -33,9 +34,11 @@ z-index: 9999;
 <script>
 	var form = layui.form, layer = layui.layer;
 	var id = View.getQStr("id");
+	var authorId;
 	$(function() {
 		var url = Const.apiUrl + "/MyAtcController/getMyAtcView"
 		View.get(url, "id="+id, function(resp) {
+			authorId = resp.authorId;
 			var data = {};
 			resp.tatcContent.htmlContent = changeBack(resp.tatcContent.htmlContent);
 			data.article = resp;
@@ -56,30 +59,135 @@ z-index: 9999;
 		return str;
 	}
 	
-	function note(id){
-		var content = '/part/note.html?id='+id;
+	var noteFlag = false;
+	function note(){
+		var content = '/part/note.html?id='+id+'&custId='+authorId;
 		layer.open({
 			type : 2,
 			title : '笔记',
-			skin: 'layui-layer-rim',
+			skin: 'layui-layer-molv',
 			shadeClose : true,
 			shade : 0,
 			resize  : true,//拉伸
+			id: 'LAY_layuipro',
 			scrollbar: false,
-			offset: 'r',
+			offset: 'rb',
 			area: ['400px', '455px'],
 			maxmin : true, //开启最大化最小化按钮
 			zIndex: layer.zIndex,
 		    success: function(layero){
-		        layer.setTop(layero);
+		    	layer.setTop(layero);
+		    	noteFlag = true;
 		    },
-			content : content //iframe的url
+			content : [content,"no"] //iframe的url
 		});
 	}
 	
-	function edit(){
-		
+	var tipFlag = false;
+	var tipValue="";
+	function tip(){
+		if(!tipFlag){
+			var content = '<textarea id="paperText" class="layui-textarea" style="height:200px;top:0px;"></textarea>';
+			layer.open({
+				type : 1,
+				title : false,
+				closeBtn: false,
+				skin: 'layui-layer-molv',
+				shadeClose : true,
+				shade : 0,
+				resize  : false,//拉伸
+				scrollbar: false,
+				id:"paper",
+				anim: 4,
+				moveType: 1,
+				offset: 'rb',
+				area: ['400px', '200px'],
+				maxmin : false, //开启最大化最小化按钮
+				zIndex: layer.zIndex,
+			    success: function(layero){
+			        layer.setTop(layero);
+			        $("#paperText").focus();
+			        $("#paperText").val(tipValue);
+			        tipFlag = true;
+			    },
+				content : content //iframe的url
+			});
+		}else{
+			tipValue = $("#paperText").val();
+			layer.closeAll();
+			tipFlag = false;
+		}
 	}
+	
+	jQuery(document).keydown(function(e) {
+		//Ctrl+Enter-呼出笔记
+		if(e.which == 13 && e.ctrlKey) {
+			if(noteFlag){
+				layer.closeAll();
+				noteFlag = false;
+			}else{
+				note();
+			}
+		}
+		//Alt+Enter-呼出便签
+		if(e.which == 13 && e.altKey) {
+			tip();
+		}
+		//Alt+S-保存便签并关闭
+		if(e.which == 83 && e.altKey) {
+			if(tipFlag){
+				tipValue = $("#paperText").val();
+				layer.closeAll();
+				tipFlag = false;
+				if(tipValue.match(/^[ ]*$/)){
+					tipValue = "";
+					layer.msg('tip无内容', function(){
+					});
+					return;
+				}
+				layer.msg('tip已保存', function(){
+					//保存笔记--绑定用户+文章
+					var url = Const.apiUrl + "/MyAtcController/saveNote"
+					var tAtcNote = {};
+					var title = "";
+					var note = "";
+					if(tipValue.indexOf("【")>-1&&tipValue.indexOf("】")>-1){
+						title = tipValue.substring(tipValue.indexOf("【"),tipValue.indexOf("】")+1);
+						note = tipValue.substring(tipValue.indexOf("】")+1);
+					}else{
+						var time = getLocalTime();
+						title = "Tip"+"--"+time;
+						note = tipValue;
+					}
+					tAtcNote.noteTitle = title;
+					tAtcNote.note =  note;
+					tAtcNote.custId = authorId;
+					tAtcNote.atcId = id;
+					tipValue = "";
+					View.post(url, tAtcNote, function(resp) {
+					}, function() {
+						TmplUtils.showMsgFail("出错");
+					})
+				});
+			}
+		}
+	});
+	
+	$('#layerDemo .layui-btn').on('click', function(){
+	    var othis = $(this), method = othis.data('method');
+	    active[method] ? active[method].call(this, othis) : '';
+	  });
+	
+	function getLocalTime() {
+		var now = new Date();
+		var year = now.getFullYear(),
+			month = now.getMonth() + 1,
+			date = now.getDate(),
+			hour = now.getHours(),
+			minute = now.getMinutes(),
+			second = now.getSeconds();
+		return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+	}  
 </script>
 <script id="articleViewTmpl" type="text/html">
 	<div class="ques-intro-box">

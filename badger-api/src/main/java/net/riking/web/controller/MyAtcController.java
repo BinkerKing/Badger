@@ -15,6 +15,7 @@ import net.riking.core.log.InFunLog;
 import net.riking.core.log.InModLog;
 import net.riking.entity.model.SearchParam;
 import net.riking.entity.model.TAtcInfomation;
+import net.riking.entity.model.TAtcNote;
 import net.riking.service.TAtcInfomationService;
 
 @InModLog(modName = "我的手记")
@@ -52,5 +53,29 @@ public class MyAtcController {
 		if(tAtcInfomation == null)
 			return new Resp().setCode(CodeDef.ERROR);
 		return new Resp(tAtcInfomation,CodeDef.SUCCESS);
+	}
+	
+	@RequestMapping(value = "/saveNote", method = RequestMethod.POST)
+	public Resp saveNote(@RequestBody TAtcNote lc){
+		tAtcInfomationService.saveNote(lc);
+		return new Resp().setCode(CodeDef.SUCCESS);
+	}
+	
+	@RequestMapping(value = "/udpateNotes", method = RequestMethod.POST)
+	public Resp udpateNotes(@RequestBody List<TAtcNote> notes){
+		tAtcInfomationService.updateNotes(notes);
+		return new Resp().setCode(CodeDef.SUCCESS);
+	}
+	
+	@RequestMapping(value = "/deleteNote", method = RequestMethod.GET)
+	public Resp deleteNote(@RequestParam("id") Long id){
+		tAtcInfomationService.deleteNote(id);
+		return new Resp().setCode(CodeDef.SUCCESS);
+	}
+	
+	@RequestMapping(value = "/getNotes", method = RequestMethod.GET)
+	public Resp getNotes(@RequestParam("id") Long id,@RequestParam("custId") Long custId){
+		List<TAtcNote> noteList = tAtcInfomationService.getNotes(id,custId);
+		return new Resp(noteList).setCode(CodeDef.SUCCESS);
 	}
 }
