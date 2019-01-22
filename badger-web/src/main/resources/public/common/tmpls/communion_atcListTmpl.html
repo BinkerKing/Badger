@@ -22,6 +22,10 @@
 				<a href="javascript:viewArticle({{item.id}});"><b>{{item.titleInfo}}</b></a>
 			</h2>
 			<div class="fly-list-info">
+				<a href="javascript:;" link>
+					<cite>{{item.authorName}}</cite>
+				</a>
+				<span>01.22</span>
 				{{#
 					if(item.tag.length>0){
 				}}
@@ -29,9 +33,13 @@
 				{{#
 					}
 				}}
+
+				<span class="fly-list-nums"> 
+					<i class="iconfont icon-pinglun1" title="评论"></i>0
+				</span>
 			</div>
 			<div class="fly-list-badge">
-
+				<i class="layui-icon" title="赞">&#xe6c6;</i>
 			</div>
 		</li>
 		{{#
