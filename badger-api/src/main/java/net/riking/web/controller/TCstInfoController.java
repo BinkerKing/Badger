@@ -7,7 +7,7 @@ import net.riking.core.log.InModLog;
 
 @InModLog(modName = "用户信息")
 @RestController
-@RequestMapping(value = "/TCustInfoController")
+@RequestMapping(value = "/TCstInfoController")
 public class TCstInfoController {
 	
 	

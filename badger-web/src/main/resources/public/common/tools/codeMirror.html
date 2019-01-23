@@ -1,0 +1,55 @@
+<link href="{=ctx}/tools/codemirror/lib/codemirror.css" rel="stylesheet" type="text/css">
+<link href="{=ctx}/tools/codemirror/addon/display/fullscreen.css" rel="stylesheet" type="text/css">
+
+ <!--下面的css文件就是不同主题配色的css文件-->
+<link type="text/css" rel="stylesheet" href="{=ctx}/tools/codemirror/theme/monokai.css">
+<link type="text/css" rel="stylesheet" href="{=ctx}/tools/codemirror/theme/3024-day.css">
+<link type="text/css" rel="stylesheet" href="{=ctx}/tools/codemirror/theme/3024-night.css">
+
+<!-- 引入CodeMirror核心文件 -->
+<script type="text/javascript" src="{=ctx}/tools/codemirror/lib/codemirror.js"></script>
+
+<!-- CodeMirror支持不同语言，根据需要引入JS文件 -->
+<!-- 因为HTML混合语言依赖Javascript、XML、CSS语言支持，所以都要引入 -->
+<script type="text/javascript" src="{=ctx}/tools/codemirror/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/codemirror/mode/css/css.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/codemirror/mode/clike/clike.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<!-- 下面分别为显示行数、括号匹配和全屏插件 -->
+<script type="text/javascript" src="{=ctx}/tools/codemirror/addon/selection/active-line.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/codemirror/addon/edit/matchbrackets.js"></script>
+<script type="text/javascript" src="{=ctx}/tools/codemirror/addon/display/fullscreen.js"></script>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,     // 显示行数
+        firstLineNumber: 1,    // 行号从哪个数开始计数，默认为1
+        indentUnit: 4,         // 缩进单位为4
+        indentWithTabs: true,  // tab字符的宽度，默认为4
+        styleActiveLine: true, // 当前行背景高亮
+        matchBrackets: true,   // 括号匹配
+        mode: 'htmlmixed',     // HMTL混合模式
+        autofocus: true,       // 是否在初始化时自动获取焦点
+        lineWrapping: true,    // 自动换行
+        theme: 'monokai',      // 使用monokai模版
+        lineWrapping: true,    // 是否代码折叠
+        showCursorWhenSelecting:true, //在选择时是否显示光标，默认为false
+        extraKeys: {"Ctrl-Space": "autocomplete"} //智能提示
+    });
+    editor.setOption("extraKeys", {
+        // Tab键换成4个空格
+        Tab: function(cm) {
+            var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+            cm.replaceSelection(spaces);
+        },
+        // F11键切换全屏
+        "F11": function(cm) {
+            cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+        },
+        // Esc键退出全屏
+        "Esc": function(cm) {
+            if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        }
+    });
+</script>

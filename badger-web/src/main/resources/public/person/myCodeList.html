@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>标签文章组</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link type="include" href="/common/depcss.html" />
+</head>
+<body>
+<div style="padding: 10px; background-color: #F2F2F2;height:600px; width:1280px;">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md3">
+			<div class="layui-card">
+				<div class="layui-card-header">
+					<input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search">
+				</div>
+				<div class="layui-card-body" style="height:518px;">
+					<div id="codeListDiv"></div>
+				</div>
+	      </div>
+		</div>
+		<div class="layui-col-md9">
+			<div class="layui-card-header">
+				<form class="layui-form" action="">
+					<div class="layui-row layui-col-space15">
+						<div class="layui-col-md6">
+							<input id="title" type="text" placeholder="" autocomplete="off" class="layui-input">
+						</div>
+						<div class="layui-col-md3">
+							<select name="themeFilter" lay-filter="themeFilter" lay-search="">
+								<option value="monokai" selected>monokai</option>
+								<option value="3024-day">3024-day</option>
+								<option value="3024-night">3024-night</option>
+							</select>
+						</div>
+						<div class="layui-col-md3">
+							<select name="modFilter" lay-filter="modFilter" lay-search="">
+								<option value="htmlmixed" selected>htmlmixed</option>
+								<option value="css">css</option>
+								<option value="clike">clike</option>
+								<option value="javascript">javascript</option>
+								<option value="xml">xml</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="layui-card-body">
+				<textarea id="code" name="code"></textarea>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<link type="include" href="/common/depjs.html" />
+<link type="include" href="/common/tools/codeMirror.html" />
+<script>
+	/*全局定义*/
+	var form = layui.form, layer = layui.layer;
+	var custId = 1;
+	
+	var val = "";
+	
+	form.on('select(themeFilter)', function(data){
+		val = editor.getValue();
+		editor.setOption("theme", data.value);
+	});
+	
+	form.on('select(modFilter)', function(data){
+		editor.setValue(val);
+		editor.setOption("mode", data.value);
+	});
+	
+	$(function() {
+		//获取用户所有代码块信息
+		var url =  Const.apiUrl + "/TCdeInfoController/getCodeList"
+		View.get(url, "custId="+custId, function(resp) {
+			var data = {};
+			data.codes = resp;
+			var getTpl = document.getElementById("titleListTmpl").innerHTML;
+			var view = document.getElementById("codeListDiv");
+			layui.laytpl(getTpl).render(data, function(html){
+				view.innerHTML = html;
+			});
+		}, function() {
+			TmplUtils.showMsgFail("出错");
+		})
+		//渲染模板
+		
+	});
+	
+	function getContent(id){
+		var url =  Const.apiUrl + "/TCdeInfoController/getCodeContent"
+		View.get(url, "infoId="+id, function(resp) {
+			$("#title").val(resp.title);
+			editor.setValue(resp.tcdeContentList[0].content);
+			editor.setOption("mode", resp.tcdeContentList[0].mode);
+			editor.setOption("theme", resp.tcdeContentList[0].theme);
+		}, function() {
+			TmplUtils.showMsgFail("出错");
+		})
+	}
+</script>
+<script id="titleListTmpl" type="text/html">
+<ul>
+	{{#
+		layui.each(d.codes, function(index, item){
+			var shortTitle = item.title;
+			if(item.title.length>20){
+				shortTitle = item.title.substring(0,20) + "...";
+			}
+	}}
+		<li><a href="javascript:getContent({{item.id}});" title="{{item.title}}">{{shortTitle}}</a><hr></li>
+	{{#
+		});
+	}}
+</ul>
+</script>
+</html>
