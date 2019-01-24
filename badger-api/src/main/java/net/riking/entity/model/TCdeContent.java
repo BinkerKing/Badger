@@ -26,18 +26,18 @@ public class TCdeContent {
 	@Column(name = "info_id")
 	private Long infoId;
 	
+	@Comment("文件名")
+	@Column(name = "file_name")
+	private String fileName;
+	
 	@Lob
 	@Comment("内容")
 	@Column(name = "content")
 	private String content;
 	
-	@Comment("编辑框样式")
-	@Column(name = "theme")
-	private String theme;
-	
 	@Comment("代码格式")
-	@Column(name = "mod")
-	private String mod;
+	@Column(name = "mode")
+	private String mode;
 	
 	@Comment("备注")
 	@Column(name = "note")
