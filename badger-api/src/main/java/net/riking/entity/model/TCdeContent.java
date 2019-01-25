@@ -14,6 +14,7 @@ import net.riking.core.annos.Comment;
 @Entity
 @Getter
 @Setter
+@Comment("代码内容表")
 @Table(name = "T_CDE_CONTENT")
 public class TCdeContent {
 

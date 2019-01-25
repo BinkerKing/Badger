@@ -13,6 +13,7 @@ import net.riking.core.annos.Comment;
 @Entity
 @Getter
 @Setter
+@Comment("用户信息表")
 @Table(name = "T_CST_INFO")
 public class TCstInfo {
 

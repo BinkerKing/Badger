@@ -13,6 +13,7 @@ import net.riking.core.annos.Comment;
 @Entity
 @Getter
 @Setter
+@Comment("猿问评论表")
 @Table(name = "T_ASK_COMMENT")
 public class TAskComment {
 

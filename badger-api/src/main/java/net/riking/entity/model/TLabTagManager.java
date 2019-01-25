@@ -13,6 +13,7 @@ import net.riking.core.annos.Comment;
 @Entity
 @Getter
 @Setter
+@Comment("标签表")
 @Table(name = "T_LAB_TAG_MANAGER")
 public class TLabTagManager {
 

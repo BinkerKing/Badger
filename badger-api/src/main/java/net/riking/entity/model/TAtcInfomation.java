@@ -20,6 +20,7 @@ import net.riking.core.annos.Comment;
 @Entity
 @Getter
 @Setter
+@Comment("手记信息表")
 @Table(name = "T_ATC_INFOMATION")
 public class TAtcInfomation {
 

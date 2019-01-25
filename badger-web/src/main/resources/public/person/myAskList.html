@@ -2,22 +2,150 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>标签文章组</title>
+<title>我的手记列表</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link type="include" href="/common/depcss.html" />
+<link rel="stylesheet" href="{=ctx}/fly/css/global.css">
 </head>
 <body>
+<div class="layui-row layui-col-space15">
+	<div class="layui-col-md7  layui-col-md-offset1">
+		<div id="person_searchTmplDiv"></div>
+		<div id="person_atcListTmplDiv"></div>
+	</div>
+	<div class="layui-col-md3">
+		<div id="person_outlineTmplDiv"></div>
+		<div id="searchResultTmplDiv"></div>
+	</div>
+	<ul class="layui-fixbar">
+		<li class="layui-icon" lay-type="bar1" style="background-color:#009688" onclick="addArticle()"></li>
+		<li class="layui-icon layui-fixbar-top" lay-type="top" onclick='$("html,body").animate({"scrollTop":0});' style="background-color: rgb(0, 150, 136); display: list-item;"></li>
+	</ul>
+</div>
 </body>
 <link type="include" href="/common/depjs.html" />
 <script>
-	/*全局定义*/
-	var form = layui.form, layer = layui.layer;
-	$(function() {
+var form = layui.form, layer = layui.layer;
+var authorId = 1;
+
+jQuery(document).keydown(function(e) {
+	if(e.which == 13 && e.ctrlKey) {
+		searchTitle();
+	}
+});
+
+$(function() {
+	reloadView();
+	window.focus();
+});
+
+function tagManager(){
+	var url = "/manager/tagsManager.html";
+	layer.open({
+	    type: 2,
+	    content: url,
+	    title: "标签管理",
+	    shadeClose: true,
+	    shade: 0.5,
+	    maxmin: true,
+	    area: ['500px', '500px'] //宽高
+	  });
+}
+
+function reloadView(){
+	initGlobalVal(1);//1-个人
+	var url = Const.apiUrl + "/MyAtcController/getMyAtcList"
+	var param = {};
+	param.authorId = authorId;
+	param.status= search_status;
+	View.post(url, param, function(resp) {
+		AtcList = resp;
+		eachMyAtcList();
+		var searchData = {};
+		searchData.lables = MyAllTag;
+		searchData.buttonName = "写文章";
+		searchData.buttonFun = "addArticle()"
+		//data.article = resp;
+		//search模板
+		tmplTools.person_searchTmpl.onload(searchData);
+		//articleList模板
+		var listData = {};
+		listData.article = resp;
+		tmplTools.person_atcListTmpl.onload(listData);
+		//outline模板
+		var outlineData = {};
+		outlineData.mod = "all";
+		outlineData.unpublish = Outline_unpublish;
+		outlineData.publish = Outline_publish;
+		outlineData.like = Outline_like;
+		outlineData.see = Outline_view;
+		tmplTools.person_outlineTmpl.onload(outlineData);
 		
+		//outline模板
+		var searchResultData = {};
+		tmplTools.searchResultTmpl.onload(searchResultData);
 		
+		View.resetUi();
+	}, function() {
+		TmplUtils.showMsgFail("出错");
+	})
+}
+
+function eachMyAtcList(){
+	$.each(AtcList,function(i,item){
+		//获取我的所有标签
+		var labelGroup = item.labelGroup;
+		var lables = JSON.parse(labelGroup);
+		for ( var i = 0; i <lables.length; i++){
+			if(!isInArray(MyAllTag,lables[i])){
+				var lableObj = {};
+				lableObj.name = lables[i];
+				MyAllTag.push(lableObj);
+			}
+		}
+		//获取发布组和未发布组
+		if(item.publishStatus == 1){
+			Outline_publish ++;
+			PublishList.push(item);
+		}else{
+			Outline_unpublish ++;
+			UnPublishList.push(item);
+		}
+		//统计查看总数和点赞总数
+		Outline_like += item.likeCount;
+		Outline_view += item.scanCount;
+		
+		//获取标星组
+		if(item.starFlag == 1){
+			GoodList.push(item);
+		}
 	});
+}
+
+function isInArray(arr,value){
+    for(var i = 0; i < arr.length; i++){
+        if(value === arr[i].name){
+            return true;
+        }
+    }
+    return false;
+}
+
+View.setEvent("TB_DATA_CHANGE", function(arg) {
+	reloadView();
+    if (!!arg && arg.window) {
+        var index = layer.getFrameIndex(arg.window); //获取窗口索引
+        layer.close(index);
+    }
+});
+
 </script>
+<script type="text/javascript" src="/common/tmplsJs/tmplUtils.js"></script>
+<link type="include" href="/common/tmpls/person_searchTmpl.html" />
+<link type="include" href="/common/tmpls/person_atcListTmpl.html" />
+<link type="include" href="/common/tmpls/person_outlineTmpl.html" />
+<link type="include" href="/common/tmpls/searchResultTmpl.html" />
+</body>
 </html>

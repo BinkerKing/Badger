@@ -14,6 +14,7 @@ import net.riking.core.annos.Comment;
 @Entity
 @Getter
 @Setter
+@Comment("手记笔记表")
 @Table(name = "T_ATC_NOTE")
 public class TAtcNote {
 

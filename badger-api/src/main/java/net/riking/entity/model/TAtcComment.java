@@ -13,6 +13,7 @@ import net.riking.core.annos.Comment;
 @Entity
 @Getter
 @Setter
+@Comment("手记评论表")
 @Table(name = "T_ATC_COMMENT")
 public class TAtcComment {
 
@@ -25,8 +26,5 @@ public class TAtcComment {
 	@Column(name = "pet_name")
 	private String petName;
 
-	
-	
-	
 	
 }

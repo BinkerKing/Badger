@@ -14,6 +14,7 @@ import net.riking.core.annos.Comment;
 @Entity
 @Getter
 @Setter
+@Comment("标签组表")
 @Table(name = "T_LAB_GRP_MANAGER")
 public class TLabGrpManager {
 
