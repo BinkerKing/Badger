@@ -14,10 +14,12 @@ import net.riking.config.Const;
 import net.riking.entity.model.TAtcContent;
 import net.riking.entity.model.TAtcInfomation;
 import net.riking.entity.model.TAtcNote;
+import net.riking.entity.model.TCltInfo;
 import net.riking.service.TAtcInfomationService;
 import net.riking.service.repo.TAtcContentRepo;
 import net.riking.service.repo.TAtcInfomationRepo;
 import net.riking.service.repo.TAtcNoteRepo;
+import net.riking.service.repo.TCltInfoRepo;
 
 @Service
 public class TAtcInfomationServiceImpl implements TAtcInfomationService{
@@ -30,7 +32,7 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 	
 	@Autowired
 	private TAtcNoteRepo tAtcNoteRepo;
-
+	
 	@Override
 	public List<TAtcInfomation> getMyAtcList(Long authorId,String status,String search,String lable) {
 		List<TAtcInfomation> tAtcInfomationList = new ArrayList<>();
@@ -136,4 +138,5 @@ public class TAtcInfomationServiceImpl implements TAtcInfomationService{
 		tAtcNoteRepo.save(notes);
 		return null;
 	}
+
 }

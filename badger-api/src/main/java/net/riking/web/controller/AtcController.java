@@ -40,4 +40,5 @@ public class AtcController {
 		List<TAtcInfomation> tAtcInfomationList = tAtcInfomationService.getAtcList(param.getStatus(),param.getSearch(),param.getLable());
 		return new Resp(tAtcInfomationList,CodeDef.SUCCESS);
 	}
+	
 }

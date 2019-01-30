@@ -184,14 +184,7 @@
 			"window" : window.name
 		});
 	}
-	View.setEvent("TB_DATA_CHANGE", function(arg) {
-	    if (!!arg && arg.window) {
-	        var index = layer.getFrameIndex(arg.window); //获取窗口索引
-	        layer.close(index);
-	    }
-	    $("input[name='title']").val(TAtcInfomation.titleInfo)
-    	View.resetUi();
-	});
+	
 	function getInfoById(){
 		
 	}

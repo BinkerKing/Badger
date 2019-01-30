@@ -26,4 +26,5 @@ public interface TAtcInfomationService {
 	public List<TAtcNote> getNotes(Long id,Long custId);
 	
 	public String updateNotes(List<TAtcNote> notes);
+	
 }

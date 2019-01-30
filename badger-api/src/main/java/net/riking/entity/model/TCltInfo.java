@@ -26,10 +26,14 @@ public class TCltInfo {
 	@Comment("客户ID")
 	@Column(name = "cust_id")
 	private Long custId;
+	
+	@Comment("文章类型 1-手记 2-猿问 3-代码块 4-知识树")
+	@Column(name = "type")
+	private String type;
 
 	@Comment("手记ID")
 	@Column(name = "atc_id")
-	private String atcId;
+	private Long atcId;
 	
 	@Comment("手记标题")
 	@Column(name = "atc_title")
@@ -41,7 +45,7 @@ public class TCltInfo {
 	
 	@Comment("猿问ID")
 	@Column(name = "ask_id")
-	private String askId;
+	private Long askId;
 	
 	@Comment("猿问标题")
 	@Column(name = "ask_title")

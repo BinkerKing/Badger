@@ -35,6 +35,7 @@ z-index: 9999;
 	var form = layui.form, layer = layui.layer;
 	var id = View.getQStr("id");
 	var authorId = View.getQStr("authorId");
+	var collectFlag = 0;//0-未收藏 1-已收藏
 	$(function() {
 		var url = Const.apiUrl + "/MyAtcController/getMyAtcView"
 		View.get(url, "id="+id, function(resp) {
@@ -51,6 +52,27 @@ z-index: 9999;
 			TmplUtils.showMsgFail("出错");
 		})
 	});
+	
+	function getCollectInfo(){
+		var url = Const.apiUrl + "/MyCltController/getCollectInfo"
+		var param = "type=1&id="+id+"&custId="+authorId;
+		View.get(url, param, function(resp) {
+			//根据状态更改收藏标记
+			if(resp){
+				//已收藏
+				alert("已收藏");
+				collectFlag = 1;
+				//显示便签+收藏灯亮
+			}else{
+				//未收藏
+				alert("未收藏");
+				collectFlag = 0;
+				//隐藏便签+收藏灯关
+			}
+		}, function() {
+			TmplUtils.showMsgFail("出错");
+		})
+	}
 	
 	function changeBack(str){
 		str = str.replace(new RegExp("&#60;",'g'),"<");
@@ -119,6 +141,10 @@ z-index: 9999;
 	}
 	
 	jQuery(document).keydown(function(e) {
+		if(collectFlag == 0 ){
+			//未收藏快捷键失效
+			return;
+		}
 		//Ctrl+Enter-呼出笔记
 		if(e.which == 13 && e.ctrlKey) {
 			if(noteFlag){
@@ -187,6 +213,17 @@ z-index: 9999;
 			second = now.getSeconds();
 		return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
 	}  
+	
+	//收藏
+	function collect(){
+		var url = Const.apiUrl + "/MyCltController/collect";
+		var param = "type=1&id="+id+"&custId="+authorId;
+		View.get(url,param,function(){
+			//收藏成功后操作
+		},function(){
+			
+		});
+	}
 </script>
 <script id="articleViewTmpl" type="text/html">
 	<div class="ques-intro-box">
