@@ -37,6 +37,10 @@ public class TCdeInfo {
 	@Column(name = "note")
 	private String note;
 	
+	@Comment("列表")
+	@Column(name = "file_list_json")
+	private String fileListJson;
+	
 	@Transient
 	private List<TCdeContent> tcdeContentList;
 	

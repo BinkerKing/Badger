@@ -23,10 +23,10 @@ public class TCdeInfoServiceImpl implements TCdeInfoService{
 	@Override
 	public List<TCdeInfo> getCodeList(Long custId) {
 		List<TCdeInfo> tCdeInfoList = tCdeInfoRepo.findByCustId(custId);
-		for(TCdeInfo info : tCdeInfoList){
-			List<TCdeContent> contentList = tCdeContentRepo.findByInfoId(info.getId());
-			info.setTcdeContentList(contentList);
-		}
+//		for(TCdeInfo info : tCdeInfoList){
+//			List<TCdeContent> contentList = tCdeContentRepo.findByInfoId(info.getId());
+//			info.setTcdeContentList(contentList);
+//		}
 		return tCdeInfoList;
 	}
 
@@ -39,24 +39,15 @@ public class TCdeInfoServiceImpl implements TCdeInfoService{
 	}
 
 	@Override
-	public TCdeInfo save(TCdeInfo info) {
-		Integer flag = 0 ;//初始化
-		if(info.getId()==null){
-			flag = 1;//首次保存
-		}
-		TCdeInfo result = new TCdeInfo();
-		result = tCdeInfoRepo.save(info);
-		if(flag==1){
-			//首次保存
-			info.getTcdeContentList().get(0).setInfoId(result.getId());
-		}else{
-			for(TCdeContent content : info.getTcdeContentList()){
-				content.setInfoId(result.getId());
-			}
-		}
-		List<TCdeContent> contents = tCdeContentRepo.save(info.getTcdeContentList());
-		result.setTcdeContentList(contents);
-		return result;
+	public TCdeInfo saveCode(TCdeInfo info) {
+		info = tCdeInfoRepo.save(info);
+		return info;
+	}
+	
+	@Override
+	public TCdeContent saveContent(TCdeContent content) {
+		content = tCdeContentRepo.save(content);
+		return content;
 	}
 
 	@Override

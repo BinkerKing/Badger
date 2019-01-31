@@ -2,101 +2,59 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>标签文章组</title>
+<title>我的代码块</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link type="include" href="/common/depcss.html" />
 </head>
-<body>
-<div style="padding: 10px; background-color: #F2F2F2;">
-	<div class="layui-row layui-col-space15">
-		<div class="layui-col-md3">
-			<button class="layui-btn layui-btn-lg layui-btn-normal" onclick="add()">新增代码块</button>
-			<div class="layui-card-header">
-				<input id="search" type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search">
-			</div>
-			<div class="layui-card-body">
-				<div id="codeListDiv"></div>
-			</div>
-		</div>
-		<div class="layui-col-md9">
-			<div class="layui-card-body">
-				<div class="layui-collapse" lay-accordion="">
-					<div class="layui-colla-item">
-						<h2 id="operateType" class="layui-colla-title"></h2>
-						<div class="layui-colla-content layui-show">
-							<div class="layui-row layui-col-space15">
-								<div class="layui-col-md6">
-									<div class="layui-card">
-										<form class="layui-form" action="">
-											<div class="layui-form-item">
-												<div class="layui-inline">
-													<label class="layui-form-label">标题</label>
-													<div class="layui-input-inline">
-														<input id="title" type="text" placeholder="" autocomplete="off" class="layui-input" style="width:400px;">
-													</div>
-												</div>
-											</div>
-											<div class="layui-form-item">
-												<div class="layui-inline">
-													<label class="layui-form-label">说明</label>
-													<div class="layui-input-inline">
-														<textarea id="note" class="layui-input" style="height:100px; width:400px;"></textarea>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
-								<div class="layui-col-md4">
-									<fieldset class="layui-elem-field site-demo-button" style="height:150px;color:red;">
-  										<legend>代码块</legend>
-										<div id="fileListDiv"></div>
-									</fieldset>
-								</div>
-								<div class="layui-col-md1">
-									<button class="layui-btn layui-btn-lg layui-btn-normal" onclick="save()">保存代码</button>
-									<button class="layui-btn layui-btn-lg layui-btn-normal" onclick="addFile()">添加代码</button>
-									<button class="layui-btn layui-btn-lg layui-btn-normal" onclick="deleteFile()">删除代码</button>
-								</div>
-							</div>
+<body class="iframeBody">
+	<div class="scrollbar">
+		<div class="content">
+			<div class="main-panel-pos main-panel-two">
+				<div class="main-panel-left" lay-filter="side">
+					<div class="layui-side-scroll">
+						<div id="sidebar" class="rk-panel-header">
+							<h3>代码块</h3>
+							<span class="right-btn-bg-n" onclick="addCode()"  id="add-data">
+								<i class="iconfont icon-tianjia" title="添加"></i>
+							</span>
+						</div>
+				 	  	<div class="rk-panel-list-search-wrapper">
+			 	  	  		<input placeholder="搜索" class="layui-input rk-input-search" type="text">
+				 	  	  	<span class="rk-panel-list-search-action"><i class="iconfont icon-sousuo"></i></span>
+			 	  	  	</div>
+						<div class="rk-panel-content rk-panel-list-search">
+							 <ul class="layui-nav layui-nav-tree layui-form" id="codeList"></ul>
 						</div>
 					</div>
 				</div>
-			</div>
-				<div class="layui-card-header">
-					<form class="layui-form" action="">
-						<div class="layui-row layui-col-space15">
-							<div class="layui-col-md5">
-								<input id="fileName" type="text" placeholder="" autocomplete="off" class="layui-input">
-							</div>
-							<div class="layui-col-md3 layui-col-md-offset1">
-								<select name="themeFilter" lay-filter="themeFilter" lay-search="">
-									<option value="monokai" selected>monokai</option>
-									<option value="3024-day">3024-day</option>
-									<option value="3024-night">3024-night</option>
-								</select>
-							</div>
-							<div class="layui-col-md3">
-								<select id="mode" name="modeFilter" lay-filter="modeFilter" lay-search="">
-									<option value="htmlmixed" selected>htmlmixed</option>
-									<option value="css">css</option>
-									<option value="clike">clike</option>
-									<option value="javascript">javascript</option>
-									<option value="xml">xml</option>
-								</select>
-							</div>
+				<div class="main-panel-left" lay-filter="side" style="margin-left:255px;">
+					<div class="layui-side-scroll">
+						<div id="sidebar" class="rk-panel-header">
+							<h3>代码</h3>
+							<span class="right-btn-bg-n" onclick="addFile()"  id="add-data">
+								<i class="iconfont icon-tianjia" title="添加"></i>
+							</span>
 						</div>
-					</form>
+						<div class="rk-panel-content rk-panel-list-search">
+							 <ul class="layui-nav layui-nav-tree" id="fileList"></ul>
+						</div>
+					</div>
 				</div>
-				<div class="layui-card-body">
-					<textarea id="code" name="code"></textarea>
+				<div class="main-panel-right" style="margin-left:510px">
+					<div class="layui-side-scroll">
+						<div id="sidebar" class="rk-panel-header">
+							<h3>fileName</h3>
+						</div>
+						<div class="rk-panel-content">
+							<textarea id="code" name="code"></textarea>
+						 </div>
+					</div>
 				</div>
+			</div>
 		</div>
 	</div>
-</div>
 </body>
 <link type="include" href="/common/depjs.html" />
 <link type="include" href="/common/tools/codeMirror.html" />
@@ -104,250 +62,120 @@
 	/*全局定义*/
 	var form = layui.form, layer = layui.layer;
 	var custId = 1;
-	var CodeInfoList = [];//所有 的code列表
-	var CurCodeInfoId = 0;
-	var CurCodeInfo = {};
-	var CurCodeContent = {};
 	
-	form.on('select(themeFilter)', function(data){
-		editor.setOption("theme", data.value);
-	});
-	
-	form.on('select(modeFilter)', function(data){
-		editor.setOption("mode", data.value);
+	$(function(){
+		//同步渲染模板
+		var funs = [loadCodes];
+		View.deferred(funs,function(obj){
+			funs = [loadFiles];
+			View.deferred(funs,function(obj){
+				loadContent();
+			});
+		});
 	});
 	
 
-	$("#search").on("change",function(){
-		var result = search($(this).val());
-		var data = {};
-		data.content = result;
-		loadCodeListTmpl(data);
-	})
-	$("#search").bind("keydown",function(e){   
-	    var theEvent = e || window.event;  
-	    var code = theEvent.keyCode || theEvent.which || theEvent.charCode;    
-	    if (code == 13) {//回车执行
-	    	//window.focus();
-        }
-	});
+	//codeList全局变量
+	var CodeList;//所有code列表--包含fileList
+	var CurCode;//当前code
+	var CurContent;//当前内容
 	
-	$(function() {
+	//加载codeList
+	function loadCodes(obj,callbackFun){
 		//获取用户所有代码块信息
 		var url =  Const.apiUrl + "/TCdeInfoController/getCodeList"
-		View.get(url, "custId="+custId, function(resp) {
-			CodeInfoList = resp;
-			var data = {};
-			data.content = resp;
-			loadCodeListTmpl(data);
+		View.get(url, "custId="+custId, function(ds) {
+			if(ds && ds.length > 0){
+				CurCode = ds[0];
+			}
+			CodeList = ds;
+			drawCodes(callbackFun);
 		}, function() {
 			TmplUtils.showMsgFail("出错");
 		})
-		//渲染模板
-		
-	});
-	
-	function loadCodeListTmpl(data){
-		var getTpl = document.getElementById("titleListTmpl").innerHTML;
-		var view = document.getElementById("codeListDiv");
-		layui.laytpl(getTpl).render(data, function(html){
-			view.innerHTML = html;
-		});
-		View.resetUi();
 	}
 	
-	function loadFileListTmpl(data){
-		var getTpl = document.getElementById("fileListTmpl").innerHTML;
-		var view = document.getElementById("fileListDiv");
-		layui.laytpl(getTpl).render(data, function(html){
-			view.innerHTML = html;
+	//绘制codeList模板
+	function drawCodes(callbackFun){
+		drawTmpl({
+			"container" : $("#codeList"),
+			"tmpl" : $("#codeListTmpl").html(),
+		},function(callback){
+			callback.call(this,CodeList);//数据
+			callbackFun.call();
+		},function(){
+			$("#codeList li").eq(0).addClass("layui-this");
 		});
-		View.resetUi();
 	}
 	
-	//通过codeInfoid 获取代码组信息
-	function getContent(id){
-		CurCodeInfoId = id;//当前展示的代码组id
-		var codeInfo = searchById(id);
-		var codeContent = codeInfo.tcdeContentList[0];//第一个code
-		CurCodeContent = codeContent;
-		$("#title").val(codeInfo.title);
-		$("#note").val(codeInfo.note);
-		$("#fileName").val(codeContent.fileName);
-		editor.setValue(codeContent.content);
-		editor.setOption("mode", codeContent.mode);
-		var data ={};
-		data.content = codeInfo.tcdeContentList;
-		loadFileListTmpl(data);
-		/*
-		var url =  Const.apiUrl + "/TCdeInfoController/getCodeContent"
-		View.get(url, "infoId="+id, function(resp) {
-			$("#fileName").val(resp.title);
-			editor.setValue(resp.tcdeContentList[0].content);
-			editor.setOption("mode", resp.tcdeContentList[0].mode);
+	//加载fileList
+	function loadFiles(obj,callbackFun){
+		drawFiles(callbackFun);
+	}
+	
+	//绘制fileList模板
+	function drawFiles(callbackFun){
+		var fileList = JSON.parse(CurCode.fileListJson);
+		drawTmpl({
+			"container" : $("#fileList"),
+			"tmpl" : $("#fileListTmpl").html(),
+		},function(callback){
+			callback.call(this,fileList);//数据
+			callbackFun.call();
+		},function(){
+			$("#fileList li").eq(0).addClass("layui-this");
+		});
+	}
+	
+	//加载内容
+	function loadContent(obj,callbackFun){
+		var fileList = JSON.parse(CurCode.fileListJson);
+		var contentId = fileList[0].id;
+		//获取当前内容
+		var url =  Const.apiUrl + "/TCdeInfoController/getContent"
+		View.get(url, "contentId="+contentId, function(ds) {
+			CurContent = ds;
+			editor.setValue(CurContent.content);
 		}, function() {
 			TmplUtils.showMsgFail("出错");
-		})*/
-		
+		})
 	}
 	
-	function searchById(id){
-		var code = {};
-		$.each(CodeInfoList,function(i,item){
-			if(item.id == id){
-				CurCodeInfo = item;
-				code = item;
-				return false;
-			}
+	//模板绘制方法
+	function drawTmpl(opt,bindFun,finishFun){
+		var tmpl = new View.Tmpl(opt);
+		tmpl.onFinish(finishFun);
+		tmpl.onload(function(){
+			tmpl.bind(bindFun);
 		});
-		return code;
-	}
-	
-	//搜索需要优化
-	function search(info){
-		debugger;
-		if(!info)
-			return CodeInfoList;
-		var result=[];
-		$.each(CodeInfoList,function(i,item){
-			if(item.title.indexOf(info)>-1){
-				result.push(item);
-			}
-		});
-		return result;
-	}
-	
-	//新增按钮
-	function add(){
-		//检查是否需要保存，并弹框提醒
-		//清空
-		$("#title").val("");
-		$("#note").val("");
-		$("#fileName").val("");
-		editor.setValue("");
-		//清空代码块，并刷新
-		var data = {};
-		data.content = [];
-		loadFileListTmpl(data);
-		//清除全局变量
-		CurCodeInfoId = 0;
-		CurCodeInfo = {};
-		//样式变更
-		$("#operateType").text('新增');
 	}
 	
 	function save(){
-		var codeInfo = {};
-		if(CurCodeInfo.custId == null){
-			//首次保存
-			codeInfo.custId = custId;
-			codeInfo.title = $("#title").val();
-			codeInfo.note = $("#note").val();
-			codeInfo.tcdeContentList = [];
-			codeInfo.tcdeContentList[0]={};
-			codeInfo.tcdeContentList[0].fileName = $("#fileName").val();
-			codeInfo.tcdeContentList[0].mode = $("#mode").val();
-			codeInfo.tcdeContentList[0].content = editor.getValue();
-		}else{
-			debugger;
-			codeInfo = CurCodeInfo;
-			codeInfo.title = $("#title").val();
-			codeInfo.note = $("#note").val();
-			codeInfo.tcdeContentList = [];
-			var codeContent = {};
-			//修改
-			if(CurCodeContent.id!=null){
-				codeContent = CurCodeContent;
-			}
-			codeContent.fileName = $("#fileName").val();
-			codeContent.mode = $("#mode").val();
-			codeContent.content = editor.getValue();
-			codeInfo.tcdeContentList[0]=codeContent;
-		}
 		
-		var url =  Const.apiUrl + "/TCdeInfoController/save"
-		View.post(url, codeInfo, function(resp) {
-			CurCodeContent = resp.tcdeContentList[0];
-			var id = resp.id;
-			var url1 =  Const.apiUrl + "/TCdeInfoController/getCodeList"
-			View.get(url1, "custId="+custId, function(resp2) {
-				CodeInfoList = resp2;
-				var data = {};
-				data.content = resp2;
-				loadCodeListTmpl(data);
-				
-				var codeInfo = searchById(id);
-				var contentData={};
-				contentData.content = codeInfo.tcdeContentList;
-				loadFileListTmpl(contentData);	
-			}, function() {
-				TmplUtils.showMsgFail("出错");
-			});
-		}, function() {
-			TmplUtils.showMsgFail("出错");
-		});
 	}
 	
-	function changeFile(id){
-		var content = {};
-		var codeList = CurCodeInfo.tcdeContentList;
-		debugger;
-		for(var i=0;i<codeList.length;i++){
-			if(codeList[i].id==id){
-				CurCodeContent = codeList[i];
-				content = codeList[i].content;
-				$("#fileName").val(codeList[i].fileName);
-				editor.setOption("mode", codeList[i].mode);
-				editor.setValue(content);
-				return;
-			}
-		}
+	function editFile(){
+		
 	}
 	
-	function addFile(){
-		CurCodeContent={};
-		$("#fileName").val("");
-		editor.setValue("");
+	function removeFile(){
+		
 	}
 	
-	function deleteFile(){
-		if(CurCodeContent.id==null){
-			addFile();
-			return;
-		}
-		var url =  Const.apiUrl + "/TCdeInfoController/deleteCodeContent"
-		View.get(url, "id="+CurCodeContent.id+"&custId="+custId, function(resp) {
-			CodeInfoList = resp;
-			getContent(CurCodeContent.infoId);
-		}, function() {
-			TmplUtils.showMsgFail("出错");
-		});
-	}
 </script>
-<script id="titleListTmpl" type="text/html">
-<ul class="fly-list">
-	{{#
-		layui.each(d.content, function(index, item){
-			var shortTitle = item.title;
-			if(item.title.length>20){
-				shortTitle = item.title.substring(0,20) + "...";
-			}
-	}}
-		<li><a href="javascript:getContent({{item.id}});" title="{{item.title}}">{{shortTitle}}</a><hr></li>
-	{{#
-		});
-	}}
-</ul>
+<script id="codeListTmpl" type="text/tmpl">
+{{#
+	layui.each(d, function(index, item){
+}}
+<li class="layui-nav-item"><a href="javascript:">{{=item.title}}</a></li>
+{{# }); }}
 </script>
-<script id="fileListTmpl" type="text/html">
-<ul>
-	{{#
-		layui.each(d.content, function(index, item){
-	}}
-		<li><a href="javascript:changeFile({{item.id}});">{{item.fileName}}</a><hr></li>
-	{{#
-		});
-	}}
-</ul>
+<script id="fileListTmpl" type="text/tmpl">
+{{#
+	layui.each(d, function(index, item){
+}}
+<li class="layui-nav-item " title="{{=item.fileName}}">
+<a href="javascript:editFile({{=item.id}})">{{=item.fileName}}</a><i class="iconfont icon-delete" onclick="removeFile({{=item.id}})" title="删除"></i></li>
+{{# }); }}
 </script>
 </html>

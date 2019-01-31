@@ -1,0 +1,151 @@
+@charset "utf-8";
+
+/*内容*/
+.formboxShort{
+	padding:40px 0 50px;
+}
+.formboxShort .layui-form-item .layui-input-inline{
+	width: auto;
+    display: inline-block;
+    margin: 0;
+}
+.formboxShort .layui-form-label{
+	width:150px;
+	    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.formboxShort .layui-input,.formboxImport .layui-textarea{
+	display: inline-block;
+	width:200px;
+}
+.formboxShort  .layui-form-select .layui-select-title{
+	width: 168px;
+}
+.formboxShort .layui-input-block{
+	margin-left:180px;
+	min-height:auto;
+}
+.formboxShort .layui-btn{
+	min-width:60px;
+}
+.formboxShort .word-aux-tip{
+	font-size:12px;
+	padding:5px 0 0!important;
+}
+.formboxShort .layui-form-mid{
+	padding: 5px 0!important;
+	margin-left:10px;
+	display:none;
+}
+
+.etl-editformbar{
+	 padding: 20px 65px 0px 45px;
+}
+.etl-editformbar .layui-form-item .layui-input-inline{
+	width: auto;
+    display: inline-block;
+    margin: 0;
+}
+.etl-editformbar .layui-form-label{
+	width:150px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.etl-editformbar  .layui-input,.etl-editformbar .layui-textarea{
+	display: inline-block;
+	width:240px;
+}
+.etl-editformbar  .layui-textarea{
+	min-height:60px;
+}
+.etl-editformbar .layui-form-select .layui-select-title{
+	width:208px;
+}
+.etl-editformbar .layui-form-item{
+	margin-bottom:10px;
+}
+.etl-editformbar .layui-form-radio{
+	margin-top:2px;
+}
+.etl-editformbar .identifier{
+	position: static;
+    margin-right: 3px;
+     margin-top: 0px;
+}
+.etl-editformbar  .layui-input-block{
+	margin-left:180px;
+	min-height:auto;
+}
+.etl-editformbar  .layui-btn{
+	min-width:60px;
+}
+.etl-editformbar  .word-aux-tip{
+	font-size:12px;
+	padding:5px 0 0!important;
+}
+.etl-editformbar .layui-form-mid{
+	padding: 5px 0!important;
+	margin-left:10px;
+	display:none;
+}
+.etl-edit-w1  .layui-form-item{
+	margin-bottom:10px;
+	display: inline-block;
+    width: 500px;
+    vertical-align: top;
+}
+
+.staticTable table th,.staticTable table td{
+    position: static;
+    padding: 0px 15px;
+    height: 32px;
+    width: 10px;
+    min-width: 45px;
+    line-height: 32px;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+}
+.staticTable .lay-tab-left th:first-child,.staticTable .lay-tab-left td:first-child{
+	padding: 0px 15px!important;
+}
+.tableContent .layui-form-radio{
+	margin: 0 auto;
+    padding: 0;
+    display: block;
+    text-align: center;
+}
+.staticTable .layui-input{
+	width:240px;
+	height:22px;
+	vertical-align: top;
+    margin: 5px 0;
+}
+
+.layui-input-date .layui-input{
+	padding-right:30px;
+}
+.layui-input-date .iconfont {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+}
+
+.tableContent .operation-a a.icon-jiazai{
+	color: #666;
+    cursor: auto;
+}
+
+.tabmCustomScrollbar .layui-table-main{
+	height: 321px;
+    overflow: auto;
+}
+.formbox .addGjbox ul li{
+	line-height:25px;
+}

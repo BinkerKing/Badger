@@ -7,7 +7,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@EnableCaching
+//@EnableCaching
 public class Application extends SpringBootServletInitializer {
 
 	@Override
@@ -17,8 +17,6 @@ public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		System.setProperty("spring.devtools.restart.enabled", "true");
-		
-		
 		SpringApplication.run(Application.class, args);
 	}
 
